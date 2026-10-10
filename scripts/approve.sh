@@ -30,12 +30,9 @@ for pr_nr in "${pr_numbers[@]}"; do
   fi
 
   # Get relevant info from PR.
-  pr_json="$(gh pr view "$pr_nr" --json "headRefName,state,url,files")"
-  pr_branch="$(jq -r ".headRefName" <<< "$pr_json")"
-  pr_state="$(jq -r ".state" <<< "$pr_json")"
-  pr_url="$(jq -r ".url" <<< "$pr_json")"
-
-  pr_state="${pr_state,,}"
+  pr_branch="$(get_pr_branch "$pr_nr")"
+  pr_state="$(get_pr_state "$pr_nr")"
+  pr_url="$(get_pr_url "$pr_nr")"
 
   # Start checks on the PR.
   safe_to_approve=true
@@ -47,7 +44,7 @@ for pr_nr in "${pr_numbers[@]}"; do
   fi
 
   # Get the changed files and check them.
-  mapfile -t pr_files < <(jq -r ".files[].path" <<< "$pr_json")
+  mapfile -t pr_files < <(get_pr_filepaths "$pr_nr")
 
   for file in "${pr_files[@]}"; do
     echo "==> Checking file \`$file\` from pull request #$pr_nr..."

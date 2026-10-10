@@ -1,6 +1,96 @@
 #!/bin/bash
 # Set of functions used to execute the other scripts.
 
+# Obtain the number of the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GIT_COMMITTER_NAME`: The name of the committer.
+#
+# Output:
+# Writes the number of the pull request to stdout.
+#
+function get_latest_pr_number() {
+  gh pr list --author "$GIT_COMMITTER_NAME" --limit 1 --json number \
+    | jq ".[0].number"
+}
+
+# Obtain a certain property of the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The key of the PR property.
+#
+# Output:
+# Writes property of pull request to stdout.
+#
+function _get_pr_property() {
+  gh pr view "$1" --json "$2" | jq -r ".$2"
+}
+
+# Obtain branch of the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes branch of pull request to stdout.
+#
+function get_pr_branch() {
+  _get_pr_property "$1" "headRefName"
+}
+
+# Obtain state of the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes state of pull request to stdout.
+#
+function get_pr_state() {
+  _get_pr_property "$1" "state" | tr "[:upper:]" "[:lower:]"
+}
+
+# Obtain URL of the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes URL of pull request to stdout.
+#
+function get_pr_url() {
+  _get_pr_property "$1" "url"
+}
+
+# Obtain all the files modified in the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes a newline-separated list of filepaths to stdout.
+#
+function get_pr_filepaths() {
+  _get_pr_property "$1" "files" | jq -r ".[].path"
+}
+
 # Get all the formulae/casks from a given tap.
 #
 # Input:
@@ -58,7 +148,7 @@ function casks_from_tap() {
 #
 function _brew_bump_formula_or_cask() {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
-  gh pr edit "$(latest_pr_number)" --add-label "$PR_LABEL"
+  gh pr edit "$(get_latest_pr_number)" --add-label "$PR_LABEL"
 }
 
 # Bump a formula, creating a new pull request with the selected label.
@@ -87,20 +177,6 @@ function brew_bump_formula() {
 #
 function brew_bump_cask() {
   _brew_bump_formula_or_cask "$1" "cask"
-}
-
-# Obtain the number of the latest pull request.
-#
-# Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
-# - `GIT_COMMITTER_NAME`: The name of the committer.
-#
-# Output:
-# Writes the number of the pull request to stdout.
-#
-function latest_pr_number() {
-  gh pr list --author "$GIT_COMMITTER_NAME" --limit 1 --json number \
-    | jq ".[0].number"
 }
 
 # Retrieve JSON file from the selected formula/cask.
