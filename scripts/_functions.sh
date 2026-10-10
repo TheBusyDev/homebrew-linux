@@ -5,14 +5,12 @@
 #
 # Environment variables:
 # - `GITHUB_TOKEN`: Token used for authentication in `gh`.
-# - `GIT_COMMITTER_NAME`: The name of the committer.
 #
 # Output:
 # Writes the number of the pull request to stdout.
 #
 function get_latest_pr_number() {
-  gh pr list --author "$GIT_COMMITTER_NAME" --limit 1 --json number \
-    | jq ".[0].number"
+  gh pr list --author "@me" --limit 1 --json number | jq ".[0].number"
 }
 
 # Obtain a certain property of the latest pull request.
@@ -139,7 +137,6 @@ function casks_from_tap() {
 #
 # Environment variables:
 # - `GITHUB_TOKEN`: Token used for authentication in `gh`.
-# - `GIT_COMMITTER_NAME`: The name of the committer.
 # - `PR_LABEL`: Pull request label.
 #
 # Input:
@@ -155,7 +152,6 @@ function _brew_bump_formula_or_cask() {
 #
 # Environment variables:
 # - `GITHUB_TOKEN`: Token used for authentication in `gh`.
-# - `GIT_COMMITTER_NAME`: The name of the committer.
 # - `PR_LABEL`: Pull request label.
 #
 # Input:
@@ -169,7 +165,6 @@ function brew_bump_formula() {
 #
 # Environment variables:
 # - `GITHUB_TOKEN`: Token used for authentication in `gh`.
-# - `GIT_COMMITTER_NAME`: The name of the committer.
 # - `PR_LABEL`: Pull request label.
 #
 # Input:
