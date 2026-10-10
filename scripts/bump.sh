@@ -5,6 +5,7 @@
 # - `GITHUB_TOKEN`: Token used for authentication in `gh`.
 # - `GIT_COMMITTER_NAME`: The name of the committer.
 # - `GIT_COMMITTER_EMAIL`: The email address of the committer.
+# - `PR_LABEL`: Label for the pull requests created by `brew bump`.
 #
 # Input:
 # 1. The name of the tap to be updated.
@@ -32,7 +33,7 @@ echo "==> Updating formulae..."
 
 for formula in "${formulae[@]}"; do
   brew_bump_formula "$formula"
-  pr_numbers+=":$(current_pr_number)"
+  pr_numbers+=":$(latest_pr_number)"
 done
 
 # Update casks from the given tap.
@@ -40,7 +41,7 @@ echo "==> Updating casks..."
 
 for cask in "${casks[@]}"; do
   brew_bump_cask "$cask"
-  pr_numbers+=":$(current_pr_number)"
+  pr_numbers+=":$(latest_pr_number)"
 done
 
 # Export PR numbers.
