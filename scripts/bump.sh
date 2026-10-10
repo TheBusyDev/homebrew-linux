@@ -33,7 +33,7 @@ echo "==> Updating formulae..."
 
 for formula in "${formulae[@]}"; do
   brew_bump_formula "$formula"
-  pr_numbers+=":$(latest_pr_number)"
+  pr_numbers+=":$(get_latest_pr_number)"
 done
 
 # Update casks from the given tap.
@@ -41,7 +41,7 @@ echo "==> Updating casks..."
 
 for cask in "${casks[@]}"; do
   brew_bump_cask "$cask"
-  pr_numbers+=":$(latest_pr_number)"
+  pr_numbers+=":$(get_latest_pr_number)"
 done
 
 # Export PR numbers.
