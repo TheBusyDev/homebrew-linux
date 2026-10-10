@@ -45,7 +45,12 @@ function casks_from_tap() {
   _formulae_or_casks_from_tap "$1" "casks"
 }
 
-# Bump the selected formula/cask, creating a new pull request.
+# Bump a formula/cask, creating a new pull request with the selected label.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GIT_COMMITTER_NAME`: The name of the committer.
+# - `PR_LABEL`: Pull request label.
 #
 # Input:
 # 1. The fully-qualified name of the formula/cask.
@@ -53,9 +58,15 @@ function casks_from_tap() {
 #
 function _brew_bump_formula_or_cask() {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
+  gh pr edit "$(latest_pr_number)" --add-label "$PR_LABEL"
 }
 
-# Bump the selected formula, creating a new pull request.
+# Bump a formula, creating a new pull request with the selected label.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GIT_COMMITTER_NAME`: The name of the committer.
+# - `PR_LABEL`: Pull request label.
 #
 # Input:
 # 1. The fully-qualified name of the formula.
@@ -64,7 +75,12 @@ function brew_bump_formula() {
   _brew_bump_formula_or_cask "$1" "formula"
 }
 
-# Bump the selected cask, creating a new pull request.
+# Bump a cask, creating a new pull request with the selected label.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GIT_COMMITTER_NAME`: The name of the committer.
+# - `PR_LABEL`: Pull request label.
 #
 # Input:
 # 1. The fully-qualified name of the cask.
@@ -73,13 +89,18 @@ function brew_bump_cask() {
   _brew_bump_formula_or_cask "$1" "cask"
 }
 
-# Obtain the number of the pull request from the current branch.
+# Obtain the number of the latest pull request.
+#
+# Environment variables:
+# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GIT_COMMITTER_NAME`: The name of the committer.
 #
 # Output:
 # Writes the number of the pull request to stdout.
 #
-function current_pr_number() {
-  gh pr view --json "number" | jq -r ".number"
+function latest_pr_number() {
+  gh pr list --author "$GIT_COMMITTER_NAME" --limit 1 --json number \
+    | jq ".[0].number"
 }
 
 # Retrieve JSON file from the selected formula/cask.
