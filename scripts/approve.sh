@@ -2,7 +2,7 @@
 # Auto-approve some pull requests with certain criteria.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Input:
 # 1. Colon-separated list of pull request numbers.
@@ -61,7 +61,7 @@ for pr_nr in "${pr_numbers[@]}"; do
       | grep "^[+-]" \
       | grep -v "^+++" \
       | grep -v "^---" \
-      | sed "s/^[+-]//g" \
+      | sed "s/^[+-]//" \
       || true)"
 
     unauthorized_changes="$(echo "$all_changes" \

@@ -2,9 +2,9 @@
 # Update `version` and `sha265` for all the formulae/casks from the provided tap.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
-# - `GIT_COMMITTER_NAME`: The name of the committer.
-# - `GIT_COMMITTER_EMAIL`: The email address of the committer.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `COMMITTER_NAME`: The name of the committer.
+# - `COMMITTER_EMAIL`: The email address of the committer.
 # - `PR_LABEL`: Label for the pull requests created by `brew bump`.
 #
 # Input:
@@ -18,9 +18,9 @@
 source ./scripts/_functions.sh
 
 # Useful variables.
-export HOMEBREW_GITHUB_API_TOKEN="$GITHUB_TOKEN"
-export HOMEBREW_GIT_COMMITTER_NAME="$GIT_COMMITTER_NAME"
-export HOMEBREW_GIT_COMMITTER_EMAIL="$GIT_COMMITTER_EMAIL"
+export HOMEBREW_GITHUB_API_TOKEN="$GH_TOKEN"
+export HOMEBREW_GIT_COMMITTER_NAME="$COMMITTER_NAME"
+export HOMEBREW_GIT_COMMITTER_EMAIL="$COMMITTER_EMAIL"
 
 pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
 

@@ -4,7 +4,7 @@
 # Obtain the number of the latest pull request.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Output:
 # Writes the number of the pull request to stdout.
@@ -16,7 +16,7 @@ function get_latest_pr_number() {
 # Obtain a certain property of the latest pull request.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Input:
 # 1. The number of the pull request.
@@ -32,7 +32,7 @@ function _get_pr_property() {
 # Obtain branch of the latest pull request.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Input:
 # 1. The number of the pull request.
@@ -47,7 +47,7 @@ function get_pr_branch() {
 # Obtain state of the latest pull request.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Input:
 # 1. The number of the pull request.
@@ -62,7 +62,7 @@ function get_pr_state() {
 # Obtain URL of the latest pull request.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Input:
 # 1. The number of the pull request.
@@ -77,7 +77,7 @@ function get_pr_url() {
 # Obtain all the files modified in the latest pull request.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 #
 # Input:
 # 1. The number of the pull request.
@@ -136,7 +136,7 @@ function casks_from_tap() {
 # Bump a formula/cask, creating a new pull request with the selected label.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `PR_LABEL`: Pull request label.
 #
 # Input:
@@ -151,7 +151,7 @@ function _brew_bump_formula_or_cask() {
 # Bump a formula, creating a new pull request with the selected label.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `PR_LABEL`: Pull request label.
 #
 # Input:
@@ -164,7 +164,7 @@ function brew_bump_formula() {
 # Bump a cask, creating a new pull request with the selected label.
 #
 # Environment variables:
-# - `GITHUB_TOKEN`: Token used for authentication in `gh`.
+# - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `PR_LABEL`: Pull request label.
 #
 # Input:
