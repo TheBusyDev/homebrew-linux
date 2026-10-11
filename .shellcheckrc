@@ -1,0 +1,22 @@
+# Configuration file for `shellcheck`.
+
+# Enable all the warnings.
+enable=all
+
+# Allow opening any source'd file, even if not specified as input.
+external-sources=true
+
+# SC2310: This function is invoked in an 'if' / ! condition so set -e will be
+# disabled. Invoke separately if failures should cause the script to exit.
+# See: https://github.com/koalaman/shellcheck/wiki/SC2310
+disable=SC2310
+
+# SC2311: Bash implicitly disabled set -e for this function invocation because
+# it's inside a command substitution. Add set -e; before it or enable inherit_errexit.
+# See: https://github.com/koalaman/shellcheck/wiki/SC2311
+disable=SC2311
+
+# SC2312: Consider invoking this command separately to avoid masking its return
+# value (or use '|| true' to ignore).
+# See: https://github.com/koalaman/shellcheck/wiki/SC2312
+disable=SC2312
