@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - main
+      - dev-autobump
   schedule:
     # Every Sunday at midnight.
     - cron: '0 0 * * 0'
@@ -37,7 +38,7 @@ jobs:
           GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
           COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
           COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
-          PR_LABEL: "autobump"
+          PR_LABEL: autobump
         run: ./scripts/bump.sh "$TAP_NAME"
 
       - name: Auto-approve PRs safely
