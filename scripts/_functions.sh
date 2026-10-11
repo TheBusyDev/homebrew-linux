@@ -101,14 +101,18 @@ function get_pr_filepaths() {
 # Writes a newline-separated list to stdout.
 #
 function _formulae_or_casks_from_tap() {
+  local array_name
+
   case "$2" in
     casks)
-      brew tap-info "$1" --json=v1 | jq -r ".[]|.cask_tokens[]"
+      array_name="cask_tokens"
       ;;
     *)
-      brew tap-info "$1" --json=v1 | jq -r ".[]|.formula_names[]"
+      array_name="formula_names"
       ;;
   esac
+
+  brew tap-info "$1" --json=v1 | jq -r ".[].${array_name}[]"
 }
 
 # Get all the formulae from a given tap.
