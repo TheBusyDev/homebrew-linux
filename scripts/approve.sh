@@ -13,14 +13,16 @@ source ./scripts/_functions.sh
 
 # Useful variables.
 # Match `version` entries in `.rb` files.
-VERSION_REGEX='^\s*version\s+".*"$'
+VERSION_REGEX='^[+-]\s*version\s+".*"$'
 # Match `sha256` entries in `.rb` files.
-SHA256_REGEX='^\s*sha256\s+("[a-z0-9]+"|arm:\s+"[a-z0-9]+",\\n\s*intel:\s+"[a-z0-9]+")$'
+SHA256_REGEX='^[+-]\s*sha256\s+("[a-z0-9]+"|arm:\s+"[a-z0-9]+",\\n[+-]\s*intel:\s+"[a-z0-9]+")$'
 
 # Check for every PR in `pr_numbers`.
 mapfile -d ":" -t pr_numbers < <(echo -n "$1")
 failed_pr_urls="" # Newline-separated list of URLs for non-approved pull requests.
 success=true      # Have all the approvals run successfully?
+
+git fetch # Sync changes from remote.
 
 for pr_nr in "${pr_numbers[@]}"; do
   echo "==> Checking pull request #$pr_nr..."
@@ -59,12 +61,14 @@ for pr_nr in "${pr_numbers[@]}"; do
     fi
 
     # Check difference between files modified in PR and the ones on default branch.
-    all_changes="$(git diff -U0 "origin/main...origin/$pr_branch" -- "$file" \
+    all_changes="$(git diff -U0 "origin/HEAD...origin/$pr_branch" -- "$file" \
       | grep "^[+-]" \
       | grep -v "^+++" \
       | grep -v "^---" \
-      | sed "s/^[+-]//" \
       || true)"
+
+    echo "Changes between \`$pr_branch\` and default branch:"
+    echo "$all_changes"
 
     unauthorized_changes="$(echo "$all_changes" \
       | grep -vE "$VERSION_REGEX" \
@@ -72,7 +76,8 @@ for pr_nr in "${pr_numbers[@]}"; do
       || true)"
 
     if [[ -n "$unauthorized_changes" ]]; then
-      echo "::error file=$file::Unauthorized changes found."
+      echo "::error file=$file::Unauthorized changes found:"
+      echo "$unauthorized_changes"
       safe_to_approve=false
       continue
     fi
