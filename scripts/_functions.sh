@@ -1,5 +1,8 @@
 #!/bin/bash
 # Set of functions used to execute the other scripts.
+#
+
+source "$(dirname "$0")"/_env.sh
 
 # Obtain the number of the latest pull request.
 #

@@ -17,13 +17,10 @@
 #                 `brew bump`.
 #
 
-source ./scripts/_functions.sh
+source "$(dirname "$0")"/_env.sh
+source "$(dirname "$0")"/_functions.sh
 
 # Useful variables.
-export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
-export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
-export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
-
 pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
 
 # Get formulae and casks from the tap.

@@ -9,7 +9,8 @@
 #
 # TODO: add criteria list to README.md
 
-source ./scripts/_functions.sh
+source "$(dirname "$0")"/_env.sh
+source "$(dirname "$0")"/_functions.sh
 
 # Useful variables.
 # Match `version` entries in `.rb` files.
@@ -22,7 +23,7 @@ mapfile -d ":" -t pr_numbers < <(echo -n "$1")
 failed_pr_urls="" # Newline-separated list of URLs for non-approved pull requests.
 success=true      # Have all the approvals run successfully?
 
-git fetch # Sync changes from remote.
+git fetch origin # Sync changes from remote.
 
 for pr_nr in "${pr_numbers[@]}"; do
   echo "==> Checking pull request #${pr_nr}..."
