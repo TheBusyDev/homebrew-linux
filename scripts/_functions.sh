@@ -5,12 +5,18 @@
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `COMMITTER_USERNAME`: The username of the committer.
+#
+# Input:
+# 1. Pull request label (possibly empty).
 #
 # Output:
 # Writes the number of the pull request to stdout.
 #
 function get_latest_pr_number() {
-  gh pr list --author "@me" --limit 1 --json number | jq ".[0].number"
+  sleep 6 # Cooldown to detect the latest PR correctly.
+  gh pr list --author "$COMMITTER_USERNAME" --label "$1" --limit 1 \
+    --json number | jq ".[0].number"
 }
 
 # Obtain a certain property of the latest pull request.
@@ -99,14 +105,18 @@ function get_pr_filepaths() {
 # Writes a newline-separated list to stdout.
 #
 function _formulae_or_casks_from_tap() {
+  local array_name
+
   case "$2" in
     casks)
-      brew tap-info "$1" --json=v1 | jq -r ".[]|.cask_tokens[]"
+      array_name="cask_tokens"
       ;;
     *)
-      brew tap-info "$1" --json=v1 | jq -r ".[]|.formula_names[]"
+      array_name="formula_names"
       ;;
   esac
+
+  brew tap-info "$1" --json=v1 | jq -r ".[].${array_name}[]"
 }
 
 # Get all the formulae from a given tap.
@@ -137,7 +147,7 @@ function casks_from_tap() {
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
-# - `PR_LABEL`: Pull request label.
+# - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
 # 1. The fully-qualified name of the formula/cask.
@@ -145,14 +155,14 @@ function casks_from_tap() {
 #
 function _brew_bump_formula_or_cask() {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
-  gh pr edit "$(get_latest_pr_number)" --add-label "$PR_LABEL"
+  gh pr edit "$(get_latest_pr_number "")" --add-label "$PR_LABEL"
 }
 
 # Bump a formula, creating a new pull request with the selected label.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
-# - `PR_LABEL`: Pull request label.
+# - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
 # 1. The fully-qualified name of the formula.
@@ -165,7 +175,7 @@ function brew_bump_formula() {
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
-# - `PR_LABEL`: Pull request label.
+# - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
 # 1. The fully-qualified name of the cask.
