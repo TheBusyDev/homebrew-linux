@@ -26,7 +26,7 @@ for pr_nr in "${pr_numbers[@]}"; do
   echo "==> Checking pull request #$pr_nr..."
 
   if [[ ! "$pr_nr" =~ ^[0-9]+$ ]]; then
-    echo "::error ::\"$pr_nr\" is not a valid PR number."
+    echo "::error::\"$pr_nr\" is not a valid PR number."
     success=false
     continue
   fi
@@ -41,7 +41,7 @@ for pr_nr in "${pr_numbers[@]}"; do
 
   # Check the PR state.
   if [[ "$pr_state" != "open" ]]; then
-    echo "::error ::The pull request #$pr_nr is not open."
+    echo "::error::The pull request #$pr_nr is not open."
     safe_to_approve=false
   fi
 
@@ -93,7 +93,7 @@ failed_pr_urls="${failed_pr_urls%\\n}"
 failed_pr_urls="${failed_pr_urls#\\n}"
 
 if [[ -n "$failed_pr_urls" ]]; then
-  echo "::error ::The following PRs require manual approval:"
+  echo "::error::The following PRs require manual approval:"
   echo -e "$failed_pr_urls"
 fi
 
