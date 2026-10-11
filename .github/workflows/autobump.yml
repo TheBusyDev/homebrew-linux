@@ -11,6 +11,9 @@ on:
     # Every Sunday at midnight.
     - cron: '0 0 * * 0'
 
+env:
+  COMMITTER_USERNAME: ${{ github.repository_owner }}
+
 defaults:
   run:
     shell: bash -xeuo pipefail {0}
@@ -30,6 +33,8 @@ jobs:
       - name: Set up git
         id: git_setup
         uses: Homebrew/actions/git-user-config@e99025eb970cfa124b8284a35463d87426917478 # 2026.09.28.1
+        with:
+          username: ${{ env.COMMITTER_USERNAME }}
 
       - name: Bump formulae and casks
         id: brew-bump

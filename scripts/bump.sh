@@ -4,6 +4,7 @@
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `COMMITTER_NAME`: The name of the committer.
+# - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
 # - `PR_LABEL`: Label for the pull requests created by `brew bump`.
 #
