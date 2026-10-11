@@ -20,9 +20,9 @@
 source ./scripts/_functions.sh
 
 # Useful variables.
-export HOMEBREW_GITHUB_API_TOKEN="$GH_TOKEN"
-export HOMEBREW_GIT_COMMITTER_NAME="$COMMITTER_NAME"
-export HOMEBREW_GIT_COMMITTER_EMAIL="$COMMITTER_EMAIL"
+export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
+export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
+export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 
 pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
 
@@ -34,21 +34,21 @@ mapfile -t casks < <(casks_from_tap "$1")
 echo "==> Updating formulae..."
 
 for formula in "${formulae[@]}"; do
-  brew_bump_formula "$formula"
-  pr_numbers+=":$(get_latest_pr_number "$PR_LABEL")"
+  brew_bump_formula "${formula}"
+  pr_numbers+=":$(get_latest_pr_number "${PR_LABEL}")"
 done
 
 # Update casks from the given tap.
 echo "==> Updating casks..."
 
 for cask in "${casks[@]}"; do
-  brew_bump_cask "$cask"
-  pr_numbers+=":$(get_latest_pr_number "$PR_LABEL")"
+  brew_bump_cask "${cask}"
+  pr_numbers+=":$(get_latest_pr_number "${PR_LABEL}")"
 done
 
 # Export PR numbers.
 pr_numbers="${pr_numbers%:}"
 pr_numbers="${pr_numbers#:}"
-echo "pr_numbers=$pr_numbers" >> "$GITHUB_OUTPUT"
+echo "pr_numbers=${pr_numbers}" >> "${GITHUB_OUTPUT}"
 
 exit 0

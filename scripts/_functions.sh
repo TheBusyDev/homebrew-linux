@@ -15,7 +15,7 @@
 #
 function get_latest_pr_number() {
   sleep 6 # Cooldown to detect the latest PR correctly.
-  gh pr list --author "$COMMITTER_USERNAME" --label "$1" --limit 1 \
+  gh pr list --author "${COMMITTER_USERNAME}" --label "$1" --limit 1 \
     --json number | jq ".[0].number"
 }
 
@@ -155,7 +155,7 @@ function casks_from_tap() {
 #
 function _brew_bump_formula_or_cask() {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
-  gh pr edit "$(get_latest_pr_number "")" --add-label "$PR_LABEL"
+  gh pr edit "$(get_latest_pr_number "")" --add-label "${PR_LABEL}"
 }
 
 # Bump a formula, creating a new pull request with the selected label.
@@ -259,7 +259,7 @@ function _formula_or_cask_depends_on_linux_or_macos() {
   local depends_on
   depends_on="$(_json_from_formula_or_cask "$1" "$2" | jq -r ".depends_on.$3")"
 
-  if [[ "$depends_on" != "null" ]]; then
+  if [[ "${depends_on}" != "null" ]]; then
     echo "true"
   else
     echo "false"
