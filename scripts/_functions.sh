@@ -154,7 +154,7 @@ function casks_from_tap() {
 #
 function _brew_bump_formula_or_cask() {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
-  sleep 10 # Cooldown to detect the latest PR correctly.
+  sleep 5 # Cooldown to detect the latest PR correctly.
   gh pr edit "$(get_latest_pr_number "")" --add-label "$PR_LABEL"
 }
 
