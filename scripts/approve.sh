@@ -9,6 +9,8 @@
 #
 # TODO: add criteria list to README.md
 
+source ./scripts/_functions.sh
+
 # Useful variables.
 # Match `version` entries in `.rb` files.
 VERSION_REGEX='^\s*version\s+".*"$'
@@ -23,7 +25,7 @@ success=true      # Have all the approvals run successfully?
 for pr_nr in "${pr_numbers[@]}"; do
   echo "==> Checking pull request #$pr_nr..."
 
-  if [[ ! "$pr_nr" =~ [0-9] ]]; then
+  if [[ ! "$pr_nr" =~ ^[0-9]+$ ]]; then
     echo "::error ::\"$pr_nr\" is not a valid PR number."
     success=false
     continue
