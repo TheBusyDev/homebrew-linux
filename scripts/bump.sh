@@ -7,6 +7,7 @@
 # - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
 # - `PR_LABEL`: Label for the pull requests created by `brew bump`.
+# - `GITHUB_OUTPUT`: Used to write output.
 #
 # Input:
 # 1. The name of the tap to be updated.
@@ -48,6 +49,6 @@ done
 # Export PR numbers.
 pr_numbers="${pr_numbers%:}"
 pr_numbers="${pr_numbers#:}"
-echo "pr_numbers=\"$pr_numbers\"" >> "$GITHUB_OUTPUT"
+echo "pr_numbers=$pr_numbers" >> "$GITHUB_OUTPUT"
 
 exit 0
