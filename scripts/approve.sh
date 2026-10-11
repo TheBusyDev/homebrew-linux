@@ -93,7 +93,8 @@ failed_pr_urls="${failed_pr_urls%\\n}"
 failed_pr_urls="${failed_pr_urls#\\n}"
 
 if [[ -n "$failed_pr_urls" ]]; then
-  echo -e "::error ::The following PRs require manual approval:\n$failed_pr_urls"
+  echo "::error ::The following PRs require manual approval:"
+  echo -e "$failed_pr_urls"
 fi
 
 if ! $success; then
