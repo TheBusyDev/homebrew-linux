@@ -14,7 +14,7 @@
 # Writes the number of the pull request to stdout.
 #
 function get_latest_pr_number() {
-  sleep 5 # Cooldown to detect the latest PR correctly.
+  sleep 6 # Cooldown to detect the latest PR correctly.
   gh pr list --author "$COMMITTER_USERNAME" --label "$1" --limit 1 \
     --json number | jq ".[0].number"
 }
