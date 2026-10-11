@@ -6,7 +6,8 @@
 # 1. The name of the tap.
 #
 
-source ./scripts/_functions.sh
+source "$(dirname "$0")"/_env.sh
+source "$(dirname "$0")"/_functions.sh
 
 # Useful variables.
 linux_only=true # Are all the formulae/taps developed for Linux only?
