@@ -5,12 +5,14 @@
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `COMMITTER_USERNAME`: The username of the committer.
 #
 # Output:
 # Writes the number of the pull request to stdout.
 #
 function get_latest_pr_number() {
-  gh pr list --author "@me" --limit 1 --json number | jq ".[0].number"
+  gh pr list --author "$COMMITTER_USERNAME" --limit 1 --json number \
+    | jq ".[0].number"
 }
 
 # Obtain a certain property of the latest pull request.
