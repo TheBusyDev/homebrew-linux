@@ -37,7 +37,8 @@
 
 source "$(dirname "$0")"/_env.sh
 
-onoe() {
+onoe()
+{
   echo "$*" >&2
 }
 
@@ -109,7 +110,8 @@ fi
 ###
 
 # Check for specific patterns and prompt messages if detected
-no_forbidden_pattern() {
+no_forbidden_pattern()
+{
   local file="$1"
   local tempfile="$2"
   local subject="$3"
@@ -139,7 +141,8 @@ no_forbidden_pattern() {
 #
 # Replace tabs with 2 spaces instead
 #
-no_tabs() {
+no_tabs()
+{
   local file="$1"
   local tempfile="$2"
 
@@ -161,7 +164,8 @@ no_tabs() {
 #   for var in "${ARRAY[@]}"
 #   do
 #
-no_multiline_for_statements() {
+no_multiline_for_statements()
+{
   local file="$1"
   local tempfile="$2"
   local regex='^ *for [_[:alnum:]]+ in .*\\$'
@@ -194,7 +198,8 @@ EOMSG
 #     ...
 #   done < <(command)
 #
-no_IFS_newline() {
+no_IFS_newline()
+{
   local file="$1"
   local tempfile="$2"
   local regex="^[^#]*IFS=\\\$'\\\\n'"
@@ -216,7 +221,8 @@ EOMSG
 }
 
 # Combine all forbidden styles
-no_forbidden_styles() {
+no_forbidden_styles()
+{
   local file="$1"
   local tempfile="$2"
 
@@ -236,7 +242,8 @@ no_forbidden_styles() {
 #     -n ... ]]                     -n ... ]]
 #   then                      then
 #
-align_multiline_if_condition() {
+align_multiline_if_condition()
+{
   local line
   local lastline=''
   local base_indent=''       # indents before `if`
@@ -245,7 +252,8 @@ align_multiline_if_condition() {
   local multiline_if_then_end_regex='^(.*)\; (then( *#.*)?)$'
   local within_test_regex='^( *)(((! )?-[fdLrwxeszn] )|([^\[]+ (==|!=|=~) ))'
 
-  trim() {
+  trim()
+  {
     [[ "$1" =~ [^[:space:]](.*[^[:space:]])? ]]
     printf "%s" "${BASH_REMATCH[0]}"
   }
@@ -297,7 +305,8 @@ align_multiline_if_condition() {
 #   for var in ...; do        for var in ...
 #                             do
 #
-wrap_then_do() {
+wrap_then_do()
+{
   local file="$1"
   local tempfile="$2"
 
@@ -353,7 +362,8 @@ wrap_then_do() {
 #   2: shfmt failed
 #   3: forbidden styles detected
 #   4: bad styles but can be auto-fixed
-format() {
+format()
+{
   local file="$1"
   local tempfile
 
