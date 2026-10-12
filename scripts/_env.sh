@@ -12,6 +12,12 @@
 # - `GITHUB_OUTPUT`: Used to write output.
 #
 
+# Include guard.
+if [[ -n "${__ENV_SH}" ]]; then
+  return 0
+fi
+export __ENV_SH="1"
+
 # Environment variables.
 export GH_TOKEN="${GH_TOKEN:-}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
