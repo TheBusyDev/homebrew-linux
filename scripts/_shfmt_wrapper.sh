@@ -11,7 +11,7 @@
 #
 #   BSD 2-Clause License
 #
-#   Copyright (c) 2009-present, Homebrew contributors
+#   Copyright (c) 2026-present, Pietro Businaro
 #   All rights reserved.
 #
 #   Redistribution and use in source and binary forms, with or without
