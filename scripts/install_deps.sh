@@ -2,13 +2,17 @@
 # Install `brew` dependencies from `.dependencies` file.
 #
 
-source "$(dirname "$0")"/_env.sh
-mapfile -t deps < .dependencies
+mapfile -t deps < "$(dirname "$0")"/../.dependencies
 
 for dep in "${deps[@]}"
 do
-  formula="$(brew which-formula "${dep}")"
-  brew install --formula "${formula}"
+  # shellcheck disable=SC2015
+  formula="$(brew which-formula "${dep}")" \
+    && brew install --formula "${formula}" \
+    || {
+      echo "::error::Cannot install dependency \`${dep}\`."
+      exit 1
+    }
 done
 
 exit 0
