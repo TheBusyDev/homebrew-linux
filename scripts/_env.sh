@@ -45,10 +45,25 @@ then
 fi
 
 # Check if the dependencies required in this repository command can be executed.
-brew bundle check --file=.Brewfile --verbose || {
-  echo "::error::Missing dependencies from \`brew\`." \
-    "Install them by running \`brew bundle install --file=.Brewfile\`. Cheers!"
-  exit 1
+#
+# Input:
+# 1. The dependency to be satisfied.
+#
+function _check_dependency()
+{
+  if ! command -v "$1" > /dev/null 2>&1
+  then
+    echo "::error::Missing dependency: \`$1\`." \
+      "Please, install it by running \`brew install $1\`" \
+      "and ensure it is added to your \`PATH\`." >&2
+    exit 1
+  fi
 }
 
-return 0
+# Get list of dependencies from Brewfile.
+mapfile -t deps < <(brew bundle list --file=.Brewfile)
+
+for dep in "${deps[@]}"
+do
+  _check_dependency "${dep}"
+done
