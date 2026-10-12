@@ -25,10 +25,12 @@ success=true      # Have all the approvals run successfully?
 
 git fetch origin # Sync changes from remote.
 
-for pr_nr in "${pr_numbers[@]}"; do
+for pr_nr in "${pr_numbers[@]}"
+do
   echo "==> Checking pull request #${pr_nr}..."
 
-  if [[ ! "${pr_nr}" =~ ^[0-9]+$ ]]; then
+  if [[ ! "${pr_nr}" =~ ^[0-9]+$ ]]
+  then
     echo "::error::\"${pr_nr}\" is not a valid PR number."
     success=false
     continue
@@ -43,7 +45,8 @@ for pr_nr in "${pr_numbers[@]}"; do
   safe_to_approve=true
 
   # Check the PR state.
-  if [[ "${pr_state}" != "open" ]]; then
+  if [[ "${pr_state}" != "open" ]]
+  then
     echo "::error::The pull request #${pr_nr} is not open."
     safe_to_approve=false
   fi
@@ -51,11 +54,13 @@ for pr_nr in "${pr_numbers[@]}"; do
   # Get the changed files and check them.
   mapfile -t pr_files < <(get_pr_filepaths "${pr_nr}")
 
-  for file in "${pr_files[@]}"; do
+  for file in "${pr_files[@]}"
+  do
     echo "==> Checking file \`${file}\` from pull request #${pr_nr}..."
 
     # Check if not only formula/cask files are modified.
-    if [[ ! "${file}" =~ ^(Formula|Casks)/.*\.rb$ ]]; then
+    if [[ ! "${file}" =~ ^(Formula|Casks)/.*\.rb$ ]]
+    then
       echo "::error file=${file}::This PR does not modify \`.rb\` files only."
       safe_to_approve=false
       continue
@@ -76,7 +81,8 @@ for pr_nr in "${pr_numbers[@]}"; do
       | grep -vE "${SHA256_REGEX}" \
       || true)"
 
-    if [[ -n "${unauthorized_changes}" ]]; then
+    if [[ -n "${unauthorized_changes}" ]]
+    then
       echo "::error file=${file}::Unauthorized changes found:"
       echo "${unauthorized_changes}"
       safe_to_approve=false
@@ -84,7 +90,8 @@ for pr_nr in "${pr_numbers[@]}"; do
     fi
   done
 
-  if ! ${safe_to_approve}; then
+  if ! ${safe_to_approve}
+  then
     # Append the PR URL to the failed ones.
     failed_pr_urls+="\n${pr_url}"
     success=false
@@ -98,12 +105,14 @@ done
 failed_pr_urls="${failed_pr_urls%\\n}"
 failed_pr_urls="${failed_pr_urls#\\n}"
 
-if [[ -n "${failed_pr_urls}" ]]; then
+if [[ -n "${failed_pr_urls}" ]]
+then
   echo "::error::The following PRs require manual approval:"
   echo -e "${failed_pr_urls}"
 fi
 
-if ! ${success}; then
+if ! ${success}
+then
   exit 1
 fi
 
