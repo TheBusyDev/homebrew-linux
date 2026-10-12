@@ -16,9 +16,7 @@ source "$(dirname "$0")"/_env.sh
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `COMMITTER_USERNAME`: The username of the committer.
-#
-# Input:
-# 1. Pull request label (possibly empty).
+# - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Output:
 # Writes the number of the pull request to stdout.
@@ -26,7 +24,7 @@ source "$(dirname "$0")"/_env.sh
 function get_latest_pr_number()
 {
   sleep 6 # Cooldown to detect the latest PR correctly.
-  gh pr list --author "${COMMITTER_USERNAME}" --label "$1" --limit 1 \
+  gh pr list --author "${COMMITTER_USERNAME}" --label "${PR_LABEL}" --limit 1 \
     --json number | jq ".[0].number"
 }
 
@@ -175,7 +173,7 @@ function casks_from_tap()
 function _brew_bump_formula_or_cask()
 {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
-  gh pr edit "$(get_latest_pr_number "")" --add-label "${PR_LABEL}"
+  gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}"
 }
 
 # Bump a formula, creating a new pull request with the selected label.
