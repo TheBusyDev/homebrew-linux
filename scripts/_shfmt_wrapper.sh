@@ -4,7 +4,7 @@
 # by calling `./_shfmt_wrapper.sh --help`.
 #
 # The original code is taken from the `Homebrew` project:
-#   https://github.com/Homebrew/brew/blob/main/Library/Homebrew/utils/shfmt.sh
+#   https://github.com/Homebrew/brew/blob/2141dc65867a601ed1b356d51790fb6fede28257/Library/Homebrew/utils/shfmt.sh
 #
 # The original code (and this modified version as well) is distributed under the
 # following license:
