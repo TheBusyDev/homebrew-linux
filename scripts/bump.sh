@@ -2,15 +2,13 @@
 # Update `version` and `sha265` for all the formulae/casks from the provided tap.
 #
 # Environment variables:
+# - `TAP_NAME`: The name of the tap to be updated.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
 # - `PR_LABEL`: Label for the pull requests created by `brew bump`.
 # - `GITHUB_OUTPUT`: Used to write output.
-#
-# Input:
-# 1. The name of the tap to be updated.
 #
 # Output (written into `GITHUB_OUTPUT`):
 # - `pr_numbers`: Colon-separated list of pull requests numbers created by
@@ -24,8 +22,8 @@ source "$(dirname "$0")"/_functions.sh
 pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
 
 # Get formulae and casks from the tap.
-mapfile -t formulae < <(formulae_from_tap "$1")
-mapfile -t casks < <(casks_from_tap "$1")
+mapfile -t formulae < <(formulae_from_tap)
+mapfile -t casks < <(casks_from_tap)
 
 # Update formulae from the given tap.
 echo "==> Updating formulae..."

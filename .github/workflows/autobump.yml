@@ -43,7 +43,7 @@ jobs:
           COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
           COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
           PR_LABEL: autobump
-        run: ./scripts/bump.sh "$TAP_NAME"
+        run: ./scripts/bump.sh
 
       - name: Auto-approve PRs safely
         env:

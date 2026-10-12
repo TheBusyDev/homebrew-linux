@@ -111,9 +111,11 @@ function get_pr_filepaths()
 
 # Get all the formulae/casks from a given tap.
 #
+# Environment variables:
+# - `TAP_NAME`: The name of the tap.
+#
 # Input:
-# 1. The name of the tap.
-# 2. Literal string: "formulae" or "casks".
+# 1. Literal string: "formulae" or "casks".
 #
 # Output:
 # Writes a newline-separated list to stdout.
@@ -122,7 +124,7 @@ function _formulae_or_casks_from_tap()
 {
   local array_name
 
-  case "$2" in
+  case "$1" in
     casks)
       array_name="cask_tokens"
       ;;
@@ -131,33 +133,33 @@ function _formulae_or_casks_from_tap()
       ;;
   esac
 
-  brew tap-info "$1" --json=v1 | jq -r ".[].${array_name}[]"
+  brew tap-info "${TAP_NAME}" --json=v1 | jq -r ".[].${array_name}[]"
 }
 
 # Get all the formulae from a given tap.
 #
-# Input:
-# 1. The name of the tap.
+# Environment variables:
+# - `TAP_NAME`: The name of the tap.
 #
 # Output:
 # Writes a newline-separated list of formulae to stdout.
 #
 function formulae_from_tap()
 {
-  _formulae_or_casks_from_tap "$1" "formulae"
+  _formulae_or_casks_from_tap "formulae"
 }
 
 # Get all the casks from a given tap.
 #
-# Input:
-# 1. The name of the tap.
+# Environment variables:
+# - `TAP_NAME`: The name of the tap.
 #
 # Output:
 # Writes a newline-separated list of casks to stdout.
 #
 function casks_from_tap()
 {
-  _formulae_or_casks_from_tap "$1" "casks"
+  _formulae_or_casks_from_tap "casks"
 }
 
 # Bump a formula/cask, creating a new pull request with the selected label.
