@@ -1,5 +1,4 @@
-# brew tap-new uses this file to generate an autobump workflow for the new tap
-name: brew bump
+name: Homebrew autobump
 
 on:
   workflow_dispatch:
