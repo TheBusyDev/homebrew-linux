@@ -2,6 +2,12 @@
 # Set of functions used to execute the other scripts.
 #
 
+# Include guard.
+if [[ -n "${__FUNCTIONS_SH}" ]]; then
+  return 0
+fi
+export __FUNCTIONS_SH="1"
+
 source "$(dirname "$0")"/_env.sh
 
 # Obtain the number of the latest pull request.
