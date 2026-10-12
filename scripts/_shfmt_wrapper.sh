@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script acts like a wrapper to `shfmt` (bash formatter).
 # The options are exactly the same as the ones used in `shfmt` and can be viewed
-# by calling `./shfmt.sh --help`.
+# by calling `./_shfmt_wrapper.sh --help`.
 #
 # The original code is taken from the `Homebrew` project:
 #   https://github.com/Homebrew/brew/blob/main/Library/Homebrew/utils/shfmt.sh
