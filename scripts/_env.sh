@@ -35,7 +35,8 @@ export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 cd "$(dirname "$0")"/.. || exit 1
 
 # Check if the commands required in this repository command can be executed.
-function _check_command() {
+function _check_command()
+{
   local cmd="$1"
 
   if ! command -v "${cmd}" > /dev/null 2>&1
