@@ -43,7 +43,7 @@ function _check_command()
 
   if ! command -v "${cmd}" > /dev/null 2>&1
   then
-    echo "Missing dependency: \`${cmd}\`." \
+    echo "::error::Missing dependency: \`${cmd}\`." \
       "Please, install it by running \`brew install ${cmd}\`" \
       "and ensure it is added to your \`PATH\`." >&2
     exit 1
