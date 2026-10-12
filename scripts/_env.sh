@@ -36,23 +36,34 @@ export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 # Change directory to the repository root.
 cd "$(dirname "$0")"/.. || exit 1
 
-# Check if the commands required in this repository command can be executed.
-function _check_command()
-{
-  local cmd="$1"
+# Check if `brew` is installed.
+if ! command -v "brew" > /dev/null 2>&1
+then
+  echo "::error::Missing dependency: \`brew\`." \
+    "Visit https://brew.sh/ and install it! Cheers!" >&2
+  exit 1
+fi
 
-  if ! command -v "${cmd}" > /dev/null 2>&1
+# Check if the dependencies required in this repository command can be executed.
+#
+# Input:
+# 1. The dependency to be satisfied.
+#
+function _check_dependency()
+{
+  if ! command -v "$1" > /dev/null 2>&1
   then
-    echo "::error::Missing dependency: \`${cmd}\`." \
-      "Please, install it by running \`brew install ${cmd}\`" \
+    echo "::error::Missing dependency: \`$1\`." \
+      "Please, install it by running \`brew install $1\`" \
       "and ensure it is added to your \`PATH\`." >&2
     exit 1
   fi
 }
 
-_check_command "git"
-_check_command "gh"
-_check_command "jq"
-_check_command "diff"
-_check_command "shfmt"
-_check_command "shellcheck"
+# Get list of dependencies from Brewfile.
+mapfile -t deps < <(brew bundle list --file=.Brewfile)
+
+for dep in "${deps[@]}"
+do
+  _check_dependency "${dep}"
+done

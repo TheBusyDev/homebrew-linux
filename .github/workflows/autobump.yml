@@ -29,6 +29,9 @@ jobs:
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@e99025eb970cfa124b8284a35463d87426917478 # 2026.09.28.1
 
+      - name: Install dependencies
+        run: brew bundle install --file=.Brewfile --verbose
+
       - name: Set up git
         id: git_setup
         uses: Homebrew/actions/git-user-config@e99025eb970cfa124b8284a35463d87426917478 # 2026.09.28.1
