@@ -45,25 +45,16 @@ then
 fi
 
 # Check if the dependencies required in this repository command can be executed.
-#
-# Input:
-# 1. The dependency to be satisfied.
-#
-function _check_dependency()
-{
-  if ! command -v "$1" > /dev/null 2>&1
-  then
-    echo "::error::Missing dependency: \`$1\`." \
-      "Please, install it by running \`brew install $1\`" \
-      "and ensure it is added to your \`PATH\`." >&2
-    exit 1
-  fi
-}
-
-# Get list of dependencies from Brewfile.
-mapfile -t deps < <(brew bundle list --file=.Brewfile)
+mapfile -t deps < .dependencies
 
 for dep in "${deps[@]}"
 do
-  _check_dependency "${dep}"
+  if ! command -v "${dep}" > /dev/null 2>&1
+  then
+    formula="$(brew which-formula "${dep}")"
+    echo "::error::Missing dependency: \`${dep}\`." \
+      "Please, install it by running \`brew install ${formula}\`" \
+      "and ensure it is added to your \`PATH\`." >&2
+    exit 1
+  fi
 done
