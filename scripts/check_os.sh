@@ -2,8 +2,8 @@
 # Check if all the formulae/casks from the provided tap are developed for Linux
 # only.
 #
-# Input:
-# 1. The name of the tap.
+# Environment variables:
+# - `TAP_NAME`: The name of the tap.
 #
 
 source "$(dirname "$0")"/_env.sh
@@ -13,8 +13,8 @@ source "$(dirname "$0")"/_functions.sh
 linux_only=true # Are all the formulae/taps developed for Linux only?
 
 # Get formulae and casks from the tap.
-mapfile -t formulae < <(formulae_from_tap "$1")
-mapfile -t casks < <(casks_from_tap "$1")
+mapfile -t formulae < <(formulae_from_tap)
+mapfile -t casks < <(casks_from_tap)
 
 # Check formulae.
 echo "==> Checking formulae..."
