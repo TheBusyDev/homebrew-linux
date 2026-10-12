@@ -1,6 +1,6 @@
 # Install project dependencies.
 brew "gh"
 brew "jq"
-brew "diff"
+brew "diffutils"
 brew "shfmt"
 brew "shellcheck"
