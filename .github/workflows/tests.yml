@@ -13,11 +13,8 @@ defaults:
     shell: bash -xeuo pipefail {0}
 
 jobs:
-  test-bot:
+  tests:
     runs-on: ubuntu-24.04
-    container:
-      image: ghcr.io/homebrew/brew:main
-      options: --privileged
     permissions:
       actions: read
       checks: read
@@ -28,8 +25,6 @@ jobs:
       - name: Set up Homebrew
         id: set-up-homebrew
         uses: Homebrew/actions/setup-homebrew@e99025eb970cfa124b8284a35463d87426917478 # 2026.09.28.1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check style of the tap
         env:
