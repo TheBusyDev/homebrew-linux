@@ -13,7 +13,8 @@
 #
 
 # Include guard.
-if [[ -n "${__ENV_SH}" ]]; then
+if [[ -n "${__ENV_SH}" ]]
+then
   return 0
 fi
 export __ENV_SH="1"
@@ -37,7 +38,8 @@ cd "$(dirname "$0")"/.. || exit 1
 function _check_command() {
   local cmd="$1"
 
-  if ! command -v "${cmd}" > /dev/null 2>&1; then
+  if ! command -v "${cmd}" > /dev/null 2>&1
+  then
     echo "Missing dependency: \`${cmd}\`." \
       "Please, install it by running \`brew install ${cmd}\`" \
       "and ensure it is added to your \`PATH\`." >&2

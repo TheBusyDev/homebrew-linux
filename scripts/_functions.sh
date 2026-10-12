@@ -3,7 +3,8 @@
 #
 
 # Include guard.
-if [[ -n "${__FUNCTIONS_SH}" ]]; then
+if [[ -n "${__FUNCTIONS_SH}" ]]
+then
   return 0
 fi
 export __FUNCTIONS_SH="1"
@@ -268,7 +269,8 @@ function _formula_or_cask_depends_on_linux_or_macos() {
   local depends_on
   depends_on="$(_json_from_formula_or_cask "$1" "$2" | jq -r ".depends_on.$3")"
 
-  if [[ "${depends_on}" != "null" ]]; then
+  if [[ "${depends_on}" != "null" ]]
+  then
     echo "true"
   else
     echo "false"

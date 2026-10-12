@@ -30,7 +30,8 @@ mapfile -t casks < <(casks_from_tap "$1")
 # Update formulae from the given tap.
 echo "==> Updating formulae..."
 
-for formula in "${formulae[@]}"; do
+for formula in "${formulae[@]}"
+do
   brew_bump_formula "${formula}"
   pr_numbers+=":$(get_latest_pr_number "${PR_LABEL}")"
 done
@@ -38,7 +39,8 @@ done
 # Update casks from the given tap.
 echo "==> Updating casks..."
 
-for cask in "${casks[@]}"; do
+for cask in "${casks[@]}"
+do
   brew_bump_cask "${cask}"
   pr_numbers+=":$(get_latest_pr_number "${PR_LABEL}")"
 done
