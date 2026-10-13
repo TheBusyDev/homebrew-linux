@@ -40,7 +40,7 @@ OLD_PWD="${PWD}"
 source "$(dirname "$0")"/_env.sh
 cd "${OLD_PWD}" || exit 1
 
-onoe()
+function onoe()
 {
   echo "$*" >&2
 }
@@ -48,7 +48,7 @@ onoe()
 DIFF="diff"
 SHFMT="shfmt"
 
-DIFF_ARGS=("-d" "-C" "1" "--color")
+DIFF_ARGS=("--minimal" "--context=1" "--color")
 SHFMT_ARGS=()
 INPLACE=''
 while [[ $# -gt 0 ]]
@@ -113,7 +113,7 @@ fi
 ###
 
 # Check for specific patterns and prompt messages if detected
-no_forbidden_pattern()
+function no_forbidden_pattern()
 {
   local file="$1"
   local tempfile="$2"
@@ -144,7 +144,7 @@ no_forbidden_pattern()
 #
 # Replace tabs with 2 spaces instead
 #
-no_tabs()
+function no_tabs()
 {
   local file="$1"
   local tempfile="$2"
@@ -167,7 +167,7 @@ no_tabs()
 #   for var in "${ARRAY[@]}"
 #   do
 #
-no_multiline_for_statements()
+function no_multiline_for_statements()
 {
   local file="$1"
   local tempfile="$2"
@@ -201,7 +201,7 @@ EOMSG
 #     ...
 #   done < <(command)
 #
-no_IFS_newline()
+function no_IFS_newline()
 {
   local file="$1"
   local tempfile="$2"
@@ -224,7 +224,7 @@ EOMSG
 }
 
 # Combine all forbidden styles
-no_forbidden_styles()
+function no_forbidden_styles()
 {
   local file="$1"
   local tempfile="$2"
@@ -245,7 +245,7 @@ no_forbidden_styles()
 #     -n ... ]]                     -n ... ]]
 #   then                      then
 #
-align_multiline_if_condition()
+function align_multiline_if_condition()
 {
   local line
   local lastline=''
@@ -255,7 +255,7 @@ align_multiline_if_condition()
   local multiline_if_then_end_regex='^(.*)\; (then( *#.*)?)$'
   local within_test_regex='^( *)(((! )?-[fdLrwxeszn] )|([^\[]+ (==|!=|=~) ))'
 
-  trim()
+  function trim()
   {
     [[ "$1" =~ [^[:space:]](.*[^[:space:]])? ]]
     printf "%s" "${BASH_REMATCH[0]}"
@@ -308,7 +308,7 @@ align_multiline_if_condition()
 #   for var in ...; do        for var in ...
 #                             do
 #
-wrap_then_do()
+function wrap_then_do()
 {
   local file="$1"
   local tempfile="$2"
@@ -359,13 +359,34 @@ wrap_then_do()
   printf "%s\n" "${processed[@]}" > "${tempfile}"
 }
 
+# Wrap function brackets and add `function` keyword before a function.
+# before:                   after:
+#   my_fun() {                function my_fun()
+#     commands...             {
+#   }                           commands...
+#                             }
+#
+# before:                   after:
+#   function my_fun() {       function my_fun()
+#     commands...             {
+#   }                           commands...
+#                             }
+#
+function wrap_function()
+{
+  local file="$1"
+  local tempfile="$2"
+  local singleline_fun_regex='(^ *)(function )?([A-Za-z_][A-Za-z0-9_]*\(\)) \{$'
+  sed -i -E "s/${singleline_fun_regex}/\1function \3\n\1\{/" "${tempfile}"
+}
+
 # Return codes:
 #   0: success, good styles
 #   1: file system permission errors
 #   2: shfmt failed
 #   3: forbidden styles detected
 #   4: bad styles but can be auto-fixed
-format()
+function format()
 {
   local file="$1"
   local tempfile
@@ -411,6 +432,7 @@ format()
 
   # Tweak it with custom shell script styles
   wrap_then_do "${file}" "${tempfile}"
+  wrap_function "${file}" "${tempfile}"
 
   if [[ -n "${STDIN}" ]]
   then
