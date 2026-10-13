@@ -6,6 +6,7 @@
 # Environment variables:
 # - `TAP_NAME`: The name of the tap.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
 # - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
@@ -21,9 +22,9 @@ fi
 export __ENV_SH="1"
 
 # Environment variables.
-# TODO: add cooldown for gh
 export TAP_NAME="${TAP_NAME:-"TheBusyDev/tap"}"
 export GH_TOKEN="${GH_TOKEN:-}"
+export GH_COOLDOWN="${GH_COOLDOWN:-10}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
 export COMMITTER_USERNAME="${COMMITTER_USERNAME:-"TheBusyDev"}"
 export COMMITTER_EMAIL="${COMMITTER_EMAIL:-}"
