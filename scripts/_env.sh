@@ -21,6 +21,7 @@ fi
 export __ENV_SH="1"
 
 # Environment variables.
+# TODO: add cooldown for gh
 export TAP_NAME="${TAP_NAME:-"TheBusyDev/tap"}"
 export GH_TOKEN="${GH_TOKEN:-}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
@@ -60,7 +61,7 @@ do
       error_msg+=" and ensure it is added to your \`PATH\`."
     fi
 
-    echo "${error_msg}" >&2 # TODO: create echo_error for that.
+    echo "${error_msg}" >&2
     exit 1
   fi
 done

@@ -28,7 +28,7 @@ do
   if ${depends_on_linux}
   then
     echo "::error file=${file}::Linux is not the target OS for this formula." \
-      "Add \`depends_on :linux\` stanza."
+      "Add \`depends_on :linux\` stanza." >&2
     linux_only=false
   fi
 
@@ -36,7 +36,7 @@ do
   then
     echo "::error file=${file}::This repository hosts Linux formulae only." \
       "Cannot include formulae developed for MacOS." \
-      "Remove \`depends_on :macos\` stanza."
+      "Remove \`depends_on :macos\` stanza." >&2
     linux_only=false
   fi
 done
@@ -53,7 +53,7 @@ do
   if ${depends_on_linux}
   then
     echo "::error file=${file}::Linux is not the target OS for this cask." \
-      "Add \`depends_on :linux\` stanza."
+      "Add \`depends_on :linux\` stanza." >&2
     linux_only=false
   fi
 
@@ -61,7 +61,7 @@ do
   then
     echo "::error file=${file}::This repository hosts Linux casks only." \
       "Cannot include casks developed for MacOS." \
-      "Remove \`depends_on :macos\` stanza."
+      "Remove \`depends_on :macos\` stanza." >&2
     linux_only=false
   fi
 done

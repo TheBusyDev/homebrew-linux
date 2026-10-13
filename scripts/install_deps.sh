@@ -10,7 +10,7 @@ do
   formula="$(brew which-formula "${dep}")" \
     && brew install --formula "${formula}" \
     || {
-      echo "::error::Cannot install dependency \`${dep}\`."
+      echo "::error::Cannot install dependency \`${dep}\`." >&2
       exit 1
     }
 done

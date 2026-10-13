@@ -31,7 +31,7 @@ do
 
   if [[ ! "${pr_nr}" =~ ^[0-9]+$ ]]
   then
-    echo "::error::\"${pr_nr}\" is not a valid PR number."
+    echo "::error::\"${pr_nr}\" is not a valid PR number." >&2
     success=false
     continue
   fi
@@ -47,7 +47,7 @@ do
   # Check the PR state.
   if [[ "${pr_state}" != "open" ]]
   then
-    echo "::error::The pull request #${pr_nr} is not open."
+    echo "::error::The pull request #${pr_nr} is not open." >&2
     safe_to_approve=false
   fi
 
@@ -61,7 +61,7 @@ do
     # Check if not only formula/cask files are modified.
     if [[ ! "${file}" =~ ^(Formula|Casks)/.*\.rb$ ]]
     then
-      echo "::error file=${file}::This PR does not modify \`.rb\` files only."
+      echo "::error file=${file}::This PR does not modify \`.rb\` files only." >&2
       safe_to_approve=false
       continue
     fi
@@ -83,8 +83,8 @@ do
 
     if [[ -n "${unauthorized_changes}" ]]
     then
-      echo "::error file=${file}::Unauthorized changes found:"
-      echo "${unauthorized_changes}"
+      echo "::error file=${file}::Unauthorized changes found:" >&2
+      echo -e "${unauthorized_changes}" >&2
       safe_to_approve=false
       continue
     fi
@@ -107,8 +107,8 @@ failed_pr_urls="${failed_pr_urls#\\n}"
 
 if [[ -n "${failed_pr_urls}" ]]
 then
-  echo "::error::The following PRs require manual approval:"
-  echo -e "${failed_pr_urls}"
+  echo "::error::The following PRs require manual approval:" >&2
+  echo -e "${failed_pr_urls}" >&2
 fi
 
 if ! ${success}
