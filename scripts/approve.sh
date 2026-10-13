@@ -9,100 +9,114 @@
 #
 # TODO: add criteria list to README.md
 
-source ./scripts/_functions.sh
+source "$(dirname "$0")"/_env.sh
+source "$(dirname "$0")"/_functions.sh
 
 # Useful variables.
 # Match `version` entries in `.rb` files.
 VERSION_REGEX='^[+-]\s*version\s+".*"$'
 # Match `sha256` entries in `.rb` files.
-SHA256_REGEX='^[+-]\s*sha256\s+("[a-z0-9]+"|arm:\s+"[a-z0-9]+",\\n[+-]\s*intel:\s+"[a-z0-9]+")$'
+SHA256_REGEX='^[+-]\s*sha256(\s+(arm|arm64|intel|x86_64)_linux:)?\s+"[a-z0-9]+"$'
 
 # Check for every PR in `pr_numbers`.
 mapfile -d ":" -t pr_numbers < <(echo -n "$1")
 failed_pr_urls="" # Newline-separated list of URLs for non-approved pull requests.
 success=true      # Have all the approvals run successfully?
 
-git fetch # Sync changes from remote.
+git fetch origin # Sync changes from remote.
 
-for pr_nr in "${pr_numbers[@]}"; do
-  echo "==> Checking pull request #$pr_nr..."
+for pr_nr in "${pr_numbers[@]}"
+do
+  echo "==> Checking pull request #${pr_nr}..."
 
-  if [[ ! "$pr_nr" =~ ^[0-9]+$ ]]; then
-    echo "::error::\"$pr_nr\" is not a valid PR number."
+  if [[ ! "${pr_nr}" =~ ^[0-9]+$ ]]
+  then
+    echo "::error::\"${pr_nr}\" is not a valid PR number." >&2
     success=false
     continue
   fi
 
   # Get relevant info from PR.
-  pr_branch="$(get_pr_branch "$pr_nr")"
-  pr_state="$(get_pr_state "$pr_nr")"
-  pr_url="$(get_pr_url "$pr_nr")"
+  pr_branch="$(get_pr_branch "${pr_nr}")"
+  pr_state="$(get_pr_state "${pr_nr}")"
+  pr_url="$(get_pr_url "${pr_nr}")"
 
   # Start checks on the PR.
   safe_to_approve=true
 
   # Check the PR state.
-  if [[ "$pr_state" != "open" ]]; then
-    echo "::error::The pull request #$pr_nr is not open."
+  if [[ "${pr_state}" != "open" ]]
+  then
+    echo "::error::The pull request #${pr_nr} is not open." >&2
     safe_to_approve=false
   fi
 
   # Get the changed files and check them.
-  mapfile -t pr_files < <(get_pr_filepaths "$pr_nr")
+  mapfile -t pr_files < <(get_pr_filepaths "${pr_nr}")
 
-  for file in "${pr_files[@]}"; do
-    echo "==> Checking file \`$file\` from pull request #$pr_nr..."
+  for file in "${pr_files[@]}"
+  do
+    echo "==> Checking file \`${file}\` from pull request #${pr_nr}..."
 
     # Check if not only formula/cask files are modified.
-    if [[ ! "$file" =~ ^(Formula|Casks)/.*\.rb$ ]]; then
-      echo "::error file=$file::This PR does not modify \`.rb\` files only."
+    if [[ ! "${file}" =~ ^(Formula|Casks)/.*\.rb$ ]]
+    then
+      echo "::error file=${file}::This PR does not modify \`.rb\` files only." >&2
       safe_to_approve=false
       continue
     fi
 
     # Check difference between files modified in PR and the ones on default branch.
-    all_changes="$(git diff -U0 "origin/HEAD...origin/$pr_branch" -- "$file" \
+    all_changes="$(git diff -U0 "origin/HEAD...origin/${pr_branch}" -- "${file}" \
       | grep "^[+-]" \
       | grep -v "^+++" \
       | grep -v "^---" \
       || true)"
 
-    echo "Changes between \`$pr_branch\` and default branch:"
-    echo "$all_changes"
+    if [[ -n "${all_changes}" ]]
+    then
+      echo "Changes between \`${pr_branch}\` and default branch:"
+      echo "${all_changes}"
 
-    unauthorized_changes="$(echo "$all_changes" \
-      | grep -vE "$VERSION_REGEX" \
-      | grep -vE "$SHA256_REGEX" \
-      || true)"
+      unauthorized_changes="$(echo "${all_changes}" \
+        | grep -vE "${VERSION_REGEX}" \
+        | grep -vE "${SHA256_REGEX}" \
+        || true)"
 
-    if [[ -n "$unauthorized_changes" ]]; then
-      echo "::error file=$file::Unauthorized changes found:"
-      echo "$unauthorized_changes"
-      safe_to_approve=false
-      continue
+      if [[ -n "${unauthorized_changes}" ]]
+      then
+        echo "::error file=${file}::Unauthorized changes found:" >&2
+        echo -e "${unauthorized_changes}" >&2
+        safe_to_approve=false
+        continue
+      fi
     fi
   done
 
-  if ! $safe_to_approve; then
+  if ! ${safe_to_approve}
+  then
     # Append the PR URL to the failed ones.
-    failed_pr_urls+="\n$pr_url"
+    failed_pr_urls+="\n${pr_url}"
     success=false
   else
     # Finally, approve the PR.
-    echo "==> Approving pull request #$pr_nr..."
-    gh pr review "$pr_nr" --approve
+    echo "==> Approving pull request #${pr_nr}..."
+    gh pr review "${pr_nr}" --approve
+    gh pr merge "${pr_nr}" --auto
   fi
 done
 
 failed_pr_urls="${failed_pr_urls%\\n}"
 failed_pr_urls="${failed_pr_urls#\\n}"
 
-if [[ -n "$failed_pr_urls" ]]; then
-  echo "::error::The following PRs require manual approval:"
-  echo -e "$failed_pr_urls"
+if [[ -n "${failed_pr_urls}" ]]
+then
+  echo "::error::The following PRs require manual approval:" >&2
+  echo -e "${failed_pr_urls}" >&2
 fi
 
-if ! $success; then
+if ! ${success}
+then
   exit 1
 fi
 
