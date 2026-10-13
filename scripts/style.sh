@@ -54,9 +54,9 @@ else
   ./scripts/_shfmt.sh "${scripts[@]}"
 fi
 
-echo "==> Auditing formulae.."
-brew audit --strict --formulae "${formulae[@]}"
-echo "==> Auditing casks.."
-brew audit --strict --casks "${casks[@]}"
+echo "==> Auditing formulae..."
+brew audit --formulae --strict --online "${formulae[@]}"
+echo "==> Auditing casks..."
+brew audit --casks --strict --online "${casks[@]}"
 
 exit 0
