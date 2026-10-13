@@ -71,9 +71,9 @@ do
   fi
   if [[ "${arg}" =~ ^-h|--help$ ]]
   then
-    echo "This is a custom wrapper to \`shfmt\`".
-    echo "The input arguments are the same as the ones used by \`shfmt\`".
-    echo "You will find below the original help of \`shfmt\`."
+    echo "This is a custom wrapper to \`${SHFMT}\`".
+    echo "The input arguments are the same as the ones used by \`${SHFMT}\`".
+    echo "You will find below the original help of \`${SHFMT}\`."
     echo "---------------------------------------------------------------------"
     "${SHFMT}" --help
     exit 0
@@ -395,13 +395,13 @@ format()
     fi
     if ! "${SHFMT}" -w "${SHFMT_ARGS[@]}" "${tempfile}"
     then
-      onoe "Failed to run \`shfmt\` for file \"${file}\"."
+      onoe "Failed to run \`${SHFMT}\` for file \"${file}\"."
       return 2
     fi
   else
     if ! "${SHFMT}" "${SHFMT_ARGS[@]}" > "${tempfile}"
     then
-      onoe "Failed to run \`shfmt\` for file \"${file}\"."
+      onoe "Failed to run \`${SHFMT}\` for file \"${file}\"."
       return 2
     fi
   fi
@@ -459,7 +459,7 @@ do
   then
     case "${retcode}" in
       1) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 1 (permission error)." ;;
-      2) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 2 (\`shfmt\` failed)." ;;
+      2) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 2 (\`${SHFMT}\` failed)." ;;
       3) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 3 (forbidden styles detected)." ;;
       4) onoe "${0##*/}: Fixable bad styles detected in file \"${file}\"." ;;
       *) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code ${retcode}." ;;
