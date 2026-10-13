@@ -285,11 +285,11 @@ function cask_source_file()
 #
 function _formula_depends_on_linux_or_macos()
 {
-  local requirements
-  mapfile -t requirements < <(_json_from_formula_or_cask "$1" "formula" \
+  local reqs req
+  mapfile -t reqs < <(_json_from_formula_or_cask "$1" "formula" \
     | jq -r ".requirements[].name")
 
-  for req in "${requirements[@]}"
+  for req in "${reqs[@]}"
   do
     if [[ "${req}" == "$2" ]]
     then
