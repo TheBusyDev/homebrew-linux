@@ -23,7 +23,6 @@ source "$(dirname "$0")"/_env.sh
 #
 function get_latest_pr_number()
 {
-  sleep 6 # Cooldown to detect the latest PR correctly.
   gh pr list --author "${COMMITTER_USERNAME}" --label "${PR_LABEL}" --limit 1 \
     --json number | jq ".[0].number"
 }
@@ -166,6 +165,7 @@ function casks_from_tap()
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
 # - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
@@ -175,6 +175,7 @@ function casks_from_tap()
 function _brew_bump_formula_or_cask()
 {
   brew bump "$1" --"$2" --full-name --open-pr --no-fork
+  sleep "${GH_COOLDOWN}"
   gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}"
 }
 
@@ -182,6 +183,7 @@ function _brew_bump_formula_or_cask()
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
 # - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
@@ -196,6 +198,7 @@ function brew_bump_formula()
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
 # - `PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:

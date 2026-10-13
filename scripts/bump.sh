@@ -4,6 +4,7 @@
 # Environment variables:
 # - `TAP_NAME`: The name of the tap to be updated.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
 # - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
@@ -31,6 +32,7 @@ echo "==> Updating formulae..."
 for formula in "${formulae[@]}"
 do
   brew_bump_formula "${formula}"
+  sleep "${GH_COOLDOWN}"
   pr_numbers+=":$(get_latest_pr_number)"
 done
 
@@ -40,6 +42,7 @@ echo "==> Updating casks..."
 for cask in "${casks[@]}"
 do
   brew_bump_cask "${cask}"
+  sleep "${GH_COOLDOWN}"
   pr_numbers+=":$(get_latest_pr_number)"
 done
 
