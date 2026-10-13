@@ -73,20 +73,23 @@ do
       | grep -v "^---" \
       || true)"
 
-    echo "Changes between \`${pr_branch}\` and default branch:"
-    echo "${all_changes}"
-
-    unauthorized_changes="$(echo "${all_changes}" \
-      | grep -vE "${VERSION_REGEX}" \
-      | grep -vE "${SHA256_REGEX}" \
-      || true)"
-
-    if [[ -n "${unauthorized_changes}" ]]
+    if [[ -n "${all_changes}" ]]
     then
-      echo "::error file=${file}::Unauthorized changes found:" >&2
-      echo -e "${unauthorized_changes}" >&2
-      safe_to_approve=false
-      continue
+      echo "Changes between \`${pr_branch}\` and default branch:"
+      echo "${all_changes}"
+
+      unauthorized_changes="$(echo "${all_changes}" \
+        | grep -vE "${VERSION_REGEX}" \
+        | grep -vE "${SHA256_REGEX}" \
+        || true)"
+
+      if [[ -n "${unauthorized_changes}" ]]
+      then
+        echo "::error file=${file}::Unauthorized changes found:" >&2
+        echo -e "${unauthorized_changes}" >&2
+        safe_to_approve=false
+        continue
+      fi
     fi
   done
 
@@ -99,6 +102,7 @@ do
     # Finally, approve the PR.
     echo "==> Approving pull request #${pr_nr}..."
     gh pr review "${pr_nr}" --approve
+    gh pr merge "${pr_nr}" --auto
   fi
 done
 
