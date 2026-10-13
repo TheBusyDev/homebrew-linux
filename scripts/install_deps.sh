@@ -8,7 +8,7 @@ for dep in "${deps[@]}"
 do
   # shellcheck disable=SC2015
   formula="$(brew which-formula "${dep}")" \
-    && brew install --formula "${formula}" \
+    && brew install --formula -y "${formula}" \
     || {
       echo "::error::Cannot install dependency \`${dep}\`." >&2
       exit 1
