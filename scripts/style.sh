@@ -55,8 +55,8 @@ else
 fi
 
 echo "==> Auditing formulae..."
-brew audit --formulae --strict --online "${formulae[@]}"
+brew audit --formulae --strict "${formulae[@]}"
 echo "==> Auditing casks..."
-brew audit --casks --strict --online "${casks[@]}"
+brew audit --casks --strict "${casks[@]}"
 
 exit 0
