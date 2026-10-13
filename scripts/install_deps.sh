@@ -1,8 +1,8 @@
 #!/bin/bash
-# Install `brew` dependencies from `.dependencies` file.
+# Install `brew` dependencies from `.deps` file.
 #
 
-mapfile -t deps < "$(dirname "$0")"/../.dependencies
+mapfile -t deps < "$(dirname "$0")"/../.deps
 
 for dep in "${deps[@]}"
 do

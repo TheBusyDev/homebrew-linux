@@ -47,7 +47,7 @@ then
 fi
 
 # Check if the dependencies required in this repository command can be executed.
-mapfile -t deps < .dependencies
+mapfile -t deps < .deps
 
 for dep in "${deps[@]}"
 do
