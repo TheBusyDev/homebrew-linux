@@ -16,7 +16,7 @@ source "$(dirname "$0")"/_functions.sh
 # Match `version` entries in `.rb` files.
 VERSION_REGEX='^[+-]\s*version\s+".*"$'
 # Match `sha256` entries in `.rb` files.
-SHA256_REGEX='^[+-]\s*sha256\s+("[a-z0-9]+"|arm:\s+"[a-z0-9]+",\\n[+-]\s*intel:\s+"[a-z0-9]+")$'
+SHA256_REGEX='^[+-]\s*sha256(\s+(arm|arm64|intel|x86_64)_linux:)?\s+"[a-z0-9]+"$'
 
 # Check for every PR in `pr_numbers`.
 mapfile -d ":" -t pr_numbers < <(echo -n "$1")
