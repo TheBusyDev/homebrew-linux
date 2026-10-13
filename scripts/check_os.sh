@@ -25,7 +25,7 @@ do
   depends_on_linux="$(formula_depends_on_linux "${formula}")"
   depends_on_macos="$(formula_depends_on_macos "${formula}")"
 
-  if ${depends_on_linux}
+  if ! ${depends_on_linux}
   then
     echo "::error file=${file}::Linux is not the target OS for this formula." \
       "Add \`depends_on :linux\` stanza." >&2
@@ -50,7 +50,7 @@ do
   depends_on_linux="$(cask_depends_on_linux "${cask}")"
   depends_on_macos="$(cask_depends_on_macos "${cask}")"
 
-  if ${depends_on_linux}
+  if ! ${depends_on_linux}
   then
     echo "::error file=${file}::Linux is not the target OS for this cask." \
       "Add \`depends_on :linux\` stanza." >&2
