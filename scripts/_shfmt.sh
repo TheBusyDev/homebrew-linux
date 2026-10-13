@@ -36,7 +36,9 @@
 #   OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
+OLD_PWD="${PWD}"
 source "$(dirname "$0")"/_env.sh
+cd "${OLD_PWD}" || exit 1
 
 onoe()
 {
@@ -74,7 +76,7 @@ do
     echo "You will find below the original help of \`shfmt\`."
     echo "---------------------------------------------------------------------"
     "${SHFMT}" --help
-    exit 1
+    exit 0
   fi
   SHFMT_ARGS+=("${arg}")
   shift
