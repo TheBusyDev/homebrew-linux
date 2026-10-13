@@ -1,5 +1,6 @@
 #!/bin/bash
-# Install `brew` dependencies from `.dependencies` file.
+# Install dependencies from `.dependencies` file and enable developer mode for
+# `brew`.
 #
 
 mapfile -t deps < "$(dirname "$0")"/../.dependencies
@@ -14,5 +15,7 @@ do
       exit 1
     }
 done
+
+brew developer on # Enable developer mode for `brew`.
 
 exit 0
