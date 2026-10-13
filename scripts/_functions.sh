@@ -274,27 +274,31 @@ function cask_source_file()
   _formula_or_cask_source_file "$1" "cask"
 }
 
-# Check if the selected formula/cask depends on Linux/MacOS.
+# Check if the selected formula depends on Linux/MacOS.
 #
 # Input:
-# 1. The fully-qualified name of the formula/cask.
-# 2. Literal string: "formula" or "cask".
-# 3. Literal string: "linux" or "macos".
+# 1. The fully-qualified name of the formula.
+# 2. Literal string: "linux" or "macos".
 #
 # Output:
 # Write "true" to stdout if depending on Linux/MacOS. "false" otherwise.
 #
-function _formula_or_cask_depends_on_linux_or_macos()
+function _formula_depends_on_linux_or_macos()
 {
-  local depends_on
-  depends_on="$(_json_from_formula_or_cask "$1" "$2" | jq -r ".depends_on.$3")"
+  local requirements
+  mapfile -t requirements < <(_json_from_formula_or_cask "$1" "formula" \
+    | jq -r ".requirements[].name")
 
-  if [[ "${depends_on}" != "null" ]]
-  then
-    echo "true"
-  else
-    echo "false"
-  fi
+  for req in "${requirements[@]}"
+  do
+    if [[ "${req}" == "$2" ]]
+    then
+      echo "true"
+      return 0
+    fi
+  done
+
+  echo "false"
 }
 
 # Check if the selected formula depends on Linux.
@@ -307,7 +311,7 @@ function _formula_or_cask_depends_on_linux_or_macos()
 #
 function formula_depends_on_linux()
 {
-  _formula_or_cask_depends_on_linux_or_macos "$1" "formula" "linux"
+  _formula_depends_on_linux_or_macos "$1" "linux"
 }
 
 # Check if the selected formula depends on MacOS.
@@ -320,7 +324,31 @@ function formula_depends_on_linux()
 #
 function formula_depends_on_macos()
 {
-  _formula_or_cask_depends_on_linux_or_macos "$1" "formula" "macos"
+  _formula_depends_on_linux_or_macos "$1" "macos"
+}
+
+# Check if the selected cask depends on Linux/MacOS.
+#
+# Input:
+# 1. The fully-qualified name of the cask.
+# 2. Literal string: "linux" or "macos".
+#
+# Output:
+# Write "true" to stdout if depending on Linux/MacOS. "false" otherwise.
+#
+function _cask_depends_on_linux_or_macos()
+{
+
+  local depends_on
+  depends_on="$(_json_from_formula_or_cask "$1" "cask" \
+    | jq -r ".depends_on.$2")"
+
+  if [[ "${depends_on}" != "null" ]]
+  then
+    echo "true"
+  else
+    echo "false"
+  fi
 }
 
 # Check if the selected cask depends on Linux.
@@ -333,7 +361,7 @@ function formula_depends_on_macos()
 #
 function cask_depends_on_linux()
 {
-  _formula_or_cask_depends_on_linux_or_macos "$1" "cask" "linux"
+  _cask_depends_on_linux_or_macos "$1" "linux"
 }
 
 # Check if the selected cask depends on MacOS.
@@ -346,5 +374,5 @@ function cask_depends_on_linux()
 #
 function cask_depends_on_macos()
 {
-  _formula_or_cask_depends_on_linux_or_macos "$1" "cask" "macos"
+  _cask_depends_on_linux_or_macos "$1" "macos"
 }
