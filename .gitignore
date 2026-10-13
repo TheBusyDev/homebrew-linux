@@ -1,5 +1,6 @@
 .vscode
 *.log
+*.tmp
 steps_output.txt
 
 *.gem
