@@ -1,3 +1,7 @@
+.vscode
+*.log
+steps_output.txt
+
 *.gem
 *.rbc
 /.config
