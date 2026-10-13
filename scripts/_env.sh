@@ -51,10 +51,18 @@ for dep in "${deps[@]}"
 do
   if ! command -v "${dep}" > /dev/null 2>&1
   then
-    formula="$(brew which-formula "${dep}")"
-    echo "::error::Missing dependency: \`${dep}\`." \
-      "Please, install it by running \`brew install ${formula}\`" \
-      "and ensure it is added to your \`PATH\`." >&2
+    formula="$(brew which-formula "${dep}" || echo "")"
+    error_msg="::error::Missing dependency: \`${dep}\`."
+
+    if [[ -n "${formula}" ]]
+    then
+      error_msg+=" Please, install it by running \`brew install ${formula}\`"
+      error_msg+=" and ensure it is added to your \`PATH\`."
+    fi
+
+    echo "${error_msg}" >&2 # TODO: create echo_error for that.
     exit 1
   fi
 done
+
+unset deps dep formula error_msg
