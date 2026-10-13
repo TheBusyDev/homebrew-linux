@@ -49,6 +49,6 @@ done
 # Export PR numbers.
 pr_numbers="${pr_numbers%:}"
 pr_numbers="${pr_numbers#:}"
-echo "pr_numbers=${pr_numbers}" >> "${GITHUB_OUTPUT}"
+echo "pr-numbers=${pr_numbers}" >> "${GITHUB_OUTPUT}"
 
 exit 0
