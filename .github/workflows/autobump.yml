@@ -33,7 +33,7 @@ jobs:
         run: ./scripts/install_deps.sh
 
       - name: Set up git
-        id: git_setup
+        id: git-setup
         uses: Homebrew/actions/git-user-config@e99025eb970cfa124b8284a35463d87426917478 # 2026.09.28.1
         with:
           username: ${{ env.COMMITTER_USERNAME }}
@@ -44,13 +44,12 @@ jobs:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
           GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
           GH_COOLDOWN: 10
-          COMMITTER_NAME: ${{ steps.git_setup.outputs.name }}
-          COMMITTER_EMAIL: ${{ steps.git_setup.outputs.email }}
+          COMMITTER_NAME: ${{ steps.git-setup.outputs.name }}
+          COMMITTER_EMAIL: ${{ steps.git-setup.outputs.email }}
           PR_LABEL: autobump
         run: ./scripts/bump.sh
 
       - name: Auto-approve PRs safely
         env:
-          PR_NUMBERS: ${{ steps.brew-bump.outputs.pr_numbers }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./scripts/approve.sh "$PR_NUMBERS"
+        run: ./scripts/approve.sh "$${{ steps.brew-bump.outputs.pr-numbers }}"
