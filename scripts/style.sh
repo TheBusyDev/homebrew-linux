@@ -14,8 +14,7 @@ source "$(dirname "$0")"/_functions.sh
 
 mapfile -t formulae < <(formulae_from_tap)
 mapfile -t casks < <(casks_from_tap)
-shopt -s nullglob
-scripts=(./scripts/*.sh)
+mapfile -t scripts < <(find ./scripts -name "*.sh" -type f)
 
 if ((${#formulae[@]} == 0))
 then
