@@ -338,7 +338,6 @@ function formula_depends_on_macos()
 #
 function _cask_depends_on_linux_or_macos()
 {
-
   local depends_on
   depends_on="$(_json_from_formula_or_cask "$1" "cask" \
     | jq -r ".depends_on.$2")"
