@@ -9,22 +9,6 @@ export __FUNCTIONS_SH="1"
 
 source "$(dirname "$0")"/_env.sh
 
-# Obtain the number of the latest pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-# - `COMMITTER_USERNAME`: The username of the committer.
-# - `PR_LABEL`: Pull request label (possibly empty).
-#
-# Output:
-# Writes the number of the pull request to stdout.
-#
-function get_latest_pr_number()
-{
-  gh pr list --author "${COMMITTER_USERNAME}" --label "${PR_LABEL}" --limit 1 \
-    --json number | jq ".[0].number"
-}
-
 # Obtain a certain property of the latest pull request.
 #
 # Environment variables:
@@ -170,15 +154,37 @@ function casks_from_tap()
 # 1. The fully-qualified name of the formula/cask.
 # 2. Literal string: "formula" or "cask".
 #
+# Output:
+# Writes the number of the newly created pull request to stdout (empty if no
+# pull request has been created).
+# Writes logging info from `brew bump` and `gh` to stderr.
+#
 function _brew_bump_formula_or_cask()
 {
-  brew bump "$1" --"$2" --full-name --open-pr --no-fork \
-    && sleep "${GH_COOLDOWN}" \
-    && gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}" \
+  # Bump and save output to a temporary file.
+  tmp_file="$(mktemp)"
+  trap 'rm -f "${tmp_file}" 2>/dev/null' RETURN EXIT
+
+  brew bump "$1" --"$2" --full-name --open-pr --no-fork 2>&1 \
+    | tee "${tmp_file}" >&2 \
     || {
       git reset --hard # Reset changed files.
-      return 1
+      return $?
     }
+
+  # Retrieve PR number from log file.
+  pr_url="$(grep -oE "^https://github\.com/[^/]+/[^/]+/pull/[[:digit:]]+$" \
+    | tail -n1 || true)"
+  pr_nr="${pr_url##*/}"
+
+  if [[ -n "${pr_nr}" ]]
+  then
+    # Update PR label.
+    sleep "${GH_COOLDOWN}"
+    gh pr edit "${pr_nr}" --add-label "${PR_LABEL}" >&2
+  fi
+
+  echo "${pr_nr}"
 }
 
 # Bump a formula, creating a new pull request with the selected label.
@@ -190,6 +196,11 @@ function _brew_bump_formula_or_cask()
 #
 # Input:
 # 1. The fully-qualified name of the formula.
+#
+# Output:
+# Writes the number of the newly created pull request to stdout (empty if no
+# pull request has been created).
+# Writes logging info from `brew bump` and `gh` to stderr.
 #
 function brew_bump_formula()
 {
@@ -205,6 +216,11 @@ function brew_bump_formula()
 #
 # Input:
 # 1. The fully-qualified name of the cask.
+#
+# Output:
+# Writes the number of the newly created pull request to stdout (empty if no
+# pull request has been created).
+# Writes logging info from `brew bump` and `gh` to stderr.
 #
 function brew_bump_cask()
 {
