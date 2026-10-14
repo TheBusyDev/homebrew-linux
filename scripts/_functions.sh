@@ -3,10 +3,7 @@
 #
 
 # Include guard.
-if [[ -n "${__FUNCTIONS_SH}" ]]
-then
-  return 0
-fi
+[[ -n "${__FUNCTIONS_SH}" ]] && return 0
 export __FUNCTIONS_SH="1"
 
 source "$(dirname "$0")"/_env.sh
