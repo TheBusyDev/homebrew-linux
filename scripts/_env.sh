@@ -54,7 +54,7 @@ for dep in "${deps[@]}"
 do
   if ! command -v "${dep}" > /dev/null 2>&1
   then
-    formula="$(brew which-formula "${dep}" || echo "")"
+    formula="$(brew which-formula "${dep}" || true)"
     error_msg="::error::Missing dependency: \`${dep}\`."
 
     if [[ -n "${formula}" ]]

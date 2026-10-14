@@ -32,13 +32,12 @@ echo "==> Updating formulae..."
 
 for formula in "${formulae[@]}"
 do
-  brew_bump_formula "${formula}" \
-    && sleep "${GH_COOLDOWN}" \
-    && pr_numbers+=":$(get_latest_pr_number)" \
-    || {
-      echo "::error::Cannot bump the formula \`${formula}\`." >&2
-      all_bumped=false
-    }
+  pr_nr="$(brew_bump_formula "${formula}")" || {
+    echo "::error::Cannot bump the formula \`${formula}\`." >&2
+    all_bumped=false
+  }
+
+  [[ -n "${pr_nr}" ]] && pr_numbers+=":${pr_nr}"
 done
 
 # Update casks from the given tap.
@@ -46,13 +45,12 @@ echo "==> Updating casks..."
 
 for cask in "${casks[@]}"
 do
-  brew_bump_cask "${cask}" \
-    && sleep "${GH_COOLDOWN}" \
-    && pr_numbers+=":$(get_latest_pr_number)" \
-    || {
-      echo "::error::Cannot bump the cask \`${cask}\`." >&2
-      all_bumped=false
-    }
+  pr_nr="$(brew_bump_cask "${cask}")" || {
+    echo "::error::Cannot bump the cask \`${cask}\`." >&2
+    all_bumped=false
+  }
+
+  [[ -n "${pr_nr}" ]] && pr_numbers+=":${pr_nr}"
 done
 
 # Export PR numbers.
