@@ -3,9 +3,8 @@
 #
 
 # Include guard.
-export __FUNCTIONS_SH="${__FUNCTIONS_SH:-}"
-[[ -n "${__FUNCTIONS_SH}" ]] && return 0
-export __FUNCTIONS_SH="1"
+[[ -n "${_FUNCTIONS_SH:-}" ]] && return 0
+readonly _FUNCTIONS_SH=1
 
 source "$(dirname "$0")"/_env.sh
 
@@ -161,6 +160,8 @@ function casks_from_tap()
 #
 function _brew_bump_formula_or_cask()
 {
+  local tmp_file pr_url pr_nr
+
   # Bump and save output to a temporary file.
   tmp_file="$(mktemp)"
   trap 'rm -f "${tmp_file}" 2>/dev/null' RETURN EXIT
@@ -228,169 +229,27 @@ function brew_bump_cask()
   _brew_bump_formula_or_cask "$1" "cask"
 }
 
-# Retrieve JSON file from the selected formula/cask.
+# Check if the provided entry appears in the `*.rb` file
 #
 # Input:
-# 1. The fully-qualified name of the formula/cask.
-# 2. Literal string: "formula" or "cask".
+# 1. The `*.rb` filepath.
+# 2. The regex entry, passed as an associative array with "key" and "value" keys.
 #
 # Output:
-# Writes JSON file to stdout.
+# Write `true` if "key" is found in the `*.rb` and its value matches "value".
+# `false` otherwise.
 #
-function _json_from_formula_or_cask()
+function is_rb_file_entry()
 {
-  local array_name
-
-  case "$2" in
-    cask)
-      array_name="casks"
-      ;;
-    *)
-      array_name="formulae"
-      ;;
-  esac
-
-  brew info "$1" --"$2" --json=v2 | jq -r ".${array_name}[0]"
-}
-
-# Retrieve ruby source file from the selected formula/cask.
-#
-# Input:
-# 1. The fully-qualified name of the formula/cask.
-# 2. Literal string: "formula" or "cask".
-#
-# Output:
-# Writes ruby source filepath to stdout.
-#
-function _formula_or_cask_source_file()
-{
-  _json_from_formula_or_cask "$1" "$2" | jq -r ".ruby_source_path"
-}
-
-# Retrieve ruby source file from the selected formula.
-#
-# Input:
-# 1. The fully-qualified name of the formula.
-#
-# Output:
-# Writes ruby source filepath to stdout.
-#
-function formula_source_file()
-{
-  _formula_or_cask_source_file "$1" "formula"
-}
-
-# Retrieve ruby source file from the selected cask.
-#
-# Input:
-# 1. The fully-qualified name of the cask.
-#
-# Output:
-# Writes ruby source filepath to stdout.
-#
-function cask_source_file()
-{
-  _formula_or_cask_source_file "$1" "cask"
-}
-
-# Check if the selected formula depends on Linux/MacOS.
-#
-# Input:
-# 1. The fully-qualified name of the formula.
-# 2. Literal string: "linux" or "macos".
-#
-# Output:
-# Write "true" to stdout if depending on Linux/MacOS. "false" otherwise.
-#
-function _formula_depends_on_linux_or_macos()
-{
-  local reqs req
-  mapfile -t reqs < <(_json_from_formula_or_cask "$1" "formula" \
-    | jq -r ".requirements[].name")
-
-  for req in "${reqs[@]}"
-  do
-    if [[ "${req}" == "$2" ]]
-    then
-      echo "true"
-      return 0
-    fi
-  done
-
-  echo "false"
-}
-
-# Check if the selected formula depends on Linux.
-#
-# Input:
-# 1. The fully-qualified name of the formula.
-#
-# Output:
-# Write "true" to stdout if depending on Linux. "false" otherwise.
-#
-function formula_depends_on_linux()
-{
-  _formula_depends_on_linux_or_macos "$1" "linux"
-}
-
-# Check if the selected formula depends on MacOS.
-#
-# Input:
-# 1. The fully-qualified name of the formula.
-#
-# Output:
-# Write "true" to stdout if depending on MacOS. "false" otherwise.
-#
-function formula_depends_on_macos()
-{
-  _formula_depends_on_linux_or_macos "$1" "macos"
-}
-
-# Check if the selected cask depends on Linux/MacOS.
-#
-# Input:
-# 1. The fully-qualified name of the cask.
-# 2. Literal string: "linux" or "macos".
-#
-# Output:
-# Write "true" to stdout if depending on Linux/MacOS. "false" otherwise.
-#
-function _cask_depends_on_linux_or_macos()
-{
-  local depends_on
-  depends_on="$(_json_from_formula_or_cask "$1" "cask" \
-    | jq -r ".depends_on.$2")"
-
-  if [[ "${depends_on}" != "null" ]]
+  if [[ ! -f "$1" ]]
   then
-    echo "true"
-  else
-    echo "false"
+    echo false
+    return 1
   fi
-}
+  local -n __regex__="$2"
 
-# Check if the selected cask depends on Linux.
-#
-# Input:
-# 1. The fully-qualified name of the cask.
-#
-# Output:
-# Write "true" to stdout if depending on Linux. "false" otherwise.
-#
-function cask_depends_on_linux()
-{
-  _cask_depends_on_linux_or_macos "$1" "linux"
-}
-
-# Check if the selected cask depends on MacOS.
-#
-# Input:
-# 1. The fully-qualified name of the cask.
-#
-# Output:
-# Write "true" to stdout if depending on MacOS. "false" otherwise.
-#
-function cask_depends_on_macos()
-{
-  _cask_depends_on_linux_or_macos "$1" "macos"
+  grep -E "^[[:space:]]*${__regex__["key"]}[[:space:]]+${__regex__["value"]}\$" \
+    "$1" > /dev/null 2>&1 \
+    && echo true \
+    || echo false
 }

@@ -1,7 +1,9 @@
 #!/bin/bash
-# This script is used to check the style of the entire tap. It executes:
+# This script is used to check the style of the entire tap.
+# The following checks are executed:
 # - `brew style` and `brew audit` on all the formulae/casks;
-# - `shellcheck` and `shfmt` on all the bash scripts.
+# - `shellcheck` and `shfmt` on all the bash scripts;
+# - check target OS on all the formulae/casks.
 #
 # Possibly apply changes if `--fix` flag is enabled.
 #
@@ -38,11 +40,11 @@ fi
 
 if [[ "${arg}" == "--fix" ]]
 then
-  echo "==> Fixing formulae..."
+  echo "==> Fixing style of formulae..."
   brew style --formulae --fix "${formulae[@]}"
-  echo "==> Fixing casks..."
+  echo "==> Fixing style of casks..."
   brew style --casks --fix "${casks[@]}"
-  echo "==> Fixing scripts..."
+  echo "==> Fixing style of scripts..."
   shellcheck --rcfile=".shellcheckrc" --format=diff "${scripts[@]}" \
     | git apply --allow-empty
   ./scripts/_shfmt.sh --write "${scripts[@]}"
@@ -50,11 +52,11 @@ then
   exit 0
 fi
 
-echo "==> Checking formulae..."
+echo "==> Checking style of formulae..."
 brew style --formulae "${formulae[@]}" || success=false
-echo "==> Checking casks..."
+echo "==> Checking style of casks..."
 brew style --casks "${casks[@]}" || success=false
-echo "==> Checking scripts..."
+echo "==> Checking style of scripts..."
 shellcheck --rcfile=".shellcheckrc" "${scripts[@]}" || success=false
 ./scripts/_shfmt.sh "${scripts[@]}" || success=false
 
@@ -63,5 +65,15 @@ brew audit --formulae --strict "${formulae[@]}" || success=false
 echo "==> Auditing casks..."
 brew audit --casks --strict "${casks[@]}" || success=false
 
+./scripts/_check_rb_files.sh || success=false
+
 ${success} || exit 1
+
+cat << EOMSG
+
+No offense found in:
+- ${#formulae[@]} formulae;
+- ${#casks[@]} casks;
+- ${#scripts[@]} bash scripts.
+EOMSG
 exit 0

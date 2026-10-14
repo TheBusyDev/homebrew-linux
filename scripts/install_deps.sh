@@ -16,4 +16,6 @@ do
 done
 
 ${all_installed} || exit 1
+
+echo -e "\nInstalled ${#deps[@]} dependencies!"
 exit 0

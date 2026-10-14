@@ -1,9 +1,9 @@
 #!/bin/bash
-# Set of environment variable definitions.
+# Set environment variables and check dependencies (as listed in `.deps` file).
 # **WARNING:** When sourcing this file, current directory will be always moved
 # to the repository root, as required by all the scripts in this repository.
 #
-# Environment variables:
+# Required global variables:
 # - `TAP_NAME`: The name of the tap.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
@@ -15,9 +15,8 @@
 #
 
 # Include guard.
-export __ENV_SH="${__ENV_SH:-}"
-[[ -n "${__ENV_SH}" ]] && return 0
-export __ENV_SH="1"
+[[ -n "${_ENV_SH:-}" ]] && return 0
+readonly _ENV_SH=1
 
 # Apply shell options.
 set -euo pipefail
@@ -35,6 +34,33 @@ export GITHUB_OUTPUT="${GITHUB_OUTPUT:-"github_output.log"}"
 export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
 export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
 export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
+
+# Match `version` entries in `.rb` files.
+# shellcheck disable=SC2034
+declare -rA VERSION_REGEX=(
+  ["key"]='version'
+  ["value"]='".+"'
+)
+
+# Match `sha256` entries in `.rb` files.
+# shellcheck disable=SC2034
+declare -rA SHA256_REGEX=(
+  ["key"]='sha256'
+  ["value"]='((arm64|x86_64)_linux:\s+)?"[[:xdigit:]]+"'
+)
+
+# Match `depends_on` stanzas in `.rb` files.
+# shellcheck disable=SC2034
+declare -rA DEPENDS_ON_LINUX_REGEX=(
+  ["key"]='depends_on'
+  ["value"]=':linux'
+)
+
+# shellcheck disable=SC2034
+declare -rA DEPENDS_ON_MACOS_REGEX=(
+  ["key"]='depends_on'
+  ["value"]=':?macos(:\s+:[[:lower:]]+)?'
+)
 
 # Change directory to the repository root.
 cd "$(dirname "$0")"/.. || exit 1
