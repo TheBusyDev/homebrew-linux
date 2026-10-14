@@ -16,7 +16,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        os: [ubuntu-24.04-arm, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
@@ -33,11 +33,13 @@ jobs:
         run: ./scripts/install_deps.sh
 
       - name: Check style of the tap
+        if: matrix.os == 'ubuntu-24.04-arm'
         env:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
         run: ./scripts/style.sh
 
       - name: Check target OS
+        if: matrix.os == 'ubuntu-24.04-arm'
         env:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
         run: ./scripts/check_os.sh
