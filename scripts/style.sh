@@ -67,9 +67,15 @@ brew audit --casks --strict "${casks[@]}" || success=false
 
 ./scripts/_check_rb_files.sh || success=false
 
-${success} || exit 1
+if ! ${success}
+then
+  echo -e "\n\n::error::Some offenses found. You can try to correct them by" \
+    "invoking: \`$0 --fix\`."
+  exit 1
+fi
 
 cat << EOMSG
+
 
 No offense found in:
 - ${#formulae[@]} formulae;
