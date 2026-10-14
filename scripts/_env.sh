@@ -37,27 +37,27 @@ export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 
 # Match `version` entries in `.rb` files.
 # shellcheck disable=SC2034
-declare -A VERSION_REGEX=(
+declare -rA VERSION_REGEX=(
   ["key"]='version'
   ["value"]='".+"'
 )
 
 # Match `sha256` entries in `.rb` files.
 # shellcheck disable=SC2034
-declare -A SHA256_REGEX=(
+declare -rA SHA256_REGEX=(
   ["key"]='sha256'
   ["value"]='((arm64|x86_64)_linux:\s+)?"[[:xdigit:]]+"'
 )
 
 # Match `depends_on` stanzas in `.rb` files.
 # shellcheck disable=SC2034
-declare -A DEPENDS_ON_LINUX_REGEX=(
+declare -rA DEPENDS_ON_LINUX_REGEX=(
   ["key"]='depends_on'
   ["value"]=':linux'
 )
 
 # shellcheck disable=SC2034
-declare -A DEPENDS_ON_MACOS_REGEX=(
+declare -rA DEPENDS_ON_MACOS_REGEX=(
   ["key"]='depends_on'
   ["value"]=':?macos(:\s+:[[:lower:]]+)?'
 )
