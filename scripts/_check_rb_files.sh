@@ -12,9 +12,9 @@ echo "==> Checking formula/cask \`.rb\` files..."
 
 for rb_file in "${rb_files[@]}"
 do
-  sha256_correct="$(is_rb_file_entry "${rb_file}" SHA256_REGEX)"
-  depends_on_linux="$(is_rb_file_entry "${rb_file}" DEPENDS_ON_LINUX_REGEX)"
-  depends_on_macos="$(is_rb_file_entry "${rb_file}" DEPENDS_ON_MACOS_REGEX)"
+  sha256_correct="$(is_rb_entry SHA256_REGEX "${rb_file}")"
+  depends_on_linux="$(is_rb_entry DEPENDS_ON_LINUX_REGEX "${rb_file}")"
+  depends_on_macos="$(is_rb_entry DEPENDS_ON_MACOS_REGEX "${rb_file}")"
 
   if ! ${sha256_correct}
   then

@@ -86,8 +86,8 @@ do
 
       unauthorized_changes="$(
         echo "${file_changes}" \
-          | sed -zE "s/\n[ \t]*${VERSION_REGEX["key"]}[ \t]+${VERSION_REGEX["value"]}\n/\n/g" \
-          | sed -zE "s/\n[ \t]*${SHA256_REGEX["key"]}[ \t]+${SHA256_REGEX["value"]}\n/\n/g"
+          | sed -zE "s/$(get_rb_entry_regex VERSION_REGEX)/\n/g" \
+          | sed -zE "s/$(get_rb_entry_regex SHA256_REGEX)/\n/g"
       )"
 
       if [[ -n "${unauthorized_changes}" ]]
