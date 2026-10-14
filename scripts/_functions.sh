@@ -8,7 +8,7 @@ readonly _FUNCTIONS_SH=1
 
 source "$(dirname "$0")"/_env.sh
 
-# Obtain a certain property of the latest pull request.
+# Obtain a certain property of a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -25,23 +25,7 @@ function _get_pr_property()
   gh pr view "$1" --json "$2" | jq -r ".$2"
 }
 
-# Obtain branch of the latest pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-#
-# Input:
-# 1. The number of the pull request.
-#
-# Output:
-# Writes branch of pull request to stdout.
-#
-function get_pr_branch()
-{
-  _get_pr_property "$1" "headRefName"
-}
-
-# Obtain state of the latest pull request.
+# Obtain state of a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -57,7 +41,7 @@ function get_pr_state()
   _get_pr_property "$1" "state" | tr "[:upper:]" "[:lower:]"
 }
 
-# Obtain URL of the latest pull request.
+# Obtain URL of a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -73,7 +57,7 @@ function get_pr_url()
   _get_pr_property "$1" "url"
 }
 
-# Obtain all the files modified in the latest pull request.
+# Obtain all the files modified in a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.

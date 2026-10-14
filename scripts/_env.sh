@@ -35,27 +35,31 @@ export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
 export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
 export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 
-# Match `version` entries in `.rb` files.
+# Match `version "<version>"` entries in `.rb` files.
 # shellcheck disable=SC2034
 declare -rA VERSION_REGEX=(
   ["key"]='version'
   ["value"]='".+"'
 )
 
-# Match `sha256` entries in `.rb` files.
+# Match `sha256` entries in `.rb` files:
+#  sha256 "<sha256-signature>"
+#  sha256 arm64_linux:  "<sha256-signature>"
+#         x86_64_linux: "<sha256-signature>"
 # shellcheck disable=SC2034
 declare -rA SHA256_REGEX=(
   ["key"]='sha256'
-  ["value"]='((arm64|x86_64)_linux:[ \t]+)?"[[:xdigit:]]+"'
+  ["value"]='((arm64|x86_64)_linux:[ \t]+)?"[[:xdigit:]]{64}"(,\n[ \t]*(arm64|x86_64)_linux:[ \t]+"[[:xdigit:]]{64}")?'
 )
 
-# Match `depends_on` stanzas in `.rb` files.
+# Match `depends_on :linux` stanzas in `.rb` files.
 # shellcheck disable=SC2034
 declare -rA DEPENDS_ON_LINUX_REGEX=(
   ["key"]='depends_on'
   ["value"]=':linux'
 )
 
+# Match `depends_on :macos` stanzas in `.rb` files.
 # shellcheck disable=SC2034
 declare -rA DEPENDS_ON_MACOS_REGEX=(
   ["key"]='depends_on'
