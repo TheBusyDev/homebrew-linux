@@ -15,11 +15,12 @@
 #
 
 # Include guard.
-if [[ -n "${__ENV_SH}" ]]
-then
-  return 0
-fi
+export __ENV_SH="${__ENV_SH:-}"
+[[ -n "${__ENV_SH}" ]] && return 0
 export __ENV_SH="1"
+
+# Apply shell options.
+set -euo pipefail
 
 # Environment variables.
 export TAP_NAME="${TAP_NAME:-"TheBusyDev/tap"}"
@@ -53,7 +54,7 @@ for dep in "${deps[@]}"
 do
   if ! command -v "${dep}" > /dev/null 2>&1
   then
-    formula="$(brew which-formula "${dep}" || echo "")"
+    formula="$(brew which-formula "${dep}" || true)"
     error_msg="::error::Missing dependency: \`${dep}\`."
 
     if [[ -n "${formula}" ]]

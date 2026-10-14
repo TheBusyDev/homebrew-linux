@@ -25,15 +25,19 @@ pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
 # Get formulae and casks from the tap.
 mapfile -t formulae < <(formulae_from_tap)
 mapfile -t casks < <(casks_from_tap)
+all_bumped=true # Have all the formulae/casks been bumped correctly?
 
 # Update formulae from the given tap.
 echo "==> Updating formulae..."
 
 for formula in "${formulae[@]}"
 do
-  brew_bump_formula "${formula}"
-  sleep "${GH_COOLDOWN}"
-  pr_numbers+=":$(get_latest_pr_number)"
+  pr_nr="$(brew_bump_formula "${formula}")" || {
+    echo "::error::Cannot bump the formula \`${formula}\`." >&2
+    all_bumped=false
+  }
+
+  [[ -n "${pr_nr}" ]] && pr_numbers+=":${pr_nr}"
 done
 
 # Update casks from the given tap.
@@ -41,9 +45,12 @@ echo "==> Updating casks..."
 
 for cask in "${casks[@]}"
 do
-  brew_bump_cask "${cask}"
-  sleep "${GH_COOLDOWN}"
-  pr_numbers+=":$(get_latest_pr_number)"
+  pr_nr="$(brew_bump_cask "${cask}")" || {
+    echo "::error::Cannot bump the cask \`${cask}\`." >&2
+    all_bumped=false
+  }
+
+  [[ -n "${pr_nr}" ]] && pr_numbers+=":${pr_nr}"
 done
 
 # Export PR numbers.
@@ -51,4 +58,5 @@ pr_numbers="${pr_numbers%:}"
 pr_numbers="${pr_numbers#:}"
 echo "pr-numbers=${pr_numbers}" >> "${GITHUB_OUTPUT}"
 
+${all_bumped} || exit 1
 exit 0
