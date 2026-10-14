@@ -8,7 +8,7 @@ readonly _FUNCTIONS_SH=1
 
 source "$(dirname "$0")"/_env.sh
 
-# Obtain a certain property of the latest pull request.
+# Obtain a certain property of a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -25,23 +25,7 @@ function _get_pr_property()
   gh pr view "$1" --json "$2" | jq -r ".$2"
 }
 
-# Obtain branch of the latest pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-#
-# Input:
-# 1. The number of the pull request.
-#
-# Output:
-# Writes branch of pull request to stdout.
-#
-function get_pr_branch()
-{
-  _get_pr_property "$1" "headRefName"
-}
-
-# Obtain state of the latest pull request.
+# Obtain state of a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -57,7 +41,7 @@ function get_pr_state()
   _get_pr_property "$1" "state" | tr "[:upper:]" "[:lower:]"
 }
 
-# Obtain URL of the latest pull request.
+# Obtain URL of a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -73,7 +57,7 @@ function get_pr_url()
   _get_pr_property "$1" "url"
 }
 
-# Obtain all the files modified in the latest pull request.
+# Obtain all the files modified in a pull request.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
@@ -229,27 +213,40 @@ function brew_bump_cask()
   _brew_bump_formula_or_cask "$1" "cask"
 }
 
+# Get the regular expression defined in the input associative array.
+#
+# Input:
+# 1. The regex entry, passed as an associative array with "key" and "value" keys.
+#
+# Output:
+# Writes the complete regular expression of the entry to stdout.
+#
+function get_rb_entry_regex()
+{
+  local -n __regex__="$1"
+  printf '\\n[[:blank:]]*%s[[:blank:]]+%s\\n' "${__regex__["key"]}" "${__regex__["value"]}"
+}
+
 # Check if the provided entry appears in the `*.rb` file
 #
 # Input:
-# 1. The `*.rb` filepath.
-# 2. The regex entry, passed as an associative array with "key" and "value" keys.
+# 1. The regex entry, passed as an associative array with "key" and "value" keys.
+# 2. The `*.rb` filepath.
 #
 # Output:
-# Write `true` if "key" is found in the `*.rb` and its value matches "value".
+# Writes `true` if "key" is found in the `*.rb` and its value matches "value".
 # `false` otherwise.
 #
-function is_rb_file_entry()
+function is_rb_entry()
 {
-  if [[ ! -f "$1" ]]
+  local -n ____regex____="$1"
+  if [[ ! -f "$2" ]]
   then
     echo false
     return 1
   fi
-  local -n __regex__="$2"
 
-  grep -E "^[[:space:]]*${__regex__["key"]}[[:space:]]+${__regex__["value"]}\$" \
-    "$1" > /dev/null 2>&1 \
+  grep -zqP "$(get_rb_entry_regex ____regex____)" "$2" \
     && echo true \
     || echo false
 }

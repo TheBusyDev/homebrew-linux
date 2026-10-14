@@ -18,8 +18,6 @@ mapfile -d ":" -t pr_numbers < <(echo -n "$1")
 failed_pr_urls="" # Newline-separated list of URLs for non-approved pull requests.
 success=true      # Have all the approvals run successfully?
 
-git fetch origin # Sync changes from remote.
-
 for pr_nr in "${pr_numbers[@]}"
 do
   echo "==> Checking pull request #${pr_nr}..."
@@ -32,7 +30,6 @@ do
   fi
 
   # Get relevant info from PR.
-  pr_branch="$(get_pr_branch "${pr_nr}")"
   pr_state="$(get_pr_state "${pr_nr}")"
   pr_url="$(get_pr_url "${pr_nr}")"
 
@@ -48,6 +45,8 @@ do
 
   # Get the changed files and check them.
   mapfile -t pr_files < <(get_pr_filepaths "${pr_nr}")
+  # Fetch all the changes in the PR.
+  all_changes="$(gh pr diff "${pr_nr}" --color=never)"
 
   for file in "${pr_files[@]}"
   do
@@ -62,26 +61,39 @@ do
     fi
 
     # Check difference between files modified in PR and the ones on default branch.
-    all_changes="$(git diff -U0 "origin/HEAD...origin/${pr_branch}" -- "${file}" \
-      | grep "^[+-]" \
-      | grep -v "^+++" \
-      | grep -v "^---" \
-      || true)"
+    file_changes="$(
+      echo "${all_changes}" \
+        | FILE="${file}" awk '
+          BEGIN { file = ENVIRON["FILE"]; prefix = "diff --git a/" file " "; suffix = " b/" file }
+          /^diff --git / {
+            inhunk = 0
+            is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
+            next
+          }
+          /^@@/ {
+            inhunk = 1
+            next
+          }
+          is_file && inhunk && /^[+-]/ {
+            print substr($0, 2)
+          }
+        '
+    )"
 
-    if [[ -n "${all_changes}" ]]
+    if [[ -n "${file_changes}" ]]
     then
-      echo "Changes between \`${pr_branch}\` and default branch:"
-      echo "${all_changes}"
+      echo -e "Changes w.r.t. base branch:\n${file_changes}\n"
 
-      unauthorized_changes="$(echo "${all_changes}" \
-        | grep -vE "^[+-][[:space:]]*${VERSION_REGEX["key"]}[[:space:]]+${VERSION_REGEX["value"]}\$" \
-        | grep -vE "^[+-][[:space:]]*${SHA256_REGEX["key"]}[[:space:]]+${SHA256_REGEX["value"]}\$" \
-        || true)"
+      unauthorized_changes="$(
+        echo "${file_changes}" \
+          | sed -zE "s/$(get_rb_entry_regex VERSION_REGEX)/\n/g" \
+          | sed -zE "s/$(get_rb_entry_regex SHA256_REGEX)/\n/g"
+      )"
 
       if [[ -n "${unauthorized_changes}" ]]
       then
-        echo "::error file=${file}::Unauthorized changes found:" >&2
-        echo -e "${unauthorized_changes}" >&2
+        echo -e "::error file=${file}::Unauthorized changes found:" >&2
+        echo -e "${unauthorized_changes}\n" >&2
         safe_to_approve=false
         continue
       fi
@@ -106,7 +118,7 @@ failed_pr_urls="${failed_pr_urls#\\n}"
 
 if [[ -n "${failed_pr_urls}" ]]
 then
-  echo "::error::The following PRs require manual approval:" >&2
+  echo -e "\n::error::The following PRs require manual approval:" >&2
   echo -e "${failed_pr_urls}" >&2
 fi
 
