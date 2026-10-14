@@ -65,7 +65,7 @@ brew audit --formulae --strict "${formulae[@]}" || success=false
 echo "==> Auditing casks..."
 brew audit --casks --strict "${casks[@]}" || success=false
 
-./scripts/_check_os.sh || success=false
+./scripts/_check_rb_files.sh || success=false
 
 ${success} || exit 1
 
