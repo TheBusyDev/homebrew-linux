@@ -40,4 +40,6 @@ do
 done
 
 ${success} || exit 1
+
+echo -e "\nInstalled ${#formulae[@]} formulae and ${#casks[@]} casks!"
 exit 0
