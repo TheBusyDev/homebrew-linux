@@ -74,8 +74,8 @@ do
       echo "${all_changes}"
 
       unauthorized_changes="$(echo "${all_changes}" \
-        | grep -vE "^[+-][[:space:]]*${VERSION_REGEX["key"]}[[:space:]]+${VERSION_REGEX["value"]}\$" \
-        | grep -vE "^[+-][[:space:]]*${SHA256_REGEX["key"]}[[:space:]]+${SHA256_REGEX["value"]}\$" \
+        | grep -vzoP "\n[+-][ \t]*${VERSION_REGEX["key"]}[ \t]+${VERSION_REGEX["value"]}\n" \
+        | grep -vzoP "\n[+-][ \t]*${SHA256_REGEX["key"]}[ \t]+${SHA256_REGEX["value"]}\n" \
         || true)"
 
       if [[ -n "${unauthorized_changes}" ]]
@@ -106,7 +106,7 @@ failed_pr_urls="${failed_pr_urls#\\n}"
 
 if [[ -n "${failed_pr_urls}" ]]
 then
-  echo "::error::The following PRs require manual approval:" >&2
+  echo -e "\n::error::The following PRs require manual approval:" >&2
   echo -e "${failed_pr_urls}" >&2
 fi
 
