@@ -113,7 +113,7 @@ fi
 ###
 
 # Check for specific patterns and prompt messages if detected
-function no_forbidden_pattern()
+function _no_forbidden_pattern()
 {
   local file="$1"
   local tempfile="$2"
@@ -149,7 +149,7 @@ function no_tabs()
   local file="$1"
   local tempfile="$2"
 
-  no_forbidden_pattern "${file}" "${tempfile}" \
+  _no_forbidden_pattern "${file}" "${tempfile}" \
     "Indent with tab" \
     'Replace tabs with 2 spaces instead.' \
     '^[[:space:]]+' \
@@ -186,7 +186,7 @@ Use the following instead (keep for statements only one line):
 EOMSG
   )"
 
-  no_forbidden_pattern "${file}" "${tempfile}" \
+  _no_forbidden_pattern "${file}" "${tempfile}" \
     "Multiline for statement" \
     "${message}" \
     "${regex}"
@@ -217,21 +217,10 @@ Use the following instead:
 EOMSG
   )"
 
-  no_forbidden_pattern "${file}" "${tempfile}" \
+  _no_forbidden_pattern "${file}" "${tempfile}" \
     "Pattern \`IFS=\$'\\n'\`" \
     "${message}" \
     "${regex}"
-}
-
-# Combine all forbidden styles
-function no_forbidden_styles()
-{
-  local file="$1"
-  local tempfile="$2"
-
-  no_tabs "${file}" "${tempfile}" || return 1
-  no_multiline_for_statements "${file}" "${tempfile}" || return 1
-  no_IFS_newline "${file}" "${tempfile}" || return 1
 }
 
 # Align multiline if condition (indent with 3 spaces or 6 spaces (start with "-"))
@@ -428,7 +417,9 @@ function format()
   fi
 
   # Fail fast when forbidden styles detected
-  no_forbidden_styles "${file}" "${tempfile}" || return 3
+  no_tabs "${file}" "${tempfile}" || return 3
+  no_multiline_for_statements "${file}" "${tempfile}" || return 3
+  no_IFS_newline "${file}" "${tempfile}" || return 3
 
   # Tweak it with custom shell script styles
   wrap_then_do "${file}" "${tempfile}"
