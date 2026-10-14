@@ -142,50 +142,6 @@ function casks_from_tap()
   _formulae_or_casks_from_tap "casks"
 }
 
-# Get all the formula/cask `*.rb` files.
-#
-# Input:
-# 1. Literal string: "formula" or "cask".
-#
-# Output:
-# Writes a newline-separated list to stdout.
-#
-function _formula_or_cask_rb_files()
-{
-  local dir
-
-  case "$1" in
-    cask)
-      dir="./Casks"
-      ;;
-    *)
-      dir="./Formula"
-      ;;
-  esac
-
-  find "${dir}" -name "*.rb" -type f
-}
-
-# Get all the formula `*.rb` files.
-#
-# Output:
-# Writes a newline-separated list to stdout.
-#
-function formula_rb_files()
-{
-  _formula_or_cask_rb_files "formula"
-}
-
-# Get all the cask `*.rb` files.
-#
-# Output:
-# Writes a newline-separated list to stdout.
-#
-function cask_rb_files()
-{
-  _formula_or_cask_rb_files "cask"
-}
-
 # Bump a formula/cask, creating a new pull request with the selected label.
 #
 # Environment variables:
@@ -283,39 +239,17 @@ function brew_bump_cask()
 # Write `true` if "key" is found in the `*.rb` and its value matches "value".
 # `false` otherwise.
 #
-function _is_entry_in_rb_file()
+function is_rb_file_entry()
 {
-  [[ -f "$1" ]] || return 1
+  if [[ ! -f "$1" ]]
+  then
+    echo false
+    return 1
+  fi
   local -n __regex__="$2"
 
   grep -E "^[[:space:]]*${__regex__["key"]}[[:space:]]+${__regex__["value"]}\$" \
     "$1" > /dev/null 2>&1 \
     && echo true \
     || echo false
-}
-
-# Check if the provided `*.rb` file depends on Linux.
-#
-# Input:
-# 1. The `*.rb` filepath.
-#
-# Output:
-# Write `true` to stdout if depending on Linux. `false` otherwise.
-#
-function depends_on_linux()
-{
-  _is_entry_in_rb_file "$1" DEPENDS_ON_LINUX_REGEX
-}
-
-# Check if the provided `*.rb` file depends on MacOS.
-#
-# Input:
-# 1. The `*.rb` filepath.
-#
-# Output:
-# Write `true` to stdout if depending on MacOS. `false` otherwise.
-#
-function depends_on_macos()
-{
-  _is_entry_in_rb_file "$1" DEPENDS_ON_MACOS_REGEX
 }

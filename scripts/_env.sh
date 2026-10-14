@@ -46,7 +46,7 @@ declare -A VERSION_REGEX=(
 # shellcheck disable=SC2034
 declare -A SHA256_REGEX=(
   ["key"]='sha256'
-  ["value"]='((arm|arm64|intel|x86_64)_linux:\s+)?"[[:xdigit:]]+"'
+  ["value"]='((arm64|x86_64)_linux:\s+)?"[[:xdigit:]]+"'
 )
 
 # Match `depends_on` stanzas in `.rb` files.
