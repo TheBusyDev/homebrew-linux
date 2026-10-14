@@ -176,7 +176,7 @@ function _brew_bump_formula_or_cask()
     && sleep "${GH_COOLDOWN}" \
     && gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}" \
     || {
-      git reset --hard "@{u}" # Reset changed files/commits.
+      git reset --hard # Reset changed files.
       return 1
     }
 }
