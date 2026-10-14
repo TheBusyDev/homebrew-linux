@@ -49,7 +49,7 @@ declare -rA VERSION_REGEX=(
 # shellcheck disable=SC2034
 declare -rA SHA256_REGEX=(
   ["key"]='sha256'
-  ["value"]='((arm64|x86_64)_linux:[ \t]+)?"[[:xdigit:]]{64}"(,\n[ \t]*(arm64|x86_64)_linux:[ \t]+"[[:xdigit:]]{64}")?'
+  ["value"]='((arm64|x86_64)_linux:[[:blank:]]+)?"[[:xdigit:]]{64}"(,\n[[:blank:]]*(arm64|x86_64)_linux:[[:blank:]]+"[[:xdigit:]]{64}")?'
 )
 
 # Match `depends_on :linux` stanzas in `.rb` files.
@@ -63,7 +63,7 @@ declare -rA DEPENDS_ON_LINUX_REGEX=(
 # shellcheck disable=SC2034
 declare -rA DEPENDS_ON_MACOS_REGEX=(
   ["key"]='depends_on'
-  ["value"]=':?macos(:[ \t]+:[[:lower:]]+)?'
+  ["value"]=':?macos(:[[:blank:]]+:[[:lower:]]+)?'
 )
 
 # Change directory to the repository root.
