@@ -15,8 +15,12 @@
 #
 
 # Include guard.
+export __ENV_SH="${__ENV_SH:-}"
 [[ -n "${__ENV_SH}" ]] && return 0
 export __ENV_SH="1"
+
+# Apply shell options.
+set -euo pipefail
 
 # Environment variables.
 export TAP_NAME="${TAP_NAME:-"TheBusyDev/tap"}"

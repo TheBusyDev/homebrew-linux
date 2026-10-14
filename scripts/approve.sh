@@ -19,6 +19,7 @@ VERSION_REGEX='^[+-]\s*version\s+".*"$'
 SHA256_REGEX='^[+-]\s*sha256(\s+(arm|arm64|intel|x86_64)_linux:)?\s+"[[:xdigit:]]+"$'
 
 # Check for every PR in `pr_numbers`.
+: "${1:?You must provide a colon-separated list of pull request numbers\!}"
 mapfile -d ":" -t pr_numbers < <(echo -n "$1")
 failed_pr_urls="" # Newline-separated list of URLs for non-approved pull requests.
 success=true      # Have all the approvals run successfully?
@@ -115,9 +116,5 @@ then
   echo -e "${failed_pr_urls}" >&2
 fi
 
-if ! ${success}
-then
-  exit 1
-fi
-
+${success} || exit 1
 exit 0

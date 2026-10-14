@@ -66,10 +66,5 @@ do
   fi
 done
 
-if ! ${linux_only}
-then
-  # Abort test.
-  exit 1
-fi
-
+${linux_only} || exit 1 # Abort test.
 exit 0

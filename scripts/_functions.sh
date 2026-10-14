@@ -3,6 +3,7 @@
 #
 
 # Include guard.
+export __FUNCTIONS_SH="${__FUNCTIONS_SH:-}"
 [[ -n "${__FUNCTIONS_SH}" ]] && return 0
 export __FUNCTIONS_SH="1"
 
@@ -171,9 +172,9 @@ function casks_from_tap()
 #
 function _brew_bump_formula_or_cask()
 {
-  brew bump "$1" --"$2" --full-name --open-pr --no-fork
-  sleep "${GH_COOLDOWN}"
-  gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}"
+  brew bump "$1" --"$2" --full-name --open-pr --no-fork \
+    && sleep "${GH_COOLDOWN}" \
+    && gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}"
 }
 
 # Bump a formula, creating a new pull request with the selected label.
