@@ -1,9 +1,9 @@
 #!/bin/bash
-# Set of environment variable definitions.
+# Set environment variables and check dependencies (as listed in `.deps` file).
 # **WARNING:** When sourcing this file, current directory will be always moved
 # to the repository root, as required by all the scripts in this repository.
 #
-# Environment variables:
+# Required global variables:
 # - `TAP_NAME`: The name of the tap.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
@@ -15,9 +15,8 @@
 #
 
 # Include guard.
-export __ENV_SH="${__ENV_SH:-}"
-[[ -n "${__ENV_SH}" ]] && return 0
-export __ENV_SH="1"
+[[ -n "${_ENV_SH:-}" ]] && return 0
+readonly _ENV_SH=1
 
 # Apply shell options.
 set -euo pipefail
