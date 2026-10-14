@@ -175,7 +175,10 @@ function _brew_bump_formula_or_cask()
   brew bump "$1" --"$2" --full-name --open-pr --no-fork \
     && sleep "${GH_COOLDOWN}" \
     && gh pr edit "$(PR_LABEL="" get_latest_pr_number)" --add-label "${PR_LABEL}" \
-    || git reset --hard "@{u}" # Reset changed files/commits.
+    || {
+      git reset --hard "@{u}" # Reset changed files/commits.
+      return 1
+    }
 }
 
 # Bump a formula, creating a new pull request with the selected label.
