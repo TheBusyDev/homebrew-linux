@@ -168,7 +168,7 @@ function _brew_bump_formula_or_cask()
   brew bump "$1" --"$2" --full-name --open-pr --no-fork 2>&1 \
     | tee "${tmp_file}" >&2 \
     || {
-      git reset --hard # Reset changed files.
+      git reset --hard >&2 # Reset changed files.
       return $?
     }
 
