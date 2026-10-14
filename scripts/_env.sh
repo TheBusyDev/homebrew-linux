@@ -35,6 +35,33 @@ export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
 export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
 export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 
+# Match `version` entries in `.rb` files.
+# shellcheck disable=SC2034
+declare -A VERSION_REGEX=(
+  ["key"]='version'
+  ["value"]='".+"'
+)
+
+# Match `sha256` entries in `.rb` files.
+# shellcheck disable=SC2034
+declare -A SHA256_REGEX=(
+  ["key"]='sha256'
+  ["value"]='((arm|arm64|intel|x86_64)_linux:\s+)?"[[:xdigit:]]+"'
+)
+
+# Match `depends_on` stanzas in `.rb` files.
+# shellcheck disable=SC2034
+declare -A DEPENDS_ON_LINUX_REGEX=(
+  ["key"]='depends_on'
+  ["value"]=':linux'
+)
+
+# shellcheck disable=SC2034
+declare -A DEPENDS_ON_MACOS_REGEX=(
+  ["key"]='depends_on'
+  ["value"]=':?macos(:\s+:[[:lower:]]+)?'
+)
+
 # Change directory to the repository root.
 cd "$(dirname "$0")"/.. || exit 1
 

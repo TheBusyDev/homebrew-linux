@@ -12,12 +12,6 @@
 source "$(dirname "$0")"/_env.sh
 source "$(dirname "$0")"/_functions.sh
 
-# Useful variables.
-# Match `version` entries in `.rb` files.
-VERSION_REGEX='^[+-]\s*version\s+".*"$'
-# Match `sha256` entries in `.rb` files.
-SHA256_REGEX='^[+-]\s*sha256(\s+(arm|arm64|intel|x86_64)_linux:)?\s+"[[:xdigit:]]+"$'
-
 # Check for every PR in `pr_numbers`.
 : "${1:?You must provide a colon-separated list of pull request numbers\!}"
 mapfile -d ":" -t pr_numbers < <(echo -n "$1")
@@ -80,8 +74,8 @@ do
       echo "${all_changes}"
 
       unauthorized_changes="$(echo "${all_changes}" \
-        | grep -vE "${VERSION_REGEX}" \
-        | grep -vE "${SHA256_REGEX}" \
+        | grep -vE "^[+-][[:space:]]*${VERSION_REGEX["key"]}[[:space:]]+${VERSION_REGEX["value"]}\$" \
+        | grep -vE "^[+-][[:space:]]*${SHA256_REGEX["key"]}[[:space:]]+${SHA256_REGEX["value"]}\$" \
         || true)"
 
       if [[ -n "${unauthorized_changes}" ]]

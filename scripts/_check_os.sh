@@ -13,17 +13,16 @@ source "$(dirname "$0")"/_functions.sh
 linux_only=true # Are all the formulae/taps developed for Linux only?
 
 # Get formulae and casks from the tap.
-mapfile -t formulae < <(formulae_from_tap)
-mapfile -t casks < <(casks_from_tap)
+mapfile -t formula_rb_files < <(formula_rb_files)
+mapfile -t cask_rb_files < <(cask_rb_files)
 
 # Check formulae.
 echo "==> Checking target OS of formulae..."
 
-for formula in "${formulae[@]}"
+for file in "${formula_rb_files[@]}"
 do
-  file="$(formula_source_file "${formula}")"
-  depends_on_linux="$(formula_depends_on_linux "${formula}")"
-  depends_on_macos="$(formula_depends_on_macos "${formula}")"
+  depends_on_linux="$(depends_on_linux "${file}")"
+  depends_on_macos="$(depends_on_macos "${file}")"
 
   if ! ${depends_on_linux}
   then
@@ -44,11 +43,10 @@ done
 # Check casks.
 echo "==> Checking target OS of casks..."
 
-for cask in "${casks[@]}"
+for file in "${cask_rb_files[@]}"
 do
-  file="$(cask_source_file "${cask}")"
-  depends_on_linux="$(cask_depends_on_linux "${cask}")"
-  depends_on_macos="$(cask_depends_on_macos "${cask}")"
+  depends_on_linux="$(depends_on_linux "${file}")"
+  depends_on_macos="$(depends_on_macos "${file}")"
 
   if ! ${depends_on_linux}
   then
