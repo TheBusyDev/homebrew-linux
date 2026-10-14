@@ -173,7 +173,8 @@ function _brew_bump_formula_or_cask()
     }
 
   # Retrieve PR number from log file.
-  pr_url="$(grep -oE "^https://github\.com/[^/]+/[^/]+/pull/[[:digit:]]+$" \
+  pr_url="$(echo "${tmp_file}" \
+    | grep -oE "^https://github\.com/[^/]+/[^/]+/pull/[[:digit:]]+$" \
     | tail -n1 || true)"
   pr_nr="${pr_url##*/}"
 
