@@ -20,8 +20,10 @@ cask "vscodium" do
 
   binary "bin/codium"
   binary "bin/codium-tunnel"
+
   bash_completion "resources/completions/bash/codium"
   zsh_completion  "resources/completions/zsh/_codium"
+
   artifact "vscodium.desktop",
            target: "#{Dir.home}/.local/share/applications/vscodium.desktop"
   artifact "vscodium-url-handler.desktop",
