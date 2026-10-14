@@ -51,4 +51,9 @@ jobs:
       - name: Auto-approve PRs safely
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./scripts/approve.sh "${{ steps.brew-bump.outputs.pr-numbers }}"
+          PR_NUMBERS: ${{ steps.brew-bump.outputs.pr-numbers }}
+        run: |
+          if [[ -n "${PR_NUMBERS}" ]]
+          then
+            ./scripts/approve.sh "${PR_NUMBERS}"
+          fi

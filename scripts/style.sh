@@ -12,9 +12,11 @@
 source "$(dirname "$0")"/_env.sh
 source "$(dirname "$0")"/_functions.sh
 
+arg="${1:-}"
 mapfile -t formulae < <(formulae_from_tap)
 mapfile -t casks < <(casks_from_tap)
 mapfile -t scripts < <(find ./scripts -name "*.sh" -type f)
+success=true # Is the style of the tap complaint?
 
 if ((${#formulae[@]} == 0))
 then
@@ -34,7 +36,7 @@ then
   exit 1
 fi
 
-if [[ "$1" == "--fix" ]]
+if [[ "${arg}" == "--fix" ]]
 then
   echo "==> Fixing formulae..."
   brew style --formulae --fix "${formulae[@]}"
@@ -44,19 +46,22 @@ then
   shellcheck --rcfile=".shellcheckrc" --format=diff "${scripts[@]}" \
     | git apply --allow-empty
   ./scripts/_shfmt.sh --write "${scripts[@]}"
-else
-  echo "==> Checking formulae..."
-  brew style --formulae "${formulae[@]}"
-  echo "==> Checking casks..."
-  brew style --casks "${casks[@]}"
-  echo "==> Checking scripts..."
-  shellcheck --rcfile=".shellcheckrc" "${scripts[@]}"
-  ./scripts/_shfmt.sh "${scripts[@]}"
+
+  exit 0
 fi
 
-echo "==> Auditing formulae..."
-brew audit --formulae --strict "${formulae[@]}"
-echo "==> Auditing casks..."
-brew audit --casks --strict "${casks[@]}"
+echo "==> Checking formulae..."
+brew style --formulae "${formulae[@]}" || success=false
+echo "==> Checking casks..."
+brew style --casks "${casks[@]}" || success=false
+echo "==> Checking scripts..."
+shellcheck --rcfile=".shellcheckrc" "${scripts[@]}" || success=false
+./scripts/_shfmt.sh "${scripts[@]}" || success=false
 
+echo "==> Auditing formulae..."
+brew audit --formulae --strict "${formulae[@]}" || success=false
+echo "==> Auditing casks..."
+brew audit --casks --strict "${casks[@]}" || success=false
+
+${success} || exit 1
 exit 0
