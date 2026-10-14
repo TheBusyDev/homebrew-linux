@@ -69,8 +69,10 @@ brew audit --casks --strict "${casks[@]}" || success=false
 
 ${success} || exit 1
 
-echo -e "\nNo offenses found in:\n" \
-  "- ${#formulae[@]} formulae;\n" \
-  "- ${#casks[@]} casks;\n" \
-  "- ${#scripts[@]} bash scripts."
+cat << EOMSG
+No offense found in:
+-> ${#formulae[@]} formulae;
+-> ${#casks[@]} casks;
+-> ${#scripts[@]} bash scripts.
+EOMSG
 exit 0
