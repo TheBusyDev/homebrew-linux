@@ -40,7 +40,7 @@ OLD_PWD="${PWD}"
 source "$(dirname "$0")"/_env.sh
 cd "${OLD_PWD}" || exit 1
 
-onoe()
+function onoe()
 {
   echo "$*" >&2
 }
@@ -48,7 +48,7 @@ onoe()
 DIFF="diff"
 SHFMT="shfmt"
 
-DIFF_ARGS=("-d" "-C" "1" "--color")
+DIFF_ARGS=("--minimal" "--context=1" "--color")
 SHFMT_ARGS=()
 INPLACE=''
 while [[ $# -gt 0 ]]
@@ -71,9 +71,9 @@ do
   fi
   if [[ "${arg}" =~ ^-h|--help$ ]]
   then
-    echo "This is a custom wrapper to \`shfmt\`".
-    echo "The input arguments are the same as the ones used by \`shfmt\`".
-    echo "You will find below the original help of \`shfmt\`."
+    echo "This is a custom wrapper to \`${SHFMT}\`".
+    echo "The input arguments are the same as the ones used by \`${SHFMT}\`".
+    echo "You will find below the original help of \`${SHFMT}\`."
     echo "---------------------------------------------------------------------"
     "${SHFMT}" --help
     exit 0
@@ -113,7 +113,7 @@ fi
 ###
 
 # Check for specific patterns and prompt messages if detected
-no_forbidden_pattern()
+function _no_forbidden_pattern()
 {
   local file="$1"
   local tempfile="$2"
@@ -144,12 +144,12 @@ no_forbidden_pattern()
 #
 # Replace tabs with 2 spaces instead
 #
-no_tabs()
+function no_tabs()
 {
   local file="$1"
   local tempfile="$2"
 
-  no_forbidden_pattern "${file}" "${tempfile}" \
+  _no_forbidden_pattern "${file}" "${tempfile}" \
     "Indent with tab" \
     'Replace tabs with 2 spaces instead.' \
     '^[[:space:]]+' \
@@ -167,7 +167,7 @@ no_tabs()
 #   for var in "${ARRAY[@]}"
 #   do
 #
-no_multiline_for_statements()
+function no_multiline_for_statements()
 {
   local file="$1"
   local tempfile="$2"
@@ -186,7 +186,7 @@ Use the following instead (keep for statements only one line):
 EOMSG
   )"
 
-  no_forbidden_pattern "${file}" "${tempfile}" \
+  _no_forbidden_pattern "${file}" "${tempfile}" \
     "Multiline for statement" \
     "${message}" \
     "${regex}"
@@ -201,7 +201,7 @@ EOMSG
 #     ...
 #   done < <(command)
 #
-no_IFS_newline()
+function no_IFS_newline()
 {
   local file="$1"
   local tempfile="$2"
@@ -217,21 +217,10 @@ Use the following instead:
 EOMSG
   )"
 
-  no_forbidden_pattern "${file}" "${tempfile}" \
+  _no_forbidden_pattern "${file}" "${tempfile}" \
     "Pattern \`IFS=\$'\\n'\`" \
     "${message}" \
     "${regex}"
-}
-
-# Combine all forbidden styles
-no_forbidden_styles()
-{
-  local file="$1"
-  local tempfile="$2"
-
-  no_tabs "${file}" "${tempfile}" || return 1
-  no_multiline_for_statements "${file}" "${tempfile}" || return 1
-  no_IFS_newline "${file}" "${tempfile}" || return 1
 }
 
 # Align multiline if condition (indent with 3 spaces or 6 spaces (start with "-"))
@@ -245,7 +234,7 @@ no_forbidden_styles()
 #     -n ... ]]                     -n ... ]]
 #   then                      then
 #
-align_multiline_if_condition()
+function align_multiline_if_condition()
 {
   local line
   local lastline=''
@@ -255,7 +244,7 @@ align_multiline_if_condition()
   local multiline_if_then_end_regex='^(.*)\; (then( *#.*)?)$'
   local within_test_regex='^( *)(((! )?-[fdLrwxeszn] )|([^\[]+ (==|!=|=~) ))'
 
-  trim()
+  function trim()
   {
     [[ "$1" =~ [^[:space:]](.*[^[:space:]])? ]]
     printf "%s" "${BASH_REMATCH[0]}"
@@ -308,7 +297,7 @@ align_multiline_if_condition()
 #   for var in ...; do        for var in ...
 #                             do
 #
-wrap_then_do()
+function wrap_then_do()
 {
   local file="$1"
   local tempfile="$2"
@@ -359,13 +348,34 @@ wrap_then_do()
   printf "%s\n" "${processed[@]}" > "${tempfile}"
 }
 
+# Wrap function brackets and add `function` keyword before a function.
+# before:                   after:
+#   my_fun() {                function my_fun()
+#     commands...             {
+#   }                           commands...
+#                             }
+#
+# before:                   after:
+#   function my_fun() {       function my_fun()
+#     commands...             {
+#   }                           commands...
+#                             }
+#
+function wrap_function()
+{
+  local file="$1"
+  local tempfile="$2"
+  local singleline_fun_regex='(^ *)(function )?([_[:alpha:]][_[:alnum:]]*\(\)) \{$'
+  sed -i -E "s/${singleline_fun_regex}/\1function \3\n\1\{/" "${tempfile}"
+}
+
 # Return codes:
 #   0: success, good styles
 #   1: file system permission errors
 #   2: shfmt failed
 #   3: forbidden styles detected
 #   4: bad styles but can be auto-fixed
-format()
+function format()
 {
   local file="$1"
   local tempfile
@@ -395,22 +405,25 @@ format()
     fi
     if ! "${SHFMT}" -w "${SHFMT_ARGS[@]}" "${tempfile}"
     then
-      onoe "Failed to run \`shfmt\` for file \"${file}\"."
+      onoe "Failed to run \`${SHFMT}\` for file \"${file}\"."
       return 2
     fi
   else
     if ! "${SHFMT}" "${SHFMT_ARGS[@]}" > "${tempfile}"
     then
-      onoe "Failed to run \`shfmt\` for file \"${file}\"."
+      onoe "Failed to run \`${SHFMT}\` for file \"${file}\"."
       return 2
     fi
   fi
 
   # Fail fast when forbidden styles detected
-  no_forbidden_styles "${file}" "${tempfile}" || return 3
+  no_tabs "${file}" "${tempfile}" || return 3
+  no_multiline_for_statements "${file}" "${tempfile}" || return 3
+  no_IFS_newline "${file}" "${tempfile}" || return 3
 
   # Tweak it with custom shell script styles
   wrap_then_do "${file}" "${tempfile}"
+  wrap_function "${file}" "${tempfile}"
 
   if [[ -n "${STDIN}" ]]
   then
@@ -459,7 +472,7 @@ do
   then
     case "${retcode}" in
       1) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 1 (permission error)." ;;
-      2) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 2 (\`shfmt\` failed)." ;;
+      2) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 2 (\`${SHFMT}\` failed)." ;;
       3) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code 3 (forbidden styles detected)." ;;
       4) onoe "${0##*/}: Fixable bad styles detected in file \"${file}\"." ;;
       *) onoe "${0##*/}: Failed to format file \"${file}\". Formatter exited with code ${retcode}." ;;

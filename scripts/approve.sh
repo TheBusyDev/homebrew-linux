@@ -16,7 +16,7 @@ source "$(dirname "$0")"/_functions.sh
 # Match `version` entries in `.rb` files.
 VERSION_REGEX='^[+-]\s*version\s+".*"$'
 # Match `sha256` entries in `.rb` files.
-SHA256_REGEX='^[+-]\s*sha256(\s+(arm|arm64|intel|x86_64)_linux:)?\s+"[a-z0-9]+"$'
+SHA256_REGEX='^[+-]\s*sha256(\s+(arm|arm64|intel|x86_64)_linux:)?\s+"[[:xdigit:]]+"$'
 
 # Check for every PR in `pr_numbers`.
 mapfile -d ":" -t pr_numbers < <(echo -n "$1")
@@ -29,7 +29,7 @@ for pr_nr in "${pr_numbers[@]}"
 do
   echo "==> Checking pull request #${pr_nr}..."
 
-  if [[ ! "${pr_nr}" =~ ^[0-9]+$ ]]
+  if [[ ! "${pr_nr}" =~ ^[[:digit:]]+$ ]]
   then
     echo "::error::\"${pr_nr}\" is not a valid PR number." >&2
     success=false
