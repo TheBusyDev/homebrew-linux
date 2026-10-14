@@ -248,8 +248,7 @@ function is_rb_file_entry()
   fi
   local -n __regex__="$2"
 
-  grep -E "^[[:space:]]*${__regex__["key"]}[[:space:]]+${__regex__["value"]}\$" \
-    "$1" > /dev/null 2>&1 \
+  grep -zqP "\n[ \t]*${__regex__["key"]}[ \t]+${__regex__["value"]}\n" "$1" \
     && echo true \
     || echo false
 }
