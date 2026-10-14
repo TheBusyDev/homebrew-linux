@@ -1,68 +1,57 @@
 #!/bin/bash
-# Check if all the formulae/casks from the provided tap are developed for Linux
-# only.
-#
-# Environment variables:
-# - `TAP_NAME`: The name of the tap.
+# Perform some checks given in REGEX format on `.rb` files in this repository.
 #
 
 source "$(dirname "$0")"/_env.sh
 source "$(dirname "$0")"/_functions.sh
 
 # Useful variables.
-linux_only=true # Are all the formulae/taps developed for Linux only?
+success=true # Have all the checks passed successfully?
 
 # Get formulae and casks from the tap.
-mapfile -t formula_rb_files < <(formula_rb_files)
-mapfile -t cask_rb_files < <(cask_rb_files)
+mapfile -t rb_files < <(find ./Formula ./Casks -name "*.rb" -type f)
 
 # Check formulae.
-echo "==> Checking target OS of formulae..."
+echo "==> Checking formula/cask \`.rb\` files..."
 
-for file in "${formula_rb_files[@]}"
+for rb_file in "${rb_files[@]}"
 do
-  depends_on_linux="$(depends_on_linux "${file}")"
-  depends_on_macos="$(depends_on_macos "${file}")"
+  sha256_correct="$(is_rb_file_entry "${rb_file}" SHA256_REGEX)"
+  depends_on_linux="$(is_rb_file_entry "${rb_file}" DEPENDS_ON_LINUX_REGEX)"
+  depends_on_macos="$(is_rb_file_entry "${rb_file}" DEPENDS_ON_MACOS_REGEX)"
+
+  if ! ${sha256_correct}
+  then
+    cat << EOMSG >&2
+::error file=${rb_file}::\`sha256\` entry is provided in the wrong format.
+Below a list of accepted styles for this repository:
+  sha256 "<sha256-signature>"
+  sha256 arm64_linux: "<sha256-signature>"
+  sha256 x86_64_linux: "<sha256-signature>"
+
+Examples of forbidden styles:
+  sha256 arm: "<sha256-signature>" # i.e. without \`_linux\` suffix.
+  sha256 arm64_linux:  "<sha256-signature>",
+         x86_64_linux: "<sha256-signature>" # i.e. multiline definition.
+EOMSG
+    success=false
+  fi
 
   if ! ${depends_on_linux}
   then
-    echo "::error file=${file}::Linux is not the target OS for this formula." \
+    echo "::error file=${rb_file}::Linux is not the target OS for this \`.rb\` file." \
       "Add \`depends_on :linux\` stanza." >&2
-    linux_only=false
+    success=false
   fi
 
   if ${depends_on_macos}
   then
-    echo "::error file=${file}::This repository hosts Linux formulae only." \
-      "Cannot include formulae developed for MacOS." \
+    echo "::error file=${rb_file}::This repository hosts Linux formulae/casks only." \
+      "Cannot include formulae/casks developed for MacOS." \
       "Remove \`depends_on :macos\` stanza." >&2
-    linux_only=false
+    success=false
   fi
 done
 
-# Check casks.
-echo "==> Checking target OS of casks..."
-
-for file in "${cask_rb_files[@]}"
-do
-  depends_on_linux="$(depends_on_linux "${file}")"
-  depends_on_macos="$(depends_on_macos "${file}")"
-
-  if ! ${depends_on_linux}
-  then
-    echo "::error file=${file}::Linux is not the target OS for this cask." \
-      "Add \`depends_on :linux\` stanza." >&2
-    linux_only=false
-  fi
-
-  if ${depends_on_macos}
-  then
-    echo "::error file=${file}::This repository hosts Linux casks only." \
-      "Cannot include casks developed for MacOS." \
-      "Remove \`depends_on :macos\` stanza." >&2
-    linux_only=false
-  fi
-done
-
-${linux_only} || exit 1 # Abort test.
+${success} || exit 1 # Abort test.
 exit 0
