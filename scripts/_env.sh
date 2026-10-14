@@ -15,10 +15,7 @@
 #
 
 # Include guard.
-if [[ -n "${__ENV_SH}" ]]
-then
-  return 0
-fi
+[[ -n "${__ENV_SH}" ]] && return 0
 export __ENV_SH="1"
 
 # Environment variables.
