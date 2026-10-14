@@ -17,7 +17,7 @@ mapfile -t formulae < <(formulae_from_tap)
 mapfile -t casks < <(casks_from_tap)
 
 # Check formulae.
-echo "==> Checking formulae..."
+echo "==> Checking target OS of formulae..."
 
 for formula in "${formulae[@]}"
 do
@@ -42,7 +42,7 @@ do
 done
 
 # Check casks.
-echo "==> Checking casks..."
+echo "==> Checking target OS of casks..."
 
 for cask in "${casks[@]}"
 do
