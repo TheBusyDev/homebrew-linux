@@ -49,11 +49,11 @@ jobs:
         run: ./scripts/bump.sh
 
       - name: Auto-approve PRs safely
+        if: |
+          always() &&
+          steps.brew-bump.conclusion != "skipped" &&
+          steps.brew-bump.outputs.pr-numbers != ""
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBERS: ${{ steps.brew-bump.outputs.pr-numbers }}
-        run: |
-          if [[ -n "${PR_NUMBERS}" ]]
-          then
-            ./scripts/approve.sh "${PR_NUMBERS}"
-          fi
+        run: ./scripts/approve.sh "${PR_NUMBERS}"
