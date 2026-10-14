@@ -7,11 +7,7 @@ source "$(dirname "$0")"/_functions.sh
 
 # Useful variables.
 success=true # Have all the checks passed successfully?
-
-# Get formulae and casks from the tap.
 mapfile -t rb_files < <(find ./Formula ./Casks -name "*.rb" -type f)
-
-# Check formulae.
 echo "==> Checking formula/cask \`.rb\` files..."
 
 for rb_file in "${rb_files[@]}"
@@ -54,4 +50,6 @@ EOMSG
 done
 
 ${success} || exit 1 # Abort test.
+
+echo "No offense found in ${#rb_files[@]} \`.rb\` files."
 exit 0
