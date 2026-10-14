@@ -16,7 +16,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        os: [ubuntu-24.04, ubuntu-24.04-arm]
+        os: [ubuntu-24.04-arm, ubuntu-24.04]
     runs-on: ${{ matrix.os }}
     permissions:
       actions: read
@@ -30,14 +30,17 @@ jobs:
         uses: Homebrew/actions/setup-homebrew@e99025eb970cfa124b8284a35463d87426917478 # 2026.09.28.1
 
       - name: Install dependencies
+        if: runner.os == 'ubuntu-24.04-arm'
         run: ./scripts/install_deps.sh
 
       - name: Check style of the tap
+        if: runner.os == 'ubuntu-24.04-arm'
         env:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
         run: ./scripts/style.sh
 
       - name: Check target OS
+        if: runner.os == 'ubuntu-24.04-arm'
         env:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
         run: ./scripts/check_os.sh
