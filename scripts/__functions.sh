@@ -8,71 +8,6 @@ readonly __FUNCTIONS_SH=1
 
 source "$(dirname "$0")"/__env.sh
 
-# Obtain a certain property of a pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-#
-# Input:
-# 1. The number of the pull request.
-# 2. The key of the PR property.
-#
-# Output:
-# Writes property of pull request to stdout.
-#
-function _get_pr_property()
-{
-  gh pr view "$1" --json "$2" | jq -r ".$2"
-}
-
-# Obtain state of a pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-#
-# Input:
-# 1. The number of the pull request.
-#
-# Output:
-# Writes state of pull request to stdout.
-#
-function get_pr_state()
-{
-  _get_pr_property "$1" "state" | tr "[:upper:]" "[:lower:]"
-}
-
-# Obtain URL of a pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-#
-# Input:
-# 1. The number of the pull request.
-#
-# Output:
-# Writes URL of pull request to stdout.
-#
-function get_pr_url()
-{
-  _get_pr_property "$1" "url"
-}
-
-# Obtain all the files modified in a pull request.
-#
-# Environment variables:
-# - `GH_TOKEN`: Token used for authentication in `gh`.
-#
-# Input:
-# 1. The number of the pull request.
-#
-# Output:
-# Writes a newline-separated list of filepaths to stdout.
-#
-function get_pr_filepaths()
-{
-  _get_pr_property "$1" "files" | jq -r ".[].path"
-}
-
 # Get all the formulae/casks from a given tap.
 #
 # Environment variables:
@@ -211,6 +146,71 @@ function brew_bump_formula()
 function brew_bump_cask()
 {
   _brew_bump_formula_or_cask "$1" "cask"
+}
+
+# Obtain a certain property of a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The key of the PR property.
+#
+# Output:
+# Writes property of pull request to stdout.
+#
+function _get_pr_property()
+{
+  gh pr view "$1" --json "$2" | jq -r ".$2"
+}
+
+# Obtain state of a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes state of pull request to stdout.
+#
+function get_pr_state()
+{
+  _get_pr_property "$1" "state" | tr "[:upper:]" "[:lower:]"
+}
+
+# Obtain URL of a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes URL of pull request to stdout.
+#
+function get_pr_url()
+{
+  _get_pr_property "$1" "url"
+}
+
+# Obtain all the files modified in a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+#
+# Output:
+# Writes a newline-separated list of filepaths to stdout.
+#
+function get_pr_filepaths()
+{
+  _get_pr_property "$1" "files" | jq -r ".[].path"
 }
 
 # Get the regular expression defined in the input associative array.
