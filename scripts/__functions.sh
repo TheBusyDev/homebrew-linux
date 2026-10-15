@@ -228,32 +228,50 @@ function get_pr_filepaths()
 #
 function _get_pr_additions_or_deletions()
 {
-  [[ -v __ALL_CHANGES__ ]] || declare -A __ALL_CHANGES__
-  # Fetch all the changes in the PR (if not already fetch).
-  [[ -v __ALL_CHANGES__["$1"] ]] \
-    || __ALL_CHANGES__["$1"]="$(gh pr diff "${pr_nr}")"
+  [[ -v __ALL_PR_CHANGES__ ]] || declare -A __ALL_PR_CHANGES__
 
-  echo "${__ALL_CHANGES__["$1"]}" \
-    | FILE="$2" CHAR="$3" awk '
-        BEGIN {
-          file = ENVIRON["FILE"]
-          char = ENVIRON["CHAR"]
-          prefix = "diff --git a/" file " "
-          suffix = " b/" file
-        }
-        /^diff --git / {
-          inhunk = 0
-          is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
-          next
-        }
-        /^@@/ {
-          inhunk = 1
-          next
-        }
-        is_file && inhunk && substr($0, 1, 1) == char {
-          print substr($0, 2)
-        }
-      '
+  # Fetch all the changes in the PR (if not already fetched).
+  if [[ ! -v __ALL_PR_CHANGES__["$1"] ]]
+  then
+    __ALL_PR_CHANGES__["$1"]="$(gh pr diff "${pr_nr}")"
+  fi
+
+  # Retrieve the changes in the file (if not already retrieved).
+  if [[ ! -v __ALL_PR_CHANGES__["$1.$2"] ]]
+  then
+    __ALL_PR_CHANGES__["$1.$2"]="$(
+      echo "${__ALL_PR_CHANGES__["$1"]}" \
+        | FILE="$2" awk '
+            BEGIN {
+              file = ENVIRON["FILE"]
+              prefix = "diff --git a/" file " "
+              suffix = " b/" file
+            }
+            /^diff --git / {
+              inhunk = 0
+              is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
+              next
+            }
+            /^@@/ {
+              inhunk = 1
+              next
+            }
+            is_file && inhunk && /^[+-]/ {
+              print $0
+            }
+          '
+    )"
+  fi
+
+  # Filter the additions/deletions (if not already filtered).
+  if [[ ! -v __ALL_PR_CHANGES__["$1.$2.$3"] ]]
+  then
+    __ALL_PR_CHANGES__["$1.$2.$3"]="$(
+      echo "${__ALL_PR_CHANGES__["$1.$2"]}" | sed -ne "s/^$3//p"
+    )"
+  fi
+
+  echo "${__ALL_PR_CHANGES__["$1.$2.$3"]}"
 }
 
 # Obtain all the file additions from a pull request.
@@ -290,6 +308,60 @@ function get_pr_deletions()
   _get_pr_additions_or_deletions "$1" "$2" "-"
 }
 
+# Obtain all the file unauthorized additions/deletions from a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The filepath.
+# 3. Literal string: "+" (to retrieve additions) or "-" (to retrieve deletions).
+#
+# Output:
+# Writes unauthorized additions/deletions for the specific file to stdout.
+#
+function _get_pr_unauthorized_additions_or_deletions()
+{
+  _get_pr_additions_or_deletions "$1" "$2" "$3" \
+    | sed -zE "s/$(get_rb_entry_regex VERSION_REGEX)/\n/g" \
+    | sed -zE "s/$(get_rb_entry_regex SHA256_REGEX)/\n/g"
+}
+
+# Obtain all the file unauthorized additions from a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The filepath.
+#
+# Output:
+# Writes unauthorized additions for the specific file to stdout.
+#
+function get_pr_unauthorized_additions()
+{
+  _get_pr_unauthorized_additions_or_deletions "$1" "$2" "+"
+}
+
+# Obtain all the file unauthorized deletions from a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The filepath.
+#
+# Output:
+# Writes unauthorized deletions for the specific file to stdout.
+#
+function get_pr_unauthorized_deletions()
+{
+  _get_pr_unauthorized_additions_or_deletions "$1" "$2" "-"
+}
+
 # Print the input additions/deletions, adding a leading "+"/"-" accordingly.
 #
 # Input:
@@ -301,10 +373,8 @@ function get_pr_deletions()
 #
 function _echo_pr_additions_or_deletions()
 {
-  local IFS="\n$2"
-  local array
-  mapfile -t array <<< "$1"
-  echo -n "${array[*]}"
+  # shellcheck disable=SC2001
+  echo "$1" | sed -e "s/^/$2/"
 }
 
 # Print the input additions, adding a leading "+".
