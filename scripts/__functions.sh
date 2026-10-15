@@ -3,8 +3,8 @@
 #
 
 # Include guard.
-[[ -n "${_FUNCTIONS_SH:-}" ]] && return 0
-readonly _FUNCTIONS_SH=1
+[[ -n "${__FUNCTIONS_SH:-}" ]] && return 0
+readonly __FUNCTIONS_SH=1
 
 source "$(dirname "$0")"/__env.sh
 
