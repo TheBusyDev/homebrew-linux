@@ -5,12 +5,12 @@
 # - `TAP_NAME`: The name of the tap.
 #
 
-source "$(dirname "$0")"/_env.sh
-source "$(dirname "$0")"/_functions.sh
+source "$(dirname "$0")"/__env.sh
+source "$(dirname "$0")"/__functions.sh
 
 # Get formulae and casks from the tap.
-mapfile -t formulae < <(formulae_from_tap)
-mapfile -t casks < <(casks_from_tap)
+mapfile -t formulae < <(get_formulae_from_tap)
+mapfile -t casks < <(get_casks_from_tap)
 success=true # Did all tests passed?
 
 # Install and test.

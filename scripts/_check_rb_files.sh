@@ -2,8 +2,8 @@
 # Perform some checks given in REGEX format on `.rb` files in this repository.
 #
 
-source "$(dirname "$0")"/_env.sh
-source "$(dirname "$0")"/_functions.sh
+source "$(dirname "$0")"/__env.sh
+source "$(dirname "$0")"/__functions.sh
 
 # Useful variables.
 success=true # Have all the checks passed successfully?
@@ -22,14 +22,14 @@ do
 
 ::error file=${rb_file}::\`sha256\` entry is provided in the wrong format.
 Below a list of accepted styles for this repository:
-  sha256 "<sha256-signature>"
-  sha256 arm64_linux: "<sha256-signature>"
-  sha256 x86_64_linux: "<sha256-signature>"
+  1. sha256 "<sha256-signature>"
+  2. sha256 arm64_linux:  "<sha256-signature>",
+            x86_64_linux: "<sha256-signature>"
 
 Examples of forbidden styles:
-  sha256 arm: "<sha256-signature>" # i.e. without \`_linux\` suffix.
-  sha256 arm64_linux:  "<sha256-signature>",
-         x86_64_linux: "<sha256-signature>" # i.e. multiline definition.
+  1. sha256 arm: "<sha256-signature>" # i.e. without \`_linux\` suffix.
+  2. sha256 arm64_linux: "<sha256-signature>"
+     sha256 x86_64_linux: "<sha256-signature>"
 EOMSG
     success=false
   fi

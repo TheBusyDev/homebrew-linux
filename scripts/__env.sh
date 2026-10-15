@@ -15,8 +15,8 @@
 #
 
 # Include guard.
-[[ -n "${_ENV_SH:-}" ]] && return 0
-readonly _ENV_SH=1
+[[ -n "${__ENV_SH:-}" ]] && return 0
+readonly __ENV_SH=1
 
 # Apply shell options.
 set -euo pipefail
@@ -49,7 +49,7 @@ declare -rA VERSION_REGEX=(
 # shellcheck disable=SC2034
 declare -rA SHA256_REGEX=(
   ["key"]='sha256'
-  ["value"]='((arm64|x86_64)_linux:[[:blank:]]+)?"[[:xdigit:]]{64}"(,\n[[:blank:]]*(arm64|x86_64)_linux:[[:blank:]]+"[[:xdigit:]]{64}")?'
+  ["value"]='("[[:xdigit:]]{64}"|arm64_linux:[[:blank:]]*"[[:xdigit:]]{64}",\n[[:blank:]]*x86_64_linux:[[:blank:]]*"[[:xdigit:]]{64}")'
 )
 
 # Match `depends_on :linux` stanzas in `.rb` files.

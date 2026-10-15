@@ -16,15 +16,15 @@
 #                 `brew bump`.
 #
 
-source "$(dirname "$0")"/_env.sh
-source "$(dirname "$0")"/_functions.sh
+source "$(dirname "$0")"/__env.sh
+source "$(dirname "$0")"/__functions.sh
 
 # Useful variables.
 pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
 
 # Get formulae and casks from the tap.
-mapfile -t formulae < <(formulae_from_tap)
-mapfile -t casks < <(casks_from_tap)
+mapfile -t formulae < <(get_formulae_from_tap)
+mapfile -t casks < <(get_casks_from_tap)
 all_bumped=true # Have all the formulae/casks been bumped correctly?
 
 # Update formulae from the given tap.

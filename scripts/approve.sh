@@ -9,8 +9,8 @@
 #
 # TODO: add criteria list to README.md
 
-source "$(dirname "$0")"/_env.sh
-source "$(dirname "$0")"/_functions.sh
+source "$(dirname "$0")"/__env.sh
+source "$(dirname "$0")"/__functions.sh
 
 # Check for every PR in `pr_numbers`.
 : "${1:?You must provide a colon-separated list of pull request numbers\!}"
@@ -45,8 +45,6 @@ do
 
   # Get the changed files and check them.
   mapfile -t pr_files < <(get_pr_filepaths "${pr_nr}")
-  # Fetch all the changes in the PR.
-  all_changes="$(gh pr diff "${pr_nr}" --color=never)"
 
   for file in "${pr_files[@]}"
   do
@@ -60,40 +58,25 @@ do
       continue
     fi
 
-    # Check difference between files modified in PR and the ones on default branch.
-    file_changes="$(
-      echo "${all_changes}" \
-        | FILE="${file}" awk '
-          BEGIN { file = ENVIRON["FILE"]; prefix = "diff --git a/" file " "; suffix = " b/" file }
-          /^diff --git / {
-            inhunk = 0
-            is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
-            next
-          }
-          /^@@/ {
-            inhunk = 1
-            next
-          }
-          is_file && inhunk && /^[+-]/ {
-            print substr($0, 2)
-          }
-        '
-    )"
+    # Get changes from the PR.
+    dels="$(get_pr_deletions "${pr_nr}" "${file}")"
+    adds="$(get_pr_additions "${pr_nr}" "${file}")"
 
-    if [[ -n "${file_changes}" ]]
+    if [[ -n "${dels}" ]] || [[ -n "${adds}" ]]
     then
-      echo -e "Changes w.r.t. base branch:\n${file_changes}\n"
+      echo "Changes w.r.t. base branch:"
+      echo_pr_deletions "${dels}"
+      echo_pr_additions "${adds}"
 
-      unauthorized_changes="$(
-        echo "${file_changes}" \
-          | sed -zE "s/$(get_rb_entry_regex VERSION_REGEX)/\n/g" \
-          | sed -zE "s/$(get_rb_entry_regex SHA256_REGEX)/\n/g"
-      )"
+      # Find unauthorized changes.
+      unauthorized_dels="$(get_pr_unauthorized_deletions "${pr_nr}" "${file}")"
+      unauthorized_adds="$(get_pr_unauthorized_additions "${pr_nr}" "${file}")"
 
-      if [[ -n "${unauthorized_changes}" ]]
+      if [[ -n "${unauthorized_dels}" ]] || [[ -n "${unauthorized_adds}" ]]
       then
-        echo -e "::error file=${file}::Unauthorized changes found:" >&2
-        echo -e "${unauthorized_changes}\n" >&2
+        echo "::error file=${file}::Unauthorized changes found:" >&2
+        echo_pr_deletions "${unauthorized_dels}" >&2
+        echo_pr_additions "${unauthorized_adds}" >&2
         safe_to_approve=false
         continue
       fi
