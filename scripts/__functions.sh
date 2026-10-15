@@ -213,6 +213,126 @@ function get_pr_filepaths()
   _get_pr_property "$1" "files" | jq -r ".[].path"
 }
 
+# Obtain all the file additions/deletions from a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The filepath.
+# 3. Literal string: "+" (to retrieve additions) or "-" (to retrieve deletions).
+#
+# Output:
+# Writes additions/deletions for the specific file to stdout.
+#
+function _get_pr_additions_or_deletions()
+{
+  [[ -v __ALL_CHANGES__ ]] || declare -A __ALL_CHANGES__
+  # Fetch all the changes in the PR (if not already fetch).
+  [[ -v __ALL_CHANGES__["$1"] ]] \
+    || __ALL_CHANGES__["$1"]="$(gh pr diff "${pr_nr}")"
+
+  echo "${__ALL_CHANGES__["$1"]}" \
+    | FILE="$2" CHAR="$3" awk '
+        BEGIN {
+          file = ENVIRON["FILE"]
+          char = ENVIRON["CHAR"]
+          prefix = "diff --git a/" file " "
+          suffix = " b/" file
+        }
+        /^diff --git / {
+          inhunk = 0
+          is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
+          next
+        }
+        /^@@/ {
+          inhunk = 1
+          next
+        }
+        is_file && inhunk && substr($0, 1, 1) == char {
+          print substr($0, 2)
+        }
+      '
+}
+
+# Obtain all the file additions from a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The filepath.
+#
+# Output:
+# Writes additions for the specific file to stdout.
+#
+function get_pr_additions()
+{
+  _get_pr_additions_or_deletions "$1" "$2" "+"
+}
+
+# Obtain all the file deletions from a pull request.
+#
+# Environment variables:
+# - `GH_TOKEN`: Token used for authentication in `gh`.
+#
+# Input:
+# 1. The number of the pull request.
+# 2. The filepath.
+#
+# Output:
+# Writes deletions for the specific file to stdout.
+#
+function get_pr_deletions()
+{
+  _get_pr_additions_or_deletions "$1" "$2" "-"
+}
+
+# Print the input additions/deletions, adding a leading "+"/"-" accordingly.
+#
+# Input:
+# 1. Newline-separated string, containing the additions/deletions.
+# 2. Literal string: "+" (to retrieve additions) or "-" (to retrieve deletions).
+#
+# Output:
+# Writes additions/deletions to stdout, adding a leading "+"/"-" accordingly.
+#
+function _echo_pr_additions_or_deletions()
+{
+  local IFS="\n$2"
+  local array
+  mapfile -t array <<< "$1"
+  echo -n "${array[*]}"
+}
+
+# Print the input additions, adding a leading "+".
+#
+# Input:
+# 1. Newline-separated string, containing the additions.
+#
+# Output:
+# Writes additions to stdout, adding a leading "+".
+#
+function echo_pr_additions()
+{
+  _echo_pr_additions_or_deletions "$1" "+"
+}
+
+# Print the input deletions, adding a leading "-".
+#
+# Input:
+# 1. Newline-separated string, containing the deletions.
+#
+# Output:
+# Writes deletions to stdout, adding a leading "-".
+#
+function echo_pr_deletions()
+{
+  _echo_pr_additions_or_deletions "$1" "-"
+}
+
 # Get the regular expression defined in the input associative array.
 #
 # Input:
