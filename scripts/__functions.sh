@@ -19,7 +19,7 @@ source "$(dirname "$0")"/__env.sh
 # Output:
 # Writes a newline-separated list to stdout.
 #
-function _formulae_or_casks_from_tap()
+function _get_formulae_or_casks_from_tap()
 {
   local array_name
 
@@ -43,9 +43,9 @@ function _formulae_or_casks_from_tap()
 # Output:
 # Writes a newline-separated list of formulae to stdout.
 #
-function formulae_from_tap()
+function get_formulae_from_tap()
 {
-  _formulae_or_casks_from_tap "formulae"
+  _get_formulae_or_casks_from_tap "formulae"
 }
 
 # Get all the casks from a given tap.
@@ -56,9 +56,9 @@ function formulae_from_tap()
 # Output:
 # Writes a newline-separated list of casks to stdout.
 #
-function casks_from_tap()
+function get_casks_from_tap()
 {
-  _formulae_or_casks_from_tap "casks"
+  _get_formulae_or_casks_from_tap "casks"
 }
 
 # Bump a formula/cask, creating a new pull request with the selected label.
