@@ -18,6 +18,7 @@ cask "vscode" do
       version = json["productVersion"]
       build = json["version"]
       next if version.blank? || build.blank?
+
       "#{version},#{build}"
     end
   end
