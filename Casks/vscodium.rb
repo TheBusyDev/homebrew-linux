@@ -42,7 +42,7 @@ cask "vscodium" do
       Icon=vscodium
       Type=Application
       StartupNotify=false
-      StartupWMClass=VSCodium
+      StartupWMClass=codium
       Categories=TextEditor;Development;IDE;
       MimeType=text/plain;inode/directory;application/x-codium-workspace;
       Actions=new-empty-window;
