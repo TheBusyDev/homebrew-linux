@@ -15,8 +15,8 @@ source "$(dirname "$0")"/__env.sh
 source "$(dirname "$0")"/__functions.sh
 
 arg="${1:-}"
-mapfile -t formulae < <(formulae_from_tap)
-mapfile -t casks < <(casks_from_tap)
+mapfile -t formulae < <(get_formulae_from_tap)
+mapfile -t casks < <(get_casks_from_tap)
 mapfile -t scripts < <(find ./scripts -name "*.sh" -type f)
 success=true # Is the style of the tap complaint?
 
