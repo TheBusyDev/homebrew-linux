@@ -37,7 +37,7 @@
 #
 
 OLD_PWD="${PWD}"
-source "$(dirname "$0")"/_env.sh
+source "$(dirname "$0")"/__env.sh
 cd "${OLD_PWD}" || exit 1
 
 function onoe()
