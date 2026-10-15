@@ -9,3 +9,6 @@ The bash scripts in this directory <u>*must*</u> follow these guidelines:
 1. The scripts named `_*.sh` (one leading underscore) are meant for
    **internal use only** (i.e. they should be executed by other scripts in this
    directory).
+1. Functions named `_my_fun` (one leading underscore) are meant for
+   **internal use only** (i.e. they should be called only within the script
+   defining them).
