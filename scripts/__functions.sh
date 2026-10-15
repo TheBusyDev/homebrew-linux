@@ -6,7 +6,7 @@
 [[ -n "${_FUNCTIONS_SH:-}" ]] && return 0
 readonly _FUNCTIONS_SH=1
 
-source "$(dirname "$0")"/_env.sh
+source "$(dirname "$0")"/__env.sh
 
 # Obtain a certain property of a pull request.
 #

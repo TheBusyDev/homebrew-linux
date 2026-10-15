@@ -5,8 +5,8 @@
 # - `TAP_NAME`: The name of the tap.
 #
 
-source "$(dirname "$0")"/_env.sh
-source "$(dirname "$0")"/_functions.sh
+source "$(dirname "$0")"/__env.sh
+source "$(dirname "$0")"/__functions.sh
 
 # Get formulae and casks from the tap.
 mapfile -t formulae < <(formulae_from_tap)
