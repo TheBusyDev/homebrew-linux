@@ -6,7 +6,7 @@ cask "vscodium" do
   sha256 arm64_linux:  "9765cea4f707ff7dc83a40be408a7318a59abb6996b359631639d9aab2f48a90",
          x86_64_linux: "c09d8ac8dd7f52b09ee159ee24b440541dfd8f937a0f6f88cc428c78e48ee1f2"
 
-  url "https://github.com/VSCodium/vscodium/releases/download/#{version}/VSCodium-#{os}-#{arch}-#{version}.tar.gz"
+  url "https://github.com/VSCodium/vscodium/releases/download/#{version}/VSCodium-linux-#{arch}-#{version}.tar.gz"
   name "VSCodium"
   desc "Editing evolved - Free/Libre Open Source Software Binaries of VS Code"
   homepage "https://vscodium.com/"
@@ -36,7 +36,7 @@ cask "vscodium" do
     write_file "vscodium.desktop", <<~EOS
       [Desktop Entry]
       Name=VSCodium
-      Comment=Editing evolved.
+      Comment=Code Editing. Evolved.
       GenericName=Text Editor
       Exec={{HOMEBREW_PREFIX}}/bin/codium %F
       Icon=vscodium
@@ -53,10 +53,11 @@ cask "vscodium" do
       Exec={{HOMEBREW_PREFIX}}/bin/codium --new-window %F
       Icon=vscodium
     EOS
+
     write_file "vscodium-url-handler.desktop", <<~EOS
       [Desktop Entry]
       Name=VSCodium - URL Handler
-      Comment=Editing evolved.
+      Comment=Code Editing. Evolved.
       GenericName=Text Editor
       Exec={{HOMEBREW_PREFIX}}/bin/codium --open-url %U
       Icon=vscodium
