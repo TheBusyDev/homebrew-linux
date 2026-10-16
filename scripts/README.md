@@ -1,14 +1,36 @@
 # Coding conventions
 
-The bash scripts in this directory <u>*must*</u> follow these guidelines:
+The bash scripts in [`scripts`](../scripts) directory <u>*must*</u> follow
+these guidelines:
 
-1. Each script must have `*.sh` as its **extension**.
-1. The scripts named `__*.sh` (two leading underscores) are meant to be
+1. Each script must have `.sh` as its **extension**.
+1. The scripts named `__my_script.sh` (two leading underscores) are meant to be
    **sourced in other scripts** (and should <u>*not*</u> be executed
-   standalone).
-1. The scripts named `_*.sh` (one leading underscore) are meant for
-   **internal use only** (i.e. they should be executed by other scripts in this
-   directory).
+   standalone). These type of scripts must implement include guards:
+
+   ```sh
+   [[ -v __MY_SCRIPT_SH ]] && return 0
+   readonly __MY_SCRIPT_SH=1
+   ```
+
+1. The scripts named `_my_script.sh` (one leading underscore) are meant for
+   **internal use only** (i.e. they should be executed by other scripts in
+   [`scripts`](../scripts) directory).
 1. Functions named `_my_fun` (one leading underscore) are meant for
    **internal use only** (i.e. they should be called only within the script
    defining them).
+1. **All the environment/global variables** must be defined within
+   [`__env.sh`](../scripts/__env.sh) script (and keep away from
+   *name clashing*!).
+1. **All the scripts** must source [`__env.sh`](../scripts/__env.sh) by
+   executing in their very first line:
+
+   ```sh
+   source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
+   ```
+
+   After that, the other scripts may be sourced using their relative path w.r.t.
+   the root of the repository.
+
+   > **⚠️ WARNING:** Sourcing [`__env.sh`](../scripts/__env.sh) automatically
+     changes the working directory to the <u>*repository root*</u>.
