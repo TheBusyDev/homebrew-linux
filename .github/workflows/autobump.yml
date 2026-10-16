@@ -41,7 +41,7 @@ jobs:
         id: brew-bump
         env:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
-          GH_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+          GH_TOKEN: ${{ secrets.HOMEBREW_LINUX_TOKEN }}
           GH_COOLDOWN: 10
           COMMITTER_NAME: ${{ steps.git-setup.outputs.name }}
           COMMITTER_EMAIL: ${{ steps.git-setup.outputs.email }}
