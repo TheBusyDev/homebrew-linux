@@ -2,11 +2,10 @@ name: Homebrew tests
 
 on:
   workflow_dispatch:
+  pull_request:
   push:
     branches:
-      - main
       - dev-tests
-  pull_request:
 
 defaults:
   run:
