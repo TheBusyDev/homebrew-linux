@@ -65,6 +65,11 @@ brew audit --formulae --strict "${formulae[@]}" || success=false
 echo "==> Auditing casks..."
 brew audit --casks --strict "${casks[@]}" || success=false
 
+echo "==> Live-checking formulae..."
+brew livecheck --formulae --debug "${formulae[@]}" || success=false
+echo "==> Live-checking casks..."
+brew livecheck --casks --debug "${casks[@]}" || success=false
+
 ./scripts/_check_rb_files.sh || success=false
 
 if ! ${success}
