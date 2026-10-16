@@ -66,6 +66,10 @@ declare -rA DEPENDS_ON_MACOS_REGEX=(
   ["value"]=':?macos(:[[:blank:]]+:[[:lower:]]+)?'
 )
 
+# Global variable for internal use only. It contains an associative array with
+# all the changes from all the PRs.
+declare -A __ALL_PR_CHANGES__
+
 # Change directory to the repository root.
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")"/.. || exit 1
 
