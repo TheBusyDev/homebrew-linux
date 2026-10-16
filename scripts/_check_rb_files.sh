@@ -2,8 +2,8 @@
 # Perform some checks given in REGEX format on `.rb` files in this repository.
 #
 
-source "$(dirname "$0")"/__env.sh
-source "$(dirname "$0")"/__functions.sh
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
+source ./scripts/__functions.sh
 
 # Useful variables.
 success=true # Have all the checks passed successfully?

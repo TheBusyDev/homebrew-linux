@@ -11,8 +11,8 @@
 # - `TAP_NAME`: The name of the tap.
 #
 
-source "$(dirname "$0")"/__env.sh
-source "$(dirname "$0")"/__functions.sh
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
+source ./scripts/__functions.sh
 
 arg="${1:-}"
 mapfile -t formulae < <(get_formulae_from_tap)
@@ -64,6 +64,11 @@ echo "==> Auditing formulae..."
 brew audit --formulae --strict "${formulae[@]}" || success=false
 echo "==> Auditing casks..."
 brew audit --casks --strict "${casks[@]}" || success=false
+
+echo "==> Live-checking formulae..."
+brew livecheck --formulae --debug "${formulae[@]}" || success=false
+echo "==> Live-checking casks..."
+brew livecheck --casks --debug "${casks[@]}" || success=false
 
 ./scripts/_check_rb_files.sh || success=false
 

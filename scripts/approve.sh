@@ -9,8 +9,8 @@
 #
 # TODO: add criteria list to README.md
 
-source "$(dirname "$0")"/__env.sh
-source "$(dirname "$0")"/__functions.sh
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
+source ./scripts/__functions.sh
 
 # Check for every PR in `pr_numbers`.
 : "${1:?You must provide a colon-separated list of pull request numbers\!}"

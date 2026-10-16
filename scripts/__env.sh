@@ -15,14 +15,14 @@
 #
 
 # Include guard.
-[[ -n "${__ENV_SH:-}" ]] && return 0
+[[ -v __ENV_SH ]] && return 0
 readonly __ENV_SH=1
 
 # Apply shell options.
 set -euo pipefail
 
 # Environment variables.
-export TAP_NAME="${TAP_NAME:-"TheBusyDev/tap"}"
+export TAP_NAME="${TAP_NAME:-"thebusydev/tap"}"
 export GH_TOKEN="${GH_TOKEN:-}"
 export GH_COOLDOWN="${GH_COOLDOWN:-10}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
@@ -66,8 +66,12 @@ declare -rA DEPENDS_ON_MACOS_REGEX=(
   ["value"]=':?macos(:[[:blank:]]+:[[:lower:]]+)?'
 )
 
+# Global variable for internal use only. It contains an associative array with
+# all the changes from all the PRs.
+declare -A __ALL_PR_CHANGES__
+
 # Change directory to the repository root.
-cd "$(dirname "$0")"/.. || exit 1
+cd -- "$(dirname -- "${BASH_SOURCE[0]}")"/.. || exit 1
 
 # Check if `brew` is installed.
 if ! command -v "brew" > /dev/null 2>&1

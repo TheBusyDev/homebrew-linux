@@ -3,10 +3,10 @@
 #
 
 # Include guard.
-[[ -n "${__FUNCTIONS_SH:-}" ]] && return 0
+[[ -v __FUNCTIONS_SH ]] && return 0
 readonly __FUNCTIONS_SH=1
 
-source "$(dirname "$0")"/__env.sh
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
 
 # Get all the formulae/casks from a given tap.
 #
@@ -228,8 +228,6 @@ function get_pr_filepaths()
 #
 function _get_pr_additions_or_deletions()
 {
-  [[ -v __ALL_PR_CHANGES__ ]] || declare -A __ALL_PR_CHANGES__
-
   # Fetch all the changes in the PR (if not already fetched).
   if [[ ! -v __ALL_PR_CHANGES__["$1"] ]]
   then
