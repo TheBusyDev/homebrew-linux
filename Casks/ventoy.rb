@@ -33,9 +33,9 @@ cask "ventoy" do
   end
 
   preflight_steps do
-    move_contents "ventoy-#{version}", "."
-    remove "ventoy-#{version}"
-    symlink "VentoyGUI.#{arch}", "VentoyGUI" # Create a symbolic link for the correct architecture.
+    move_contents "ventoy-{{version}}", "."
+    remove "ventoy-{{version}}", recursive: true
+    symlink "VentoyGUI.{{arch}}", "VentoyGUI" # Create a symbolic link for the correct architecture.
 
     mkdir_p ".local/share/applications", base: :home
     mkdir_p ".local/share/icons", base: :home
