@@ -6,7 +6,7 @@
 [[ -v __FUNCTIONS_SH ]] && return 0
 readonly __FUNCTIONS_SH=1
 
-source "$(dirname "$0")"/__env.sh
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
 
 # Get all the formulae/casks from a given tap.
 #

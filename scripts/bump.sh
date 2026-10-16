@@ -16,8 +16,8 @@
 #                 `brew bump`.
 #
 
-source "$(dirname "$0")"/__env.sh
-source "$(dirname "$0")"/__functions.sh
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
+source ./scripts/__functions.sh
 
 # Useful variables.
 pr_numbers="" # Colon-separated list of PR numbers created by `brew bump`.
