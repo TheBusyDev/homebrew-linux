@@ -15,7 +15,7 @@
 #
 
 # Include guard.
-[[ -n "${__ENV_SH:-}" ]] && return 0
+[[ -v __ENV_SH ]] && return 0
 readonly __ENV_SH=1
 
 # Apply shell options.
