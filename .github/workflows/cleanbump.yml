@@ -1,0 +1,27 @@
+name: Clean up autobump branches
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev-cleanbump
+  schedule:
+    # Every Monday at 00:00 UTC.
+    - cron: '0 0 * * 1'
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-24.04-arm
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout git repo
+        uses: actions/checkout@v7
+
+      - name: Delete autobump branches
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO_NAME: ${{ github.repository }}
+          BRANCH_PREFIX: 'bump-'
+        run: ./scripts/clean_bump.sh
