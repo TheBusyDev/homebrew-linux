@@ -67,6 +67,8 @@ function get_casks_from_tap()
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
 # - `PR_LABEL`: Pull request label (possibly empty).
+# - `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`: Enable dry-runs for `brew bump`. Specify
+#                                     the dummy PR number.
 #
 # Input:
 # 1. The fully-qualified name of the formula/cask.
@@ -85,12 +87,30 @@ function _brew_bump_formula_or_cask()
   tmp_file="$(mktemp)"
   trap 'rm -f "${tmp_file}" 2>/dev/null' RETURN EXIT
 
-  brew bump "$1" --"$2" --full-name --open-pr --no-fork 2>&1 \
-    | tee "${tmp_file}" >&2 \
-    || {
-      git reset --hard >&2 # Reset changed files.
-      return $?
-    }
+  if [[ -z "${HOMEBREW_BUMP_DRYRUN_PR_NUMBER}" ]]
+  then
+    # Perform `brew bump`.
+    brew bump "$1" --"$2" --full-name --open-pr --no-fork 2>&1 \
+      | tee "${tmp_file}" >&2 \
+      || {
+        git reset --hard >&2 # Reset changed files.
+        return 1
+      }
+  else
+    # Dry-run for `brew bump`.
+    echo "::warning::Dry-runs for \`brew bump\` are enabled." \
+      "No action is performed." >&2
+
+    if [[ ! "${HOMEBREW_BUMP_DRYRUN_PR_NUMBER}" =~ ^[[:digit:]]+$ ]]
+    then
+      echo "::error::\`HOMEBREW_BUMP_DRYRUN_PR_NUMBER\` should be a valid" \
+        "PR number." >&2
+      exit 1
+    fi
+
+    echo "https://github.com/DummyDev/DummyRepo/pull/${HOMEBREW_BUMP_DRYRUN_PR_NUMBER}" \
+      > "${tmp_file}"
+  fi
 
   # Retrieve PR number from log file.
   pr_url="$(echo "${tmp_file}" \
