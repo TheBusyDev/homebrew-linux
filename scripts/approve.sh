@@ -94,7 +94,7 @@ do
     # Finally, approve the PR.
     echo "==> Approving pull request #${pr_nr}..."
     gh pr review "${pr_nr}" --approve
-    gh pr merge "${pr_nr}" --merge --auto
+    gh pr merge "${pr_nr}" --auto
   fi
 done
 
