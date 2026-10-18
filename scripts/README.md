@@ -1,5 +1,7 @@
 # Coding conventions
 
+## Guidelines
+
 The bash scripts in [`scripts`](../scripts) directory <u>*must*</u> follow
 these guidelines:
 
@@ -8,7 +10,7 @@ these guidelines:
    **sourced in other scripts** (and should <u>*not*</u> be executed
    standalone). These type of scripts must implement include guards:
 
-   ```sh
+   ```bash
    [[ -v __MY_SCRIPT_SH ]] && return 0
    readonly __MY_SCRIPT_SH=1
    ```
@@ -25,7 +27,7 @@ these guidelines:
 1. **All the scripts** must source [`__env.sh`](../scripts/__env.sh) by
    executing in their very first line:
 
-   ```sh
+   ```bash
    source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
    ```
 
@@ -34,3 +36,19 @@ these guidelines:
 
    > **⚠️ WARNING:** Sourcing [`__env.sh`](../scripts/__env.sh) automatically
      changes the working directory to the <u>*repository root*</u>.
+
+## Autobump dry-runs
+
+When developing, it may be useful to execute
+[`scripts/bump.sh`](../scripts/bump.sh), without opening a dummy PR on the
+remote repository. Hence, **autobump dry-runs** can be easily enabled by
+defining a *custom pull request number* through the environment variable
+`HOMEBREW_BUMP_DRYRUN_PR_NUMBER`, e.g.:
+
+```bash
+HOMEBREW_BUMP_DRYRUN_PR_NUMBER=52 ./scripts/bump.sh
+```
+
+In the example above, #52 pull request will be used as a dummy pull request
+for bumping (and updating) formulae/casks, without pushing on the remote or
+creating a new PR.
