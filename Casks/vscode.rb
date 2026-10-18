@@ -2,9 +2,9 @@ cask "vscode" do
   arch arm: "arm64", intel: "x64"
   os linux: "linux"
 
-  version "1.141.0,2a59476c9bfcb90b3ddc372c36762471b7dfad1c"
-  sha256 arm64_linux:  "3b6ea238a2aa9000bab0137c19f06d4e8edcb5587438a3afc9dc9739e793e934",
-         x86_64_linux: "d77d588f0454cbaaa71e723497de4160d15b95fba4988abe177b1432e6bd570a"
+  version "1.142.0,6d62b1d5dace93a33b3a6d3eca1317bd5e15bcb1"
+  sha256 arm64_linux:  "cb4ce5183a29b1a13aeb6409d5430c896fa35aad21097be1f874fbb4cf1e7e62",
+         x86_64_linux: "fcc1ccb435685adcc748287bbde524589569deedb6b4ad5560071583cbe00ae0"
 
   url "https://update.code.visualstudio.com/commit:#{version.csv.second}/linux-#{arch}/stable"
   name "Microsoft Visual Studio Code"
