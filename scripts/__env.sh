@@ -26,7 +26,7 @@ readonly __ENV_SH=1
 set -euo pipefail
 
 # Environment variables.
-export TAP_NAME="${TAP_NAME:-"thebusydev/tap"}"
+export TAP_NAME="${TAP_NAME:-"thebusydev/linux"}"
 export GH_TOKEN="${GH_TOKEN:-}"
 export GH_COOLDOWN="${GH_COOLDOWN:-10}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
