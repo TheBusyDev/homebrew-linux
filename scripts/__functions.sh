@@ -113,13 +113,14 @@ function _brew_bump_formula_or_cask()
   fi
 
   # Retrieve PR number from log file.
-  pr_url="$(echo "${tmp_file}" \
-    | grep -oE "^https://github\.com/[^/]+/[^/]+/pull/[[:digit:]]+$" \
-    | tail -n1 \
-    || true)"
+  pr_url="$(
+    grep -oE "^https://github\.com/[^/]+/[^/]+/pull/[[:digit:]]+$" "${tmp_file}" \
+      | tail -n1 \
+      || true
+  )"
   pr_nr="${pr_url##*/}"
 
-  if [[ -n "${pr_nr}" ]]
+  if [[ -z "${HOMEBREW_BUMP_DRYRUN_PR_NUMBER}" && -n "${pr_nr}" ]]
   then
     # Update PR label.
     sleep "${GH_COOLDOWN}"
