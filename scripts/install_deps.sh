@@ -2,6 +2,8 @@
 # Install `brew` dependencies from `.deps` file.
 #
 
+set -euo pipefail
+
 mapfile -t deps < "$(dirname "$0")"/../.deps
 all_installed=true
 
