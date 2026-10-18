@@ -393,7 +393,8 @@ function format()
     tempfile="$(dirname "${file}")/.${file##*/}.formatted~"
     cp -af "${file}" "${tempfile}"
   fi
-  trap 'rm -f "${tempfile:-}" 2>/dev/null' RETURN EXIT
+  readonly tempfile
+  trap "rm -f '${tempfile}' 2>/dev/null" RETURN EXIT
 
   # Format with `shfmt` first
   if [[ -z "${STDIN}" ]]
