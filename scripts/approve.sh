@@ -3,6 +3,7 @@
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
+# - `GH_APPROVE_DRYRUN`: If set, only check pull requests without approving.
 #
 # Input:
 # 1. Colon-separated list of pull request numbers.
@@ -88,7 +89,8 @@ do
     # Append the PR URL to the failed ones.
     failed_pr_urls+="\n${pr_url}"
     success=false
-  else
+  elif [[ -z "${GH_APPROVE_DRYRUN}" ]]
+  then
     # Finally, approve the PR.
     echo "==> Approving pull request #${pr_nr}..."
     gh pr review "${pr_nr}" --approve

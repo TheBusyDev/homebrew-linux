@@ -344,8 +344,8 @@ function get_pr_deletions()
 function _get_pr_unauthorized_additions_or_deletions()
 {
   _get_pr_additions_or_deletions "$1" "$2" "$3" \
-    | sed -zE "s/$(get_rb_entry_regex VERSION_REGEX)/\n/g" \
-    | sed -zE "s/$(get_rb_entry_regex SHA256_REGEX)/\n/g"
+    | sed -zE "s/$(_get_rb_entry_regex VERSION_REGEX)/\n/" \
+    | sed -zE "s/$(_get_rb_entry_regex SHA256_REGEX)/\n/"
 }
 
 # Obtain all the file unauthorized additions from a pull request.
@@ -431,10 +431,10 @@ function echo_pr_deletions()
 # Output:
 # Writes the complete regular expression of the entry to stdout.
 #
-function get_rb_entry_regex()
+function _get_rb_entry_regex()
 {
   local -n __regex__="$1"
-  printf '\\n[[:blank:]]*%s[[:blank:]]+%s\\n' "${__regex__["key"]}" "${__regex__["value"]}"
+  printf '(^|\\n)[[:blank:]]*%s[[:blank:]]+%s($|\\n)' "${__regex__["key"]}" "${__regex__["value"]}"
 }
 
 # Check if the provided entry appears in the `*.rb` file
@@ -456,7 +456,7 @@ function is_rb_entry()
     return 1
   fi
 
-  grep -zqP "$(get_rb_entry_regex ____regex____)" "$2" \
+  grep -zqP "$(_get_rb_entry_regex ____regex____)" "$2" \
     && echo true \
     || echo false
 }
