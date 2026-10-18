@@ -85,7 +85,8 @@ function _brew_bump_formula_or_cask()
 
   # Bump and save output to a temporary file.
   tmp_file="$(mktemp)"
-  trap 'rm -f "${tmp_file:-}" 2>/dev/null' RETURN EXIT
+  readonly tmp_file
+  trap "rm -f '${tmp_file}' 2>/dev/null" RETURN EXIT
 
   if [[ -z "${HOMEBREW_BUMP_DRYRUN_PR_NUMBER}" ]]
   then
