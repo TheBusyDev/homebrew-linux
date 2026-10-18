@@ -365,7 +365,7 @@ function wrap_function()
 {
   local file="$1"
   local tempfile="$2"
-  local singleline_fun_regex='(^ *)(function )?([_[:alpha:]][_[:alnum:]]*\(\)) \{$'
+  local singleline_fun_regex='^( *)(function )?([^ ]+\(\)) \{$'
   sed -i -E "s/${singleline_fun_regex}/\1function \3\n\1\{/" "${tempfile}"
 }
 
@@ -393,7 +393,7 @@ function format()
     tempfile="$(dirname "${file}")/.${file##*/}.formatted~"
     cp -af "${file}" "${tempfile}"
   fi
-  trap 'rm -f "${tempfile}" 2>/dev/null' RETURN
+  trap 'rm -f "${tempfile:-}" 2>/dev/null' RETURN EXIT
 
   # Format with `shfmt` first
   if [[ -z "${STDIN}" ]]

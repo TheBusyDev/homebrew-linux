@@ -3,7 +3,7 @@
 # The following checks are executed:
 # - `brew style` and `brew audit` on all the formulae/casks;
 # - `shellcheck` and `shfmt` on all the bash scripts;
-# - check target OS on all the formulae/casks.
+# - check style of all the `.rb` source files.
 #
 # Possibly apply changes if `--fix` flag is enabled.
 #
