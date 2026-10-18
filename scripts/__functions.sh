@@ -85,7 +85,7 @@ function _brew_bump_formula_or_cask()
 
   # Bump and save output to a temporary file.
   tmp_file="$(mktemp)"
-  trap 'rm -f "${tmp_file}" 2>/dev/null' RETURN EXIT
+  trap 'rm -f "${tmp_file:-}" 2>/dev/null' RETURN EXIT
 
   if [[ -z "${HOMEBREW_BUMP_DRYRUN_PR_NUMBER}" ]]
   then
@@ -115,7 +115,8 @@ function _brew_bump_formula_or_cask()
   # Retrieve PR number from log file.
   pr_url="$(echo "${tmp_file}" \
     | grep -oE "^https://github\.com/[^/]+/[^/]+/pull/[[:digit:]]+$" \
-    | tail -n1 || true)"
+    | tail -n1 \
+    || true)"
   pr_nr="${pr_url##*/}"
 
   if [[ -n "${pr_nr}" ]]
