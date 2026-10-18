@@ -46,7 +46,7 @@ export HOMEBREW_BUMP_DRYRUN_PR_NUMBER="${HOMEBREW_BUMP_DRYRUN_PR_NUMBER:-}"
 # shellcheck disable=SC2034
 declare -rA VERSION_REGEX=(
   ["key"]='version'
-  ["value"]='".+"'
+  ["value"]='"[^\n]+"'
 )
 
 # Match `sha256` entries in `.rb` files:
