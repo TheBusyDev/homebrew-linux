@@ -4,7 +4,7 @@
 
 set -euo pipefail
 
-mapfile -t deps < "$(dirname "$0")"/../.deps
+mapfile -t deps < "$(dirname -- "${BASH_SOURCE[0]}")"/../.deps
 all_installed=true
 
 for dep in "${deps[@]}"
