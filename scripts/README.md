@@ -39,7 +39,7 @@ these guidelines:
 
 ## Dry-runs
 
-- **Autobump:** When developing, it may be useful to execute
+- When developing, it may be useful to execute
    [`scripts/bump.sh`](../scripts/bump.sh), without opening a dummy PR on the
    remote repository. Hence, **autobump dry-runs** can be easily enabled by
    defining a *custom pull request number* through the environment variable

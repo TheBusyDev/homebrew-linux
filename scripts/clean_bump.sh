@@ -16,17 +16,24 @@ export GH_DELETE_DRYRUN="${GH_DELETE_DRYRUN:-}"
 
 mapfile -t bump_branches < <(
   gh api --paginate "repos/${GH_REPO_NAME}/branches" \
-    --jq ".[].name | select(startswith(\"bump-\"))"
+    --jq ".[].name | select(startswith(\"${BRANCH_PREFIX}\"))"
 )
+all_deleted=true # Has all the branches deleted successfully?
 
 for branch in "${bump_branches[@]}"
 do
   echo "==> Deleting ${branch}..."
   if [[ -z "${GH_DELETE_DRYRUN}" ]]
   then
-    gh api -X DELETE "repos/${GH_REPO_NAME}/git/refs/heads/${branch}"
+    gh api -X DELETE "repos/${GH_REPO_NAME}/git/refs/heads/${branch}" \
+      || {
+        echo "::error::Cannot delete branch \`${branch}\`."
+        all_deleted=false
+      }
   fi
 done
 
-echo "Deleted ${#bump_branches[@]} branches."
+${all_deleted} || exit 1
+
+echo "Deleted ${#bump_branches[@]} branch(es)."
 exit 0
