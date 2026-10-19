@@ -58,7 +58,7 @@ these guidelines:
    the PRs by setting the env variable `GH_APPROVE_DRYRUN`, e.g.:
 
    ```bash
-   GH_APPROVE_DRYRUN=1 ./scripts/approve.sh "52:53" # or any comma-separated list of PR numbers.
+   GH_APPROVE_DRYRUN=1 ./scripts/approve.sh "52:53" # or any colon-separated list of PR numbers.
    ```
 
    In the example above, we check if the pull requests #52 and #53 are eligible
