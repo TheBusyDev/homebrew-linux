@@ -78,7 +78,7 @@ then
 
 
 ::error::Some offenses found. You can try to correct them by invoking: \
-\`$0 --fix\`.
+\`${BASH_SOURCE[0]} --fix\`.
 EOMSG
   exit 1
 fi
