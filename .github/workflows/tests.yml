@@ -35,6 +35,7 @@ jobs:
         if: matrix.os == 'ubuntu-24.04-arm'
         env:
           TAP_NAME: ${{ steps.set-up-homebrew.outputs.tap-name }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: ./scripts/style.sh
 
       - name: Install formulae and casks

@@ -456,8 +456,8 @@ do
   retcode=''
   if [[ -n "${INPLACE}" ]]
   then
-    INPLACE=1 format "${file}"
-    retcode="$?"
+    retcode=0
+    INPLACE=1 format "${file}" || retcode="$?"
     if [[ "${retcode}" == 4 ]]
     then
       onoe "${0##*/}: Bad styles detected in file \"${file}\", fixing..."
@@ -466,8 +466,8 @@ do
   fi
   if [[ -z "${retcode}" ]]
   then
-    INPLACE='' format "${file}"
-    retcode="$?"
+    retcode=0
+    INPLACE='' format "${file}" || retcode="$?"
   fi
   if [[ "${retcode}" != 0 ]]
   then

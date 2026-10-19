@@ -9,6 +9,7 @@
 #
 # Environment variables:
 # - `TAP_NAME`: The name of the tap.
+# - `GH_TOKEN`: Token used for authentication in `brew livecheck`.
 #
 
 source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
@@ -78,7 +79,7 @@ then
 
 
 ::error::Some offenses found. You can try to correct them by invoking: \
-\`$0 --fix\`.
+\`${BASH_SOURCE[0]} --fix\`.
 EOMSG
   exit 1
 fi
