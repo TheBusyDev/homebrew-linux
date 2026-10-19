@@ -456,6 +456,7 @@ do
   retcode=''
   if [[ -n "${INPLACE}" ]]
   then
+    retcode=0
     INPLACE=1 format "${file}" || retcode="$?"
     if [[ "${retcode}" == 4 ]]
     then
@@ -465,6 +466,7 @@ do
   fi
   if [[ -z "${retcode}" ]]
   then
+    retcode=0
     INPLACE='' format "${file}" || retcode="$?"
   fi
   if [[ "${retcode}" != 0 ]]
