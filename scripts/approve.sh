@@ -15,7 +15,7 @@ source ./scripts/__functions.sh
 
 # Check for every PR in `pr_numbers`.
 : "${1:?You must provide a colon-separated list of pull request numbers\!}"
-mapfile -d ":" -t pr_numbers < <(echo -n "$1")
+mapfile -d ":" -t pr_numbers < <(printf "%s" "$1")
 failed_pr_urls="" # Newline-separated list of URLs for non-approved pull requests.
 success=true      # Have all the approvals run successfully?
 
@@ -103,8 +103,11 @@ failed_pr_urls="${failed_pr_urls#\\n}"
 
 if [[ -n "${failed_pr_urls}" ]]
 then
-  echo -e "\n::error::The following PRs require manual approval:" >&2
-  echo -e "${failed_pr_urls}" >&2
+  cat << EOMSG >&2
+
+::error::The following PRs require manual approval:
+${failed_pr_urls@E}
+EOMSG
 fi
 
 ${success} || exit 1

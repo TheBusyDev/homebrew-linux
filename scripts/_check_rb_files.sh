@@ -36,21 +36,30 @@ EOMSG
 
   if ! ${depends_on_linux}
   then
-    echo -e "\n::error file=${rb_file}::Linux is not the target OS for this \`.rb\` file." \
-      "Add \`depends_on :linux\` stanza." >&2
+    cat << EOMSG >&2
+
+::error file=${rb_file}::Linux is not the target OS for this \`.rb\` file. \
+Add \`depends_on :linux\` stanza.
+EOMSG
     success=false
   fi
 
   if ${depends_on_macos}
   then
-    echo -e "\n::error file=${rb_file}::This repository hosts Linux formulae/casks only." \
-      "Cannot include formulae/casks developed for MacOS." \
-      "Remove \`depends_on :macos\` stanza." >&2
+    cat << EOMSG >&2
+
+::error file=${rb_file}::This repository hosts Linux formulae/casks only. \
+Remove \`depends_on :macos\` stanza.
+EOMSG
     success=false
   fi
 done
 
 ${success} || exit 1 # Abort test.
 
-echo -e "\nNo offense found in ${#rb_files[@]} \`.rb\` files."
+cat << EOMSG
+
+No offense found in ${#rb_files[@]} \`.rb\` files.
+EOMSG
+
 exit 0

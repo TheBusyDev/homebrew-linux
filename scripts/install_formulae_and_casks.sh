@@ -41,5 +41,9 @@ done
 
 ${success} || exit 1
 
-echo -e "\nInstalled ${#formulae[@]} formulae and ${#casks[@]} casks!"
+cat << EOMSG
+
+Installed ${#formulae[@]} formulae and ${#casks[@]} casks!
+EOMSG
+
 exit 0

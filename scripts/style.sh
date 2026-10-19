@@ -74,8 +74,12 @@ brew livecheck --casks --debug "${casks[@]}" || success=false
 
 if ! ${success}
 then
-  echo -e "\n\n::error::Some offenses found. You can try to correct them by" \
-    "invoking: \`$0 --fix\`."
+  cat << EOMSG >&2
+
+
+::error::Some offenses found. You can try to correct them by invoking: \
+\`$0 --fix\`.
+EOMSG
   exit 1
 fi
 

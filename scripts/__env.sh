@@ -46,7 +46,7 @@ export HOMEBREW_BUMP_DRYRUN_PR_NUMBER="${HOMEBREW_BUMP_DRYRUN_PR_NUMBER:-}"
 # shellcheck disable=SC2034
 declare -rA VERSION_REGEX=(
   ["key"]='version'
-  ["value"]='"[^\n]+"'
+  ["value"]='"[^"\n]+"'
 )
 
 # Match `sha256` entries in `.rb` files:
@@ -70,7 +70,7 @@ declare -rA DEPENDS_ON_LINUX_REGEX=(
 # shellcheck disable=SC2034
 declare -rA DEPENDS_ON_MACOS_REGEX=(
   ["key"]='depends_on'
-  ["value"]=':?macos(:[[:blank:]]+:[[:lower:]]+)?'
+  ["value"]='(:macos|macos:[[:blank:]]+:[[:lower:]]+)'
 )
 
 # Global variable for internal use only. It contains an associative array with
