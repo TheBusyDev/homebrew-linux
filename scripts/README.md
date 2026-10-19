@@ -35,20 +35,40 @@ these guidelines:
    the root of the repository.
 
    > **⚠️ WARNING:** Sourcing [`__env.sh`](../scripts/__env.sh) automatically
-     changes the working directory to the <u>*repository root*</u>.
+      changes the working directory to the <u>*repository root*</u>.
 
-## Autobump dry-runs
+## Dry-runs
 
-When developing, it may be useful to execute
-[`scripts/bump.sh`](../scripts/bump.sh), without opening a dummy PR on the
-remote repository. Hence, **autobump dry-runs** can be easily enabled by
-defining a *custom pull request number* through the environment variable
-`HOMEBREW_BUMP_DRYRUN_PR_NUMBER`, e.g.:
+- **Autobump:** When developing, it may be useful to execute
+   [`scripts/bump.sh`](../scripts/bump.sh), without opening a dummy PR on the
+   remote repository. Hence, **autobump dry-runs** can be easily enabled by
+   defining a *custom pull request number* through the environment variable
+   `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`, e.g.:
 
-```bash
-HOMEBREW_BUMP_DRYRUN_PR_NUMBER=52 ./scripts/bump.sh
-```
+   ```bash
+   HOMEBREW_BUMP_DRYRUN_PR_NUMBER=52 ./scripts/bump.sh
+   ```
 
-In the example above, #52 pull request will be used as a dummy pull request
-for bumping (and updating) formulae/casks, without pushing on the remote or
-creating a new PR.
+   In the example above, #52 pull request will be used as a dummy pull request
+   for bumping (and updating) formulae/casks, without pushing on the remote or
+   creating a new PR.
+
+- Similarly, we can check the **pull request approval** (implemented in
+   [`scripts/approve.sh`](../scripts/approve.sh)) without actually merging
+   the PRs by setting the env variable `GH_APPROVE_DRYRUN`, e.g.:
+
+   ```bash
+   GH_APPROVE_DRYRUN=1 ./scripts/approve.sh "52:53" # or any comma-separated list of PR numbers.
+   ```
+
+   In the example above, we check if the pull requests #52 and #53 are eligible
+   for auto-approvals (without merging them into the default branch).
+
+- Similarly, it is possible to invoke the **branch clean-up script**
+   [`scripts/clean_bump.sh`](../scripts/clean_bump.sh) without actually deleting
+   any branch on the remote by setting the env variable `GH_DELETE_DRYRUN`,
+   e.g.:
+
+   ```bash
+   GH_DELETE_DRYRUN=1 ./scripts/clean_bump.sh
+   ```
