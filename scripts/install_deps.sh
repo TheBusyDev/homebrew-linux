@@ -19,5 +19,9 @@ done
 
 ${all_installed} || exit 1
 
-echo -e "\nInstalled ${#deps[@]} dependencies!"
+cat << EOMSG
+
+Installed ${#deps[@]} dependencies!
+EOMSG
+
 exit 0
