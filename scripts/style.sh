@@ -9,6 +9,7 @@
 #
 # Environment variables:
 # - `TAP_NAME`: The name of the tap.
+# - `GH_TOKEN`: Token used for authentication in `brew livecheck`.
 #
 
 source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
