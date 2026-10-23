@@ -478,11 +478,14 @@ function _check_rb_entry()
   key_regex="$(_get_rb_key_regex ____regex____)"
   entry_regex="$(_get_rb_entry_regex ____regex____)"
 
-  # With -zo every match is terminated by a NUL, so counting NULs counts matches.
-  n_found="$(grep -zoP -- "(?m)${key_regex}" "$1" | tr -cd '\0' | wc -c)"
-  n_valid="$(grep -zoP -- "(?m)${entry_regex}" "$1" | tr -cd '\0' | wc -c)"
-
-  echo "${n_found} ${n_valid}"
+  # Print number of found entries and number of valid entries.
+  KEY_REGEX="${key_regex}" ENTRY_REGEX="${entry_regex}" perl -0777 -e '
+    my $string = do { <> } // "";
+    my ($n_found, $n_valid) = (0, 0);
+    ++$n_found while $string =~ /$ENV{KEY_REGEX}/gm;
+    ++$n_valid while $string =~ /$ENV{ENTRY_REGEX}/gm;
+    print "$n_found $n_valid\n";
+  ' "$1"
 }
 
 # Check if the format of the version entry is correct in the `*.rb` file.
