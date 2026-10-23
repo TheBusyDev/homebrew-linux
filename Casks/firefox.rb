@@ -542,7 +542,8 @@ cask "firefox" do
            target: "#{Dir.home}/.local/share/icons/firefox.png"
 
   preflight_steps do
-    move "firefox", "firefox-tmp"
+    move_contents "firefox", "firefox-tmp"
+    remove "firefox", recursive: true
     move_contents "firefox-tmp", "."
     remove "firefox-tmp", recursive: true
 
