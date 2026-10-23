@@ -22,7 +22,18 @@ all_deleted=true # Has all the branches deleted successfully?
 
 for branch in "${bump_branches[@]}"
 do
-  echo "==> Deleting ${branch}..."
+  mapfile -t open_prs < <(
+    gh pr list --head "${branch}" --state open \
+      --json "number" --jq ".[].number"
+  )
+
+  if ((${#open_prs[@]} > 0))
+  then
+    echo "==> Skipping \`${branch}\` (found open PRs)..."
+    continue
+  fi
+
+  echo "==> Deleting \`${branch}\`..."
   if [[ -z "${GH_DELETE_DRYRUN}" ]]
   then
     gh api -X DELETE "repos/${GH_REPO_NAME}/git/refs/heads/${branch}" \
