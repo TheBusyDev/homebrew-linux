@@ -9,7 +9,7 @@ cask "vscode" do
   url "https://update.code.visualstudio.com/commit:#{version.csv.second}/linux-#{arch}/stable"
   name "Microsoft Visual Studio Code"
   name "VSCode"
-  desc "Editing redefined. Open-source code editor"
+  desc "Editing redefined - Open-source code editor"
   homepage "https://code.visualstudio.com/"
 
   livecheck do
