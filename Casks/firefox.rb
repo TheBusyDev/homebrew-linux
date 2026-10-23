@@ -1193,7 +1193,5 @@ cask "firefox" do
     EOS
   end
 
-  zap trash: [
-    "#{Dir.home}/.config/mozilla",
-  ]
+  zap trash: "#{Dir.home}/.config/mozilla"
 end
