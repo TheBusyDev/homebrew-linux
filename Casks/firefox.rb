@@ -520,7 +520,7 @@ cask "firefox" do
     "zh-CN"
   end
 
-  url "https://ftp.mozilla.org/pub/firefox/releases/#{version}/linux-#{arch}/#{language}/firefox-#{version}.tar.xz"
+  url "https://archive.mozilla.org/pub/firefox/releases/#{version}/linux-#{arch}/#{language}/firefox-#{version}.tar.xz"
   name "Mozilla Firefox"
   desc "Fast and private browser"
   homepage "https://www.mozilla.org/firefox/"
@@ -553,13 +553,11 @@ cask "firefox" do
     write_file "firefox.desktop", <<~EOS
       [Desktop Entry]
       Type=Application
-      Exec={{HOMEBREW_PREFIX}}/bin/firefox @@u %u @@
+      Exec={{HOMEBREW_PREFIX}}/bin/firefox %u
       Terminal=false
-      X-MultipleArgs=false
       Icon=firefox
       StartupWMClass=firefox
-      DBusActivatable=false
-      Categories=GNOME;GTK;Network;WebBrowser;
+      Categories=Network;WebBrowser;
       MimeType=application/json;application/pdf;application/rdf+xml;application/rss+xml;application/x-xpinstall;application/xhtml+xml;application/xml;audio/flac;audio/ogg;audio/webm;image/avif;image/gif;image/jpeg;image/png;image/svg+xml;image/webp;text/html;text/xml;video/ogg;video/webm;x-scheme-handler/chrome;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/mailto;
       StartupNotify=true
       Actions=new-window;new-private-window;open-profile-manager;
@@ -876,7 +874,7 @@ cask "firefox" do
       X-GNOME-FullName=Mozilla Firefox
 
       [Desktop Action new-window]
-      Exec={{HOMEBREW_PREFIX}}/bin/firefox --new-window @@u %u @@
+      Exec={{HOMEBREW_PREFIX}}/bin/firefox --new-window %u
       Name=New Window
       Name[ach]=New Window
       Name[af]=New Window
@@ -982,7 +980,7 @@ cask "firefox" do
       Name[zh_TW]=開新視窗
 
       [Desktop Action new-private-window]
-      Exec={{HOMEBREW_PREFIX}}/bin/firefox --private-window @@u %u @@
+      Exec={{HOMEBREW_PREFIX}}/bin/firefox --private-window %u
       Name=New Private Window
       Name[ach]=New Private Window
       Name[af]=New Private Window
@@ -1195,8 +1193,5 @@ cask "firefox" do
     EOS
   end
 
-  zap trash: [
-    "#{Dir.home}/.config/mozilla",
-    "#{Dir.home}/.mozilla",
-  ]
+  zap trash: "#{Dir.home}/.config/mozilla"
 end
