@@ -50,7 +50,7 @@ cask "msedit" do
     EOS
 
     write_file "msedit.svg", <<~EOS
-      <?xml encoding="UTF-8" standalone="no"?>
+      <?xml version="1.0" encoding="UTF-8" standalone="no"?>
       <svg
         width="24"
         height="24"
