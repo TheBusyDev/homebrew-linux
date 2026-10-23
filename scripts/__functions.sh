@@ -345,8 +345,8 @@ function get_pr_deletions()
 function _get_pr_unauthorized_additions_or_deletions()
 {
   _get_pr_additions_or_deletions "$1" "$2" "$3" \
-    | sed -zE "s/$(_get_rb_entry_regex VERSION_REGEX)/\n/g" \
-    | sed -zE "s/$(_get_rb_entry_regex SHA256_REGEX)/\n/g"
+    | perl -0777 -pe "s/$(_get_rb_entry_regex VERSION_REGEX)//gm" \
+    | perl -0777 -pe "s/$(_get_rb_entry_regex SHA256_REGEX)//gm"
 }
 
 # Obtain all the file unauthorized additions from a pull request.
@@ -434,8 +434,8 @@ function echo_pr_deletions()
 #
 function _get_rb_key_regex()
 {
-  local -n _get_rb_key_regex__regex="$1"
-  printf '(^|\\n)[[:blank:]]*%s\\b' "${_get_rb_key_regex__regex["key"]}"
+  local -n __regex__="$1"
+  printf '^[[:blank:]]*%s\\b' "${__regex__["key"]}"
 }
 
 # Get the regular expression of the entry defined in the input associative array.
@@ -448,10 +448,10 @@ function _get_rb_key_regex()
 #
 function _get_rb_entry_regex()
 {
-  local -n _get_rb_entry_regex__regex="$1"
-  printf '%s[[:blank:]]+%s[[:blank:]]*(#[^\\n]*)?($|\\n)' \
-    "$(_get_rb_key_regex _get_rb_entry_regex__regex)" \
-    "${_get_rb_entry_regex__regex["value"]}"
+  local -n ___regex___="$1"
+  printf '%s[[:blank:]]+%s[[:blank:]]*(#[^\\n]*)?$' \
+    "$(_get_rb_key_regex ___regex___)" \
+    "${___regex___["value"]}"
 }
 
 # Check if the provided entry appears in the `*.rb` file.
@@ -466,8 +466,7 @@ function _get_rb_entry_regex()
 #
 function _check_rb_entry()
 {
-  # shellcheck disable=SC2034
-  local -n check_rb_entry__regex="$2"
+  local -n ____regex____="$2"
   local key_regex entry_regex n_found n_valid
 
   if [[ ! -f "$1" ]]
@@ -476,12 +475,12 @@ function _check_rb_entry()
     return 1
   fi
 
-  key_regex="$(_get_rb_key_regex check_rb_entry__regex)"
-  entry_regex="$(_get_rb_entry_regex check_rb_entry__regex)"
+  key_regex="$(_get_rb_key_regex ____regex____)"
+  entry_regex="$(_get_rb_entry_regex ____regex____)"
 
   # With -zo every match is terminated by a NUL, so counting NULs counts matches.
-  n_found="$(grep -zoP -- "${key_regex}" "$1" | tr -cd '\0' | wc -c)"
-  n_valid="$(grep -zoP -- "${entry_regex}" "$1" | tr -cd '\0' | wc -c)"
+  n_found="$(grep -zoP -- "(?m)${key_regex}" "$1" | tr -cd '\0' | wc -c)"
+  n_valid="$(grep -zoP -- "(?m)${entry_regex}" "$1" | tr -cd '\0' | wc -c)"
 
   echo "${n_found} ${n_valid}"
 }
