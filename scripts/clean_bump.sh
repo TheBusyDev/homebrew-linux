@@ -18,7 +18,8 @@ mapfile -t bump_branches < <(
   gh api --paginate "repos/${GH_REPO_NAME}/branches" \
     --jq ".[].name | select(startswith(\"${BRANCH_PREFIX}\"))"
 )
-all_deleted=true # Has all the branches deleted successfully?
+
+n_deleted=0 # Number of deleted branches.
 
 for branch in "${bump_branches[@]}"
 do
@@ -37,14 +38,14 @@ do
   if [[ -z "${GH_DELETE_DRYRUN}" ]]
   then
     gh api -X DELETE "repos/${GH_REPO_NAME}/git/refs/heads/${branch}" \
-      || {
-        echo "::error::Cannot delete branch \`${branch}\`."
-        all_deleted=false
-      }
+      || echo "::error::Cannot delete branch \`${branch}\`." >&2
   fi
+  ((++n_deleted))
 done
 
-${all_deleted} || exit 1
+n_skipped=$((n_deleted - ${#bump_branches[@]})) # Number of skipped branches.
+echo "Skipped ${n_skipped} branch(es)."
+echo "Deleted ${n_deleted} branch(es)."
 
-echo "Deleted ${#bump_branches[@]} branch(es)."
+((n_skipped == 0)) || exit 1
 exit 0
