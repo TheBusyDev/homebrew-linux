@@ -15,11 +15,11 @@ cask "vscode" do
   livecheck do
     url "https://update.code.visualstudio.com/api/update/linux-#{arch}/stable/latest"
     strategy :json do |json|
-      version = json["productVersion"]
-      build = json["version"]
-      next if version.blank? || build.blank?
+      prod_version = json["productVersion"]
+      build_id = json["version"]
+      next if prod_version.blank? || build_id.blank?
 
-      "#{version},#{build}"
+      "#{prod_version},#{build_id}"
     end
   end
 
