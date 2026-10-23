@@ -555,11 +555,9 @@ cask "firefox" do
       Type=Application
       Exec={{HOMEBREW_PREFIX}}/bin/firefox %u
       Terminal=false
-      X-MultipleArgs=false
       Icon=firefox
       StartupWMClass=firefox
-      DBusActivatable=false
-      Categories=GNOME;GTK;Network;WebBrowser;
+      Categories=Network;WebBrowser;
       MimeType=application/json;application/pdf;application/rdf+xml;application/rss+xml;application/x-xpinstall;application/xhtml+xml;application/xml;audio/flac;audio/ogg;audio/webm;image/avif;image/gif;image/jpeg;image/png;image/svg+xml;image/webp;text/html;text/xml;video/ogg;video/webm;x-scheme-handler/chrome;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/mailto;
       StartupNotify=true
       Actions=new-window;new-private-window;open-profile-manager;
