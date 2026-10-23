@@ -9,17 +9,17 @@ cask "vscode" do
   url "https://update.code.visualstudio.com/commit:#{version.csv.second}/linux-#{arch}/stable"
   name "Microsoft Visual Studio Code"
   name "VSCode"
-  desc "Editing redefined. Open-source code editor"
+  desc "Editing redefined - Open-source code editor"
   homepage "https://code.visualstudio.com/"
 
   livecheck do
     url "https://update.code.visualstudio.com/api/update/linux-#{arch}/stable/latest"
     strategy :json do |json|
-      version = json["productVersion"]
-      build = json["version"]
-      next if version.blank? || build.blank?
+      prod_version = json["productVersion"]
+      build_id = json["version"]
+      next if prod_version.blank? || build_id.blank?
 
-      "#{version},#{build}"
+      "#{prod_version},#{build_id}"
     end
   end
 

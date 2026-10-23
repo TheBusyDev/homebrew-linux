@@ -47,17 +47,15 @@ cask "msedit" do
       Categories=Utility;TextEditor;
       MimeType=text/english;text/plain;text/x-makefile;text/x-c++hdr;text/x-c++src;text/x-chdr;text/x-csrc;text/x-java;text/x-moc;text/x-pascal;text/x-tcl;text/x-tex;application/x-shellscript;text/x-c;text/x-c++;
       Keywords=text;editor
-      X-Desktop-File-Install-Version=0.28
     EOS
 
     write_file "msedit.svg", <<~EOS
-      <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+      <?xml encoding="UTF-8" standalone="no"?>
       <svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
         fill="none"
-        version="1.1"
         id="svg17"
         xmlns="http://www.w3.org/2000/svg"
         xmlns:svg="http://www.w3.org/2000/svg">

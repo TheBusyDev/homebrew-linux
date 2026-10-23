@@ -345,8 +345,8 @@ function get_pr_deletions()
 function _get_pr_unauthorized_additions_or_deletions()
 {
   _get_pr_additions_or_deletions "$1" "$2" "$3" \
-    | sed -zE "s/$(_get_rb_entry_regex VERSION_REGEX)/\n/" \
-    | sed -zE "s/$(_get_rb_entry_regex SHA256_REGEX)/\n/"
+    | sed -zE "s/$(_get_rb_entry_regex VERSION_REGEX)/\n/g" \
+    | sed -zE "s/$(_get_rb_entry_regex SHA256_REGEX)/\n/g"
 }
 
 # Obtain all the file unauthorized additions from a pull request.
@@ -424,7 +424,21 @@ function echo_pr_deletions()
   _echo_pr_additions_or_deletions "$1" "-"
 }
 
-# Get the regular expression defined in the input associative array.
+# Get the regular expression of the key defined in the input associative array.
+#
+# Input:
+# 1. The regex entry, passed as an associative array with "key" and "value" keys.
+#
+# Output:
+# Writes the complete regular expression of the key to stdout.
+#
+function _get_rb_key_regex()
+{
+  local -n _get_rb_key_regex__regex="$1"
+  printf '(^|\\n)[[:blank:]]*%s\\b' "${_get_rb_key_regex__regex["key"]}"
+}
+
+# Get the regular expression of the entry defined in the input associative array.
 #
 # Input:
 # 1. The regex entry, passed as an associative array with "key" and "value" keys.
@@ -434,30 +448,99 @@ function echo_pr_deletions()
 #
 function _get_rb_entry_regex()
 {
-  local -n __regex__="$1"
-  printf '(^|\\n)[[:blank:]]*%s[[:blank:]]+%s($|\\n)' "${__regex__["key"]}" "${__regex__["value"]}"
+  local -n _get_rb_entry_regex__regex="$1"
+  printf '%s[[:blank:]]+%s[[:blank:]]*(#[^\\n]*)?($|\\n)' \
+    "$(_get_rb_key_regex _get_rb_entry_regex__regex)" \
+    "${_get_rb_entry_regex__regex["value"]}"
 }
 
-# Check if the provided entry appears in the `*.rb` file
+# Check if the provided entry appears in the `*.rb` file.
 #
 # Input:
-# 1. The regex entry, passed as an associative array with "key" and "value" keys.
-# 2. The `*.rb` filepath.
+# 1. The `*.rb` filepath.
+# 2. The regex entry, passed as an associative array with "key" and "value" keys.
 #
 # Output:
-# Writes `true` if "key" is found in the `*.rb` and its value matches "value".
-# `false` otherwise.
+# Writes the number of found entries and the number of valid entries to stdout
+# (separated by a whitespace).
 #
-function is_rb_entry()
+function _check_rb_entry()
 {
-  local -n ____regex____="$1"
-  if [[ ! -f "$2" ]]
+  # shellcheck disable=SC2034
+  local -n check_rb_entry__regex="$2"
+  local key_regex entry_regex n_found n_valid
+
+  if [[ ! -f "$1" ]]
   then
     echo false
     return 1
   fi
 
-  grep -zqP "$(_get_rb_entry_regex ____regex____)" "$2" \
-    && echo true \
-    || echo false
+  key_regex="$(_get_rb_key_regex check_rb_entry__regex)"
+  entry_regex="$(_get_rb_entry_regex check_rb_entry__regex)"
+
+  # With -zo every match is terminated by a NUL, so counting NULs counts matches.
+  n_found="$(grep -zoP -- "${key_regex}" "$1" | tr -cd '\0' | wc -c)"
+  n_valid="$(grep -zoP -- "${entry_regex}" "$1" | tr -cd '\0' | wc -c)"
+
+  echo "${n_found} ${n_valid}"
+}
+
+# Check if the format of the version entry is correct in the `*.rb` file.
+#
+# Input:
+# 1. The `*.rb` filepath.
+#
+# Output:
+# Writes `true` if the version entry format is correct. `false` otherwise.
+#
+function check_rb_version()
+{
+  read -r n_found n_valid < <(_check_rb_entry "$1" VERSION_REGEX)
+  ((n_found == n_valid)) && echo true || echo false
+}
+
+# Check if the format of the sha256 entry is correct in the `*.rb` file.
+#
+# Input:
+# 1. The `*.rb` filepath.
+#
+# Output:
+# Writes `true` if the sha256 entry appears at least once and its format is
+# correct. `false` otherwise.
+#
+function check_rb_sha256()
+{
+  read -r n_found n_valid < <(_check_rb_entry "$1" SHA256_REGEX)
+  ((n_found > 0 && n_found == n_valid)) && echo true || echo false
+}
+
+# Check if the formula/cask defined by the `*.rb` file depends on Linux.
+#
+# Input:
+# 1. The `*.rb` filepath.
+#
+# Output:
+# Writes `true` if the formula/cask explicitly depends on Linux.
+# `false` otherwise.
+#
+function check_rb_depends_on_linux()
+{
+  read -r n_found n_valid < <(_check_rb_entry "$1" DEPENDS_ON_LINUX_REGEX)
+  ((n_valid > 0)) && echo true || echo false
+}
+
+# Check if the formula/cask defined by the `*.rb` file depends on MacOS.
+#
+# Input:
+# 1. The `*.rb` filepath.
+#
+# Output:
+# Writes `true` if the formula/cask explicitly depends on MacOS.
+# `false` otherwise.
+#
+function check_rb_depends_on_macos()
+{
+  read -r n_found n_valid < <(_check_rb_entry "$1" DEPENDS_ON_MACOS_REGEX)
+  ((n_valid > 0)) && echo true || echo false
 }

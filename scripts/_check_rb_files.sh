@@ -12,9 +12,21 @@ echo "==> Checking formula/cask \`.rb\` files..."
 
 for rb_file in "${rb_files[@]}"
 do
-  sha256_correct="$(is_rb_entry SHA256_REGEX "${rb_file}")"
-  depends_on_linux="$(is_rb_entry DEPENDS_ON_LINUX_REGEX "${rb_file}")"
-  depends_on_macos="$(is_rb_entry DEPENDS_ON_MACOS_REGEX "${rb_file}")"
+  version_correct="$(check_rb_version "${rb_file}")"
+  sha256_correct="$(check_rb_sha256 "${rb_file}")"
+  depends_on_linux="$(check_rb_depends_on_linux "${rb_file}")"
+  depends_on_macos="$(check_rb_depends_on_macos "${rb_file}")"
+
+  if ! ${version_correct}
+  then
+    cat << EOMSG >&2
+
+::error file=${rb_file}::\`version\` entry is provided in the wrong format.
+Accepted style for this repository:
+  version "1.0.0.build" # i.e. between double quotes!
+EOMSG
+    success=false
+  fi
 
   if ! ${sha256_correct}
   then
