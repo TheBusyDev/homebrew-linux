@@ -424,6 +424,21 @@ function echo_pr_deletions()
   _echo_pr_additions_or_deletions "$1" "-"
 }
 
+# Get the number of occurrences in a file using Perl.
+#
+# Input:
+# 1. The filepath.
+# 2. The regex expression.
+#
+# Output:
+# Writes the number of occurrences to stdout.
+#
+function _get_n_occurrences()
+{
+  n=$(REGEX="$2" perl -0777 -ne '$n++ while /$ENV{REGEX}/gm; print "$n\n"' "$1")
+  echo "${n:-0}"
+}
+
 # Get the regular expression of the key defined in the input associative array.
 #
 # Input:
@@ -478,14 +493,10 @@ function _check_rb_entry()
   key_regex="$(_get_rb_key_regex ____regex____)"
   entry_regex="$(_get_rb_entry_regex ____regex____)"
 
-  # Print number of found entries and number of valid entries.
-  KEY_REGEX="${key_regex}" ENTRY_REGEX="${entry_regex}" perl -0777 -e '
-    my $string = do { <> } // "";
-    my ($n_found, $n_valid) = (0, 0);
-    ++$n_found while $string =~ /$ENV{KEY_REGEX}/gm;
-    ++$n_valid while $string =~ /$ENV{ENTRY_REGEX}/gm;
-    print "$n_found $n_valid\n";
-  ' "$1"
+  n_found=$(_get_n_occurrences "$1" "${key_regex}")
+  n_valid=$(_get_n_occurrences "$1" "${entry_regex}")
+
+  echo "${n_found} ${n_valid}"
 }
 
 # Check if the format of the version entry is correct in the `*.rb` file.
