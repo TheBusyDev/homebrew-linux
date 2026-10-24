@@ -45,7 +45,7 @@ jobs:
           GH_COOLDOWN: 10
           COMMITTER_NAME: ${{ steps.git-setup.outputs.name }}
           COMMITTER_EMAIL: ${{ steps.git-setup.outputs.email }}
-          PR_LABEL: autobump
+          BUMP_PR_LABEL: autobump
         run: ./scripts/bump.sh
 
       - name: Auto-approve PRs safely

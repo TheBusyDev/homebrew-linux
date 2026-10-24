@@ -43,10 +43,10 @@ these guidelines:
    [`scripts/bump.sh`](../scripts/bump.sh), without opening a dummy PR on the
    remote repository. Hence, **autobump dry-runs** can be easily enabled by
    defining a *custom pull request number* through the environment variable
-   `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`, e.g.:
+   `BUMP_DRYRUN_PR_NUMBER`, e.g.:
 
    ```bash
-   HOMEBREW_BUMP_DRYRUN_PR_NUMBER=52 ./scripts/bump.sh
+   BUMP_DRYRUN_PR_NUMBER=52 ./scripts/bump.sh
    ```
 
    In the example above, #52 pull request will be used as a dummy pull request
