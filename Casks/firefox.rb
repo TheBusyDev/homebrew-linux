@@ -520,7 +520,7 @@ cask "firefox" do
     "zh-CN"
   end
 
-  url "https://archive.mozilla.org/pub/firefox/releases/#{version}/linux-#{arch}/#{language}/firefox-#{version}.tar.xz"
+  url "https://archive.mozilla.org/pub/firefox/releases/#{version}/#{os}-#{arch}/#{language}/firefox-#{version}.tar.xz"
   name "Mozilla Firefox"
   desc "Fast and private browser"
   homepage "https://www.mozilla.org/firefox/"
@@ -534,6 +534,8 @@ cask "firefox" do
 
   depends_on :linux
 
+  rename "firefox", "firefox-tmp"
+
   binary "firefox"
   binary "firefox-bin"
   artifact "firefox.desktop",
@@ -542,8 +544,6 @@ cask "firefox" do
            target: "#{Dir.home}/.local/share/icons/firefox.png"
 
   preflight_steps do
-    move_contents "firefox", "firefox-tmp"
-    remove "firefox", recursive: true
     move_contents "firefox-tmp", "."
     remove "firefox-tmp", recursive: true
 

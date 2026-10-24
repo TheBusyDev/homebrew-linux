@@ -6,7 +6,7 @@ cask "vscodium" do
   sha256 arm64_linux:  "a57be0d528adf7d6508318e37dbd982d695bf91501e324c37e97e11d5b375811",
          x86_64_linux: "61223b74f9e40834117311ec4177cb386d09b84c1aae4f9e674c96580569cef3"
 
-  url "https://github.com/VSCodium/vscodium/releases/download/#{version}/VSCodium-linux-#{arch}-#{version}.tar.gz"
+  url "https://github.com/VSCodium/vscodium/releases/download/#{version}/VSCodium-#{os}-#{arch}-#{version}.tar.gz"
   name "VSCodium"
   desc "Editing evolved - Free/Libre Open Source Software Binaries of VS Code"
   homepage "https://vscodium.com/"
@@ -26,7 +26,7 @@ cask "vscodium" do
            target: "#{Dir.home}/.local/share/applications/vscodium.desktop"
   artifact "vscodium-url-handler.desktop",
            target: "#{Dir.home}/.local/share/applications/vscodium-url-handler.desktop"
-  artifact "resources/app/resources/linux/code.png",
+  artifact "resources/app/resources/#{os}/code.png",
            target: "#{Dir.home}/.local/share/icons/vscodium.png"
 
   preflight_steps do
