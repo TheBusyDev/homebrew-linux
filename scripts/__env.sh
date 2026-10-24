@@ -7,11 +7,14 @@
 # - `TAP_NAME`: The name of the tap.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
+# - `GH_REPO_NAME`: The name of the GitHub repository.
 # - `GH_APPROVE_DRYRUN`: If set, only check pull requests without approving.
+# - `GH_DELETE_DRYRUN`: If set, only find branches without deleting them.
 # - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
 # - `PR_LABEL`: Label for the pull requests created by `brew bump`.
+# - `BUMP_BRANCH_PREFIX`: The prefix of the branches created by `brew bump`.
 # - `GITHUB_OUTPUT`: Used to write output.
 # - `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`:
 #     Enable dry-runs for `brew bump` and do not open a new pull request.
@@ -30,11 +33,14 @@ set -euo pipefail
 export TAP_NAME="${TAP_NAME:-"thebusydev/linux"}"
 export GH_TOKEN="${GH_TOKEN:-}"
 export GH_COOLDOWN="${GH_COOLDOWN:-10}"
+export GH_REPO_NAME="${GH_REPO_NAME:-"TheBusyDev/homebrew-linux"}"
 export GH_APPROVE_DRYRUN="${GH_APPROVE_DRYRUN:-}"
+export GH_DELETE_DRYRUN="${GH_DELETE_DRYRUN:-}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
 export COMMITTER_USERNAME="${COMMITTER_USERNAME:-"TheBusyDev"}"
 export COMMITTER_EMAIL="${COMMITTER_EMAIL:-}"
 export PR_LABEL="${PR_LABEL:-"autobump"}"
+export BUMP_BRANCH_PREFIX="${BUMP_BRANCH_PREFIX:-"bump-"}"
 export GITHUB_OUTPUT="${GITHUB_OUTPUT:-"github_output.log"}"
 
 export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"

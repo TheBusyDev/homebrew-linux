@@ -4,19 +4,15 @@
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_REPO_NAME`: The name of the GitHub repository.
-# - `BRANCH_PREFIX`: The prefix of the branches to be deleted.
 # - `GH_DELETE_DRYRUN`: If set, only find branches without deleting them.
+# - `BUMP_BRANCH_PREFIX`: The prefix of the branches created by `brew bump`.
 #
 
-set -euo pipefail
-
-export GH_REPO_NAME="${GH_REPO_NAME:-"TheBusyDev/homebrew-linux"}"
-export BRANCH_PREFIX="${BRANCH_PREFIX:-"bump-"}"
-export GH_DELETE_DRYRUN="${GH_DELETE_DRYRUN:-}"
+source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
 
 mapfile -t bump_branches < <(
   gh api --paginate "repos/${GH_REPO_NAME}/branches" \
-    --jq ".[].name | select(startswith(\"${BRANCH_PREFIX}\"))"
+    --jq ".[].name | select(startswith(\"${BUMP_BRANCH_PREFIX}\"))"
 )
 
 n_deleted=0 # Number of deleted branches.
