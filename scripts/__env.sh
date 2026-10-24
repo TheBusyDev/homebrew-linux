@@ -15,11 +15,10 @@
 # - `COMMITTER_EMAIL`: The email address of the committer.
 # - `BUMP_PR_LABEL`: Label for the pull requests created by `brew bump`.
 # - `BUMP_BRANCH_PREFIX`: The prefix of the branches created by `brew bump`.
-# - `GITHUB_OUTPUT`: Used to write output.
-# - `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`:
+# - `BUMP_DRYRUN_PR_NUMBER`:
 #     Enable dry-runs for `brew bump` and do not open a new pull request.
-#     Instead, use $HOMEBREW_BUMP_DRYRUN_PR_NUMBER as dummy PR
-#     (useful for debugging).
+#     Instead, use $BUMP_DRYRUN_PR_NUMBER as dummy PR (useful for debugging).
+# - `GITHUB_OUTPUT`: Used to write output.
 #
 
 # Include guard.
@@ -41,12 +40,12 @@ export COMMITTER_USERNAME="${COMMITTER_USERNAME:-"TheBusyDev"}"
 export COMMITTER_EMAIL="${COMMITTER_EMAIL:-}"
 export BUMP_PR_LABEL="${BUMP_PR_LABEL:-"autobump"}"
 export BUMP_BRANCH_PREFIX="${BUMP_BRANCH_PREFIX:-"bump-"}"
+export BUMP_DRYRUN_PR_NUMBER="${BUMP_DRYRUN_PR_NUMBER:-}"
 export GITHUB_OUTPUT="${GITHUB_OUTPUT:-"github_output.log"}"
 
 export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
 export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
 export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
-export HOMEBREW_BUMP_DRYRUN_PR_NUMBER="${HOMEBREW_BUMP_DRYRUN_PR_NUMBER:-}"
 
 # Match `version "<version>"` entries in `.rb` files.
 # shellcheck disable=SC2034
