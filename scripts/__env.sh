@@ -13,7 +13,7 @@
 # - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_USERNAME`: The username of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
-# - `PR_LABEL`: Label for the pull requests created by `brew bump`.
+# - `BUMP_PR_LABEL`: Label for the pull requests created by `brew bump`.
 # - `BUMP_BRANCH_PREFIX`: The prefix of the branches created by `brew bump`.
 # - `GITHUB_OUTPUT`: Used to write output.
 # - `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`:
@@ -39,7 +39,7 @@ export GH_DELETE_DRYRUN="${GH_DELETE_DRYRUN:-}"
 export COMMITTER_NAME="${COMMITTER_NAME:-}"
 export COMMITTER_USERNAME="${COMMITTER_USERNAME:-"TheBusyDev"}"
 export COMMITTER_EMAIL="${COMMITTER_EMAIL:-}"
-export PR_LABEL="${PR_LABEL:-"autobump"}"
+export BUMP_PR_LABEL="${BUMP_PR_LABEL:-"autobump"}"
 export BUMP_BRANCH_PREFIX="${BUMP_BRANCH_PREFIX:-"bump-"}"
 export GITHUB_OUTPUT="${GITHUB_OUTPUT:-"github_output.log"}"
 

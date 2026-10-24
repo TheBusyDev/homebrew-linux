@@ -66,7 +66,7 @@ function get_casks_from_tap()
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
-# - `PR_LABEL`: Pull request label (possibly empty).
+# - `BUMP_PR_LABEL`: Pull request label (possibly empty).
 # - `HOMEBREW_BUMP_DRYRUN_PR_NUMBER`: Enable dry-runs for `brew bump`. Specify
 #                                     the dummy PR number.
 #
@@ -125,7 +125,7 @@ function _brew_bump_formula_or_cask()
   then
     # Update PR label.
     sleep "${GH_COOLDOWN}"
-    gh pr edit "${pr_nr}" --add-label "${PR_LABEL}" >&2
+    gh pr edit "${pr_nr}" --add-label "${BUMP_PR_LABEL}" >&2
   fi
 
   echo "${pr_nr}"
@@ -136,7 +136,7 @@ function _brew_bump_formula_or_cask()
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
-# - `PR_LABEL`: Pull request label (possibly empty).
+# - `BUMP_PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
 # 1. The fully-qualified name of the formula.
@@ -156,7 +156,7 @@ function brew_bump_formula()
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
-# - `PR_LABEL`: Pull request label (possibly empty).
+# - `BUMP_PR_LABEL`: Pull request label (possibly empty).
 #
 # Input:
 # 1. The fully-qualified name of the cask.
