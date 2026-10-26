@@ -11,6 +11,8 @@ source ./scripts/__functions.sh
 # Get formulae and casks from the tap.
 mapfile -t formulae < <(get_formulae_from_tap)
 mapfile -t casks < <(get_casks_from_tap)
+filter_by_arch formulae
+filter_by_arch casks
 success=true # Did all tests passed?
 
 # Install and test.

@@ -61,6 +61,43 @@ function get_casks_from_tap()
   _get_formulae_or_casks_from_tap "casks"
 }
 
+# Filter out the input formula/cask array by the current architecture.
+#
+# Input:
+# 1. The formula/cask array name. The formulae/casks not designed for the
+#    architecture of the current machine will be removed.
+#
+function filter_by_arch()
+{
+  local -n __fc_array__="$1"
+  local i rb_file depends_on_intel depends_on_arm64
+
+  for i in "${!__fc_array__[@]}"
+  do
+    rb_file="$(
+      brew info "${__fc_array__[${i}]}" --json=v2 | jq -r ".$1[0].ruby_source_path"
+    )"
+
+    depends_on_intel="$(
+      check_rb_depends_on "${rb_file}" DEPENDS_ON_ARCH_INTEL_REGEX
+    )"
+
+    depends_on_arm64="$(
+      check_rb_depends_on "${rb_file}" DEPENDS_ON_ARCH_ARM64_REGEX
+    )"
+
+    if ${depends_on_intel} && [[ "${ARCH}" != "x86_64" ]]
+    then
+      unset "__fc_array__[i]"
+    fi
+
+    if ${depends_on_arm64} && [[ "${ARCH}" != "aarch64" ]]
+    then
+      unset "__fc_array__[i]"
+    fi
+  done
+}
+
 # Bump a formula/cask, creating a new pull request with the selected label.
 #
 # Environment variables:
@@ -449,8 +486,8 @@ function _get_n_occurrences()
 #
 function _get_rb_key_regex()
 {
-  local -n __regex__="$1"
-  printf '^[[:blank:]]*%s\\b' "${__regex__["key"]}"
+  local -n __rb_entry_regex__="$1"
+  printf '^[[:blank:]]*%s\\b' "${__rb_entry_regex__["key"]}"
 }
 
 # Get the regular expression of the entry defined in the input associative array.
@@ -463,10 +500,10 @@ function _get_rb_key_regex()
 #
 function _get_rb_entry_regex()
 {
-  local -n ___regex___="$1"
+  local -n ____rb_entry_regex____="$1"
   printf '%s[[:blank:]]+%s[[:blank:]]*(#[^\\n]*)?$' \
-    "$(_get_rb_key_regex ___regex___)" \
-    "${___regex___["value"]}"
+    "$(_get_rb_key_regex ____rb_entry_regex____)" \
+    "${____rb_entry_regex____["value"]}"
 }
 
 # Check if the provided entry appears in the `*.rb` file.
@@ -481,7 +518,6 @@ function _get_rb_entry_regex()
 #
 function _check_rb_entry()
 {
-  local -n ____regex____="$2"
   local key_regex entry_regex n_found n_valid
 
   if [[ ! -f "$1" ]]
@@ -490,8 +526,8 @@ function _check_rb_entry()
     return 1
   fi
 
-  key_regex="$(_get_rb_key_regex ____regex____)"
-  entry_regex="$(_get_rb_entry_regex ____regex____)"
+  key_regex="$(_get_rb_key_regex "$2")"
+  entry_regex="$(_get_rb_entry_regex "$2")"
 
   n_found=$(_get_n_occurrences "$1" "${key_regex}")
   n_valid=$(_get_n_occurrences "$1" "${entry_regex}")
@@ -528,32 +564,30 @@ function check_rb_sha256()
   ((n_found > 0 && n_found == n_valid)) && echo true || echo false
 }
 
-# Check if the formula/cask defined by the `*.rb` file depends on Linux.
+# Check if the formula/cask defined by the `*.rb` file depends on the input
+# requirement.
 #
 # Input:
 # 1. The `*.rb` filepath.
+# 2. The regex entry, passed as an associative array with "key" and "value" keys.
+#    The "key" must be equal to "depends_on".
 #
 # Output:
-# Writes `true` if the formula/cask explicitly depends on Linux.
+# Writes `true` if the formula/cask explicitly depends on the input requirement.
 # `false` otherwise.
 #
-function check_rb_depends_on_linux()
+function check_rb_depends_on()
 {
-  read -r n_found n_valid < <(_check_rb_entry "$1" DEPENDS_ON_LINUX_REGEX)
-  ((n_valid > 0)) && echo true || echo false
-}
+  local -n __depends_on_regex__="$2"
 
-# Check if the formula/cask defined by the `*.rb` file depends on MacOS.
-#
-# Input:
-# 1. The `*.rb` filepath.
-#
-# Output:
-# Writes `true` if the formula/cask explicitly depends on MacOS.
-# `false` otherwise.
-#
-function check_rb_depends_on_macos()
-{
-  read -r n_found n_valid < <(_check_rb_entry "$1" DEPENDS_ON_MACOS_REGEX)
+  if [[ "${__depends_on_regex__[key]}" != "depends_on" ]]
+  then
+    cat << EOMSG >&2
+::error::This function is designed to check only \`depends_on\` requirements.
+EOMSG
+    return 1
+  fi
+
+  read -r n_found n_valid < <(_check_rb_entry "$1" __depends_on_regex__)
   ((n_valid > 0)) && echo true || echo false
 }

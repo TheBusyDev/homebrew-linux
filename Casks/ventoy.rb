@@ -17,14 +17,9 @@ cask "ventoy" do
 
   depends_on :linux
 
-  artifact "ventoygui.desktop",
-           target: "#{Dir.home}/.local/share/applications/ventoygui.desktop"
-  artifact "WebUI/static/img/VentoyLogo.png",
-           target: "#{Dir.home}/.local/share/icons/ventoy.png"
+  rename "ventoy-#{version}", "ventoy-tmp"
 
-  executables = %w[Ventoy2Disk.sh VentoyWeb.sh VentoyPlugson.sh VentoyGUI]
-
-  executables.each do |exec|
+  %w[Ventoy2Disk.sh VentoyWeb.sh VentoyPlugson.sh VentoyGUI].each do |exec|
     command_wrapper exec.delete_suffix(".sh").downcase,
                     content: <<~SH
                       #!/bin/bash
@@ -32,9 +27,14 @@ cask "ventoy" do
                     SH
   end
 
+  artifact "ventoygui.desktop",
+           target: "#{Dir.home}/.local/share/applications/ventoygui.desktop"
+  artifact "WebUI/static/img/VentoyLogo.png",
+           target: "#{Dir.home}/.local/share/icons/ventoy.png"
+
   preflight_steps do
-    move_contents "ventoy-{{version}}", "."
-    remove "ventoy-{{version}}", recursive: true
+    move_contents "ventoy-tmp", "."
+    remove "ventoy-tmp", recursive: true
     symlink "VentoyGUI.{{arch}}", "VentoyGUI" # Create a symbolic link for the correct architecture.
 
     mkdir_p ".local/share/applications", base: :home

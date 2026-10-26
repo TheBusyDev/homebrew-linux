@@ -25,6 +25,8 @@ cask "vscode" do
 
   depends_on :linux
 
+  rename "VSCode-linux-#{arch}", "VSCode-tmp"
+
   binary "bin/code"
   binary "bin/code-tunnel"
   bash_completion "resources/completions/bash/code"
@@ -37,8 +39,8 @@ cask "vscode" do
            target: "#{Dir.home}/.local/share/icons/vscode.png"
 
   preflight_steps do
-    move_contents "VSCode-linux-{{arch}}", "."
-    remove "VSCode-linux-{{arch}}", recursive: true
+    move_contents "VSCode-tmp", "."
+    remove "VSCode-tmp", recursive: true
 
     mkdir_p ".local/share/applications", base: :home
     mkdir_p ".local/share/icons", base: :home

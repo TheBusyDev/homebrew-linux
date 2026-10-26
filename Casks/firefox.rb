@@ -534,6 +534,8 @@ cask "firefox" do
 
   depends_on :linux
 
+  rename "firefox", "firefox-tmp"
+
   binary "firefox"
   binary "firefox-bin"
   artifact "firefox.desktop",
@@ -542,8 +544,6 @@ cask "firefox" do
            target: "#{Dir.home}/.local/share/icons/firefox.png"
 
   preflight_steps do
-    move_contents "firefox", "firefox-tmp"
-    remove "firefox", recursive: true
     move_contents "firefox-tmp", "."
     remove "firefox-tmp", recursive: true
 
