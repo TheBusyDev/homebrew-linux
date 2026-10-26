@@ -66,7 +66,7 @@ cask "paraview" do
       Comment=Parallel visualization application
       Exec={{HOMEBREW_PREFIX}}/bin/paraview %f
       Icon=paraview
-      StartupWMClass=paraview
+      StartupWMClass=paraview-real
       Categories=Qt;Science;DataVisualization;
     EOS
   end
