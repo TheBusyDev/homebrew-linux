@@ -2,8 +2,8 @@ cask "paraview" do
   arch intel: "x86_64"
   os linux: "Linux"
 
-  version "6.1.0,Python3.12"
-  sha256 "bd1c3917d28b43334970a1957d94b97ab79bce555c4a694a35a1a36dfe4fe2d1"
+  version "6.2.0,Python3.12"
+  sha256 "242052db6569073cb77c9e683c8a81a4cd31c06b0901818f72c9c23546420e46"
 
   url "https://www.paraview.org/files/v#{version.major_minor}/ParaView-#{version.csv.first}-MPI-Linux-#{version.csv.second}-x86_64.tar.gz"
   name "ParaView"
