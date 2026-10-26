@@ -47,6 +47,16 @@ export HOMEBREW_GITHUB_API_TOKEN="${GH_TOKEN}"
 export HOMEBREW_GIT_COMMITTER_NAME="${COMMITTER_NAME}"
 export HOMEBREW_GIT_COMMITTER_EMAIL="${COMMITTER_EMAIL}"
 
+# Export architecture.
+# shellcheck disable=SC2155
+export ARCH="$(uname -m)"
+
+if [[ ! "${ARCH}" =~ (x86_64|aarch64) ]]
+then
+  echo "::error::Architecture \`${ARCH}\` is not supported." >&2
+  exit 1
+fi
+
 # Match `version "<version>"` entries in `.rb` files.
 # shellcheck disable=SC2034
 declare -rA VERSION_REGEX=(
@@ -62,6 +72,20 @@ declare -rA VERSION_REGEX=(
 declare -rA SHA256_REGEX=(
   ["key"]='sha256'
   ["value"]='("[[:xdigit:]]{64}"|arm64_linux:[[:blank:]]*"[[:xdigit:]]{64}",\n[[:blank:]]*x86_64_linux:[[:blank:]]*"[[:xdigit:]]{64}")'
+)
+
+# Match `depends_on arch: :intel` stanzas in `.rb` files.
+# shellcheck disable=SC2034
+declare -rA DEPENDS_ON_ARCH_INTEL_REGEX=(
+  ["key"]='depends_on'
+  ["value"]='arch:[[:blank:]]+:(intel|x86_64)'
+)
+
+# Match `depends_on arch: :arm64` stanzas in `.rb` files.
+# shellcheck disable=SC2034
+declare -rA DEPENDS_ON_ARCH_ARM64_REGEX=(
+  ["key"]='depends_on'
+  ["value"]='arch:[[:blank:]]+:arm64'
 )
 
 # Match `depends_on :linux` stanzas in `.rb` files.

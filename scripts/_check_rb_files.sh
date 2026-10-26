@@ -14,8 +14,8 @@ for rb_file in "${rb_files[@]}"
 do
   version_correct="$(check_rb_version "${rb_file}")"
   sha256_correct="$(check_rb_sha256 "${rb_file}")"
-  depends_on_linux="$(check_rb_depends_on_linux "${rb_file}")"
-  depends_on_macos="$(check_rb_depends_on_macos "${rb_file}")"
+  depends_on_linux="$(check_rb_depends_on "${rb_file}" DEPENDS_ON_LINUX_REGEX)"
+  depends_on_macos="$(check_rb_depends_on "${rb_file}" DEPENDS_ON_MACOS_REGEX)"
 
   if ! ${version_correct}
   then
