@@ -5,7 +5,7 @@ cask "ventoy" do
   version "1.1.18"
   sha256 "d86ff9de63d94c8b8f1f6b14d23c55af4b88e8207bf2893890892a6a97b1ad54"
 
-  url "https://github.com/ventoy/Ventoy/releases/download/v#{version}/ventoy-#{version}-#{os}.tar.gz"
+  url "https://github.com/ventoy/Ventoy/releases/download/v#{version}/ventoy-#{version}-linux.tar.gz"
   name "Ventoy"
   desc "Create bootable USB drives for ISO/WIM/IMG/VHD(x)/EFI files"
   homepage "https://www.ventoy.net/"

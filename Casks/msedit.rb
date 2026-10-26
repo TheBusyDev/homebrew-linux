@@ -6,7 +6,7 @@ cask "msedit" do
   sha256 arm64_linux:  "b39f0b128d29d4c00f32a416c515f2c7758e0ec8d7457ee10b948e7b76636da4",
          x86_64_linux: "7854d477e73e7b94cd02f35959eea778a4d8408f6ffc657644ae1a715124786c"
 
-  url "https://github.com/microsoft/edit/releases/download/v#{version}/edit-#{version}-#{arch}-#{os}-gnu.tar.gz"
+  url "https://github.com/microsoft/edit/releases/download/v#{version}/edit-#{version}-#{arch}-linux-gnu.tar.gz"
   name "Microsoft Edit"
   name "MSEdit"
   desc "Simple editor for simple needs"

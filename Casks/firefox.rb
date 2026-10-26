@@ -520,7 +520,7 @@ cask "firefox" do
     "zh-CN"
   end
 
-  url "https://archive.mozilla.org/pub/firefox/releases/#{version}/#{os}-#{arch}/#{language}/firefox-#{version}.tar.xz"
+  url "https://archive.mozilla.org/pub/firefox/releases/#{version}/linux-#{arch}/#{language}/firefox-#{version}.tar.xz"
   name "Mozilla Firefox"
   desc "Fast and private browser"
   homepage "https://www.mozilla.org/firefox/"
