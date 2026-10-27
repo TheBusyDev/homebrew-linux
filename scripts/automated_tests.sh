@@ -23,6 +23,7 @@ function bump-test()
   local GITHUB_OUTPUT="github_output.log"
   ./scripts/bump.sh > /dev/null
   cat "${GITHUB_OUTPUT}"
+  rm "${GITHUB_OUTPUT}"
 }
 
 mapfile -t rb_files < <(find ./Formula ./Casks -name "*.rb" -type f)
