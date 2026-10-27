@@ -4,6 +4,8 @@
 .*.formatted~
 steps_output.txt
 
+!scripts/logs/*.log
+
 *.gem
 *.rbc
 /.config

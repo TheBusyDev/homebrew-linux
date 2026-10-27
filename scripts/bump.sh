@@ -5,8 +5,8 @@
 # - `TAP_NAME`: The name of the tap to be updated.
 # - `GH_TOKEN`: Token used for authentication in `gh`.
 # - `GH_COOLDOWN`: Delay before retrieving info with `gh` (seconds).
-# - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_USERNAME`: The username of the committer.
+# - `COMMITTER_NAME`: The name of the committer.
 # - `COMMITTER_EMAIL`: The email address of the committer.
 # - `BUMP_PR_LABEL`: Label for the pull requests created by `brew bump`.
 # - `BUMP_DRYRUN_PR_NUMBER`: Enable dry-runs for `brew bump`. Specify the dummy
