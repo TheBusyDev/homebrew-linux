@@ -589,3 +589,42 @@ EOMSG
   read -r n_found n_valid < <(_check_rb_entry "$1" __depends_on_regex__)
   ((n_valid > 0)) && echo true || echo false
 }
+
+# Launch an automated test and return with errors if the test fails.
+#
+# Input:
+# 1. The function name executing the automated test.
+# 2. A string containing the expected output.
+#
+function automated_test()
+{
+  local real_output expected_output output_diff
+  echo "==> Starting automated test \`$1\`..."
+
+  # Start the automated test and save output.
+  real_output="$(
+    set -x
+    "$1"
+  )"
+
+  expected_output="$2"
+  output_diff="$(diff -U0 <(echo "${expected_output}") <(echo "${real_output}"))"
+
+  if [[ -n ${output_diff} ]]
+  then
+    cat << EOMSG >&2
+
+::error::Test failed!
+Difference between the expected output and the actual output:
+${output_diff@E}
+
+EOMSG
+    return 1
+  fi
+
+  cat << EOMSG
+
+==> Automated test \`$1\` succeeded!
+
+EOMSG
+}

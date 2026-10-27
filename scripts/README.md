@@ -72,3 +72,8 @@ these guidelines:
    ```bash
    GH_DELETE_DRYRUN=1 ./scripts/clean_bump.sh
    ```
+
+## Automated tests
+
+Some automated tests for bash scripts can be found in
+[`scripts/automated_tests.sh`](../scripts/automated_tests.sh)!

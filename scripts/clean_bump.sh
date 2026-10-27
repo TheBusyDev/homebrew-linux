@@ -1,5 +1,5 @@
 #!/bin/bash
-# Clean up all the branches on remote starting with `bump-*`.
+# Clean up all the branches on remote starting with `$BUMP_BRANCH_PREFIX`.
 #
 # Environment variables:
 # - `GH_TOKEN`: Token used for authentication in `gh`.
