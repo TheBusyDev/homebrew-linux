@@ -17,13 +17,13 @@ cask "msedit" do
     strategy :github_latest
   end
 
-  depends_on formula: "icu4c"
+  depends_on formula: "icu4c@78"
   depends_on :linux
 
   command_wrapper "msedit",
                   content: <<~SH
                     #!/bin/bash
-                    export LD_LIBRARY_PATH="#{HOMEBREW_PREFIX}/opt/icu4c/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+                    export LD_LIBRARY_PATH="#{HOMEBREW_PREFIX}/opt/icu4c@78/lib:${LD_LIBRARY_PATH}}"
                     exec "#{staged_path}/edit" "$@"
                   SH
   artifact "msedit.desktop",
