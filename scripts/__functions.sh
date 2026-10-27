@@ -298,26 +298,24 @@ function _get_pr_additions_or_deletions()
   if [[ ! -v __ALL_PR_CHANGES__["$1.$2"] ]]
   then
     __ALL_PR_CHANGES__["$1.$2"]="$(
-      echo "${__ALL_PR_CHANGES__["$1"]}" \
-        | FILE="$2" awk '
-            BEGIN {
-              file = ENVIRON["FILE"]
-              prefix = "diff --git a/" file " "
-              suffix = " b/" file
-            }
-            /^diff --git / {
-              inhunk = 0
-              is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
-              next
-            }
-            /^@@/ {
-              inhunk = 1
-              next
-            }
-            is_file && inhunk && /^[+-]/ {
-              print $0
-            }
-          '
+      FILE="$2" awk '
+BEGIN {
+  prefix = "diff --git a/" ENVIRON["FILE"] " "
+  suffix = " b/" ENVIRON["FILE"]
+}
+/^diff --git / {
+  in_hunk = 0
+  is_file = (substr($0, 1, length(prefix)) == prefix) || (substr($0, length($0) - length(suffix) + 1) == suffix)
+  next
+}
+/^@@/ {
+  in_hunk = 1
+  next
+}
+is_file && in_hunk && /^[+-]/ {
+  print $0
+}
+' <<< "${__ALL_PR_CHANGES__["$1"]}"
     )"
   fi
 
@@ -325,7 +323,7 @@ function _get_pr_additions_or_deletions()
   if [[ ! -v __ALL_PR_CHANGES__["$1.$2.$3"] ]]
   then
     __ALL_PR_CHANGES__["$1.$2.$3"]="$(
-      echo "${__ALL_PR_CHANGES__["$1.$2"]}" | sed -ne "s/^$3//p"
+      sed -ne "s/^$3//p" <<< "${__ALL_PR_CHANGES__["$1.$2"]}"
     )"
   fi
 
@@ -432,7 +430,7 @@ function get_pr_unauthorized_deletions()
 function _echo_pr_additions_or_deletions()
 {
   # shellcheck disable=SC2001
-  echo "$1" | sed -e "s/^/$2/"
+  sed -e "s/^/$2/" <<< "$1"
 }
 
 # Print the input additions, adding a leading "+".
