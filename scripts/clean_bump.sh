@@ -34,14 +34,20 @@ do
   if [[ -z "${GH_DELETE_DRYRUN}" ]]
   then
     gh api -X DELETE "repos/${GH_REPO_NAME}/git/refs/heads/${branch}" \
+      && ((++n_deleted)) \
       || echo "::error::Cannot delete branch \`${branch}\`." >&2
+  else
+    echo "::warning::Dry-run is enabled. No branch is actually deleted." >&2
+    ((++n_deleted))
   fi
-  ((++n_deleted))
 done
 
 n_skipped=$((n_deleted - ${#bump_branches[@]})) # Number of skipped branches.
-echo "Skipped ${n_skipped} branch(es)."
-echo "Deleted ${n_deleted} branch(es)."
+cat << EOMSG
+
+Skipped ${n_skipped} branch(es).
+Deleted ${n_deleted} branch(es).
+EOMSG
 
 ((n_skipped == 0)) || exit 1
 exit 0

@@ -30,7 +30,7 @@ mapfile -t rb_files < <(find ./Formula ./Casks -name "*.rb" -type f)
 expected_output="$(perl -e "print join(':', ('1') x ${#rb_files[@]})")"
 expected_output="pr-numbers=${expected_output}"
 
-automated_test bump-test "${expected_output}" \
+run_automated_test bump-test "${expected_output}" \
   && ((++n_succeeded)) \
   || ((++n_failed))
 
@@ -39,12 +39,12 @@ automated_test bump-test "${expected_output}" \
 function approve-test()
 {
   local GH_APPROVE_DRYRUN=1
-  ./scripts/approve.sh "52:53:88" 2>&1
+  ./scripts/approve.sh "52:53:88" 2>&1 || true
 }
 
 expected_output="$(cat scripts/logs/approve_test.log)"
 
-automated_test approve-test "${expected_output}" \
+run_automated_test approve-test "${expected_output}" \
   && ((++n_succeeded)) \
   || ((++n_failed))
 

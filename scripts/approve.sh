@@ -96,6 +96,8 @@ do
     then
       gh pr review "${pr_nr}" --approve
       gh pr merge "${pr_nr}" --merge --auto
+    else
+      echo "::warning::Dry-run is enabled. No PR is actually approved." >&2
     fi
   fi
 done
