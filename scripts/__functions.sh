@@ -596,35 +596,49 @@ EOMSG
 # 1. The function name executing the automated test.
 # 2. A string containing the expected output.
 #
-function automated_test()
+function run_automated_test()
 {
-  local real_output expected_output output_diff
-  echo "==> Starting automated test \`$1\`..."
+  local fun_name real_output expected_output output_diff
+  fun_name="$1"
+  echo "==> Starting automated test \`${fun_name}\`..."
 
   # Start the automated test and save output.
+  exit_code=0
+
   real_output="$(
-    set -x
-    "$1"
-  )"
+    export -f "${fun_name?}"
+    bash -xeuo pipefail -c "${fun_name}"
+  )" || exit_code=$?
 
   expected_output="$2"
   output_diff="$(diff -U0 <(echo "${expected_output}") <(echo "${real_output}"))"
+  echo
 
-  if [[ -n ${output_diff} ]]
+  if ((exit_code != 0))
   then
     cat << EOMSG >&2
+::error::Test \`${fun_name}\` failed with code ${exit_code}.
 
-::error::Test failed!
+EOMSG
+  fi
+
+  if [[ -n "${output_diff}" ]]
+  then
+    cat << EOMSG >&2
+::error::Test \`${fun_name}\` failed.
 Difference between the expected output and the actual output:
 ${output_diff@E}
 
 EOMSG
+  fi
+
+  if ((exit_code != 0)) || [[ -n "${output_diff}" ]]
+  then
     return 1
   fi
 
   cat << EOMSG
-
-==> Automated test \`$1\` succeeded!
+==> Automated test \`${fun_name}\` succeeded!
 
 EOMSG
 }
