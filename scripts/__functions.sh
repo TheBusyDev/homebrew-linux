@@ -136,7 +136,7 @@ function _brew_bump_formula_or_cask()
       }
   else
     # Dry-run for `brew bump`.
-    echo "::warning::Dry-runs for \`brew bump\` are enabled." \
+    echo "::warning::Dry-run for \`brew bump\` is enabled." \
       "No action is performed." >&2
 
     if [[ ! "${BUMP_DRYRUN_PR_NUMBER}" =~ ^[[:digit:]]+$ ]]
