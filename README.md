@@ -41,7 +41,7 @@ brew install thebusydev/linux/firefox  # Firefox, the popular web browser by Moz
 brew install thebusydev/linux/msedit   # Microsoft Edit, a TUI text editor.
 brew install thebusydev/linux/paraview # ParaView, a tool for data visualization.
 brew install thebusydev/linux/ventoy   # Ventoy, used to create bootable images.
-brew install thebusydev/linux/vscode   # VSCode, the IDE for Microsoft.
+brew install thebusydev/linux/vscode   # VSCode, Microsoft IDE.
 brew install thebusydev/linux/vscodium # VSCodium, the completely open-source alternative to VSCode.
 ```
 
@@ -84,7 +84,7 @@ brew tap-info thebusydev/linux --json | jq -r '.[]|(.formula_names[],.cask_token
   For **immutable distros users** mainly...
   I use *Fedora Kinoite* as my daily driver...
   And even if I really appreciate immutable distros for their security and yet
-  maintainability, installing new software may appear a little be cumbersome. 😵‍💫
+  maintainability, installing new software may appear quite cumbersome. 😵‍💫
 
 ## What is <ins>not</ins> planned
 
