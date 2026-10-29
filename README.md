@@ -70,12 +70,12 @@ brew tap-info thebusydev/linux --json | jq -r '.[]|(.formula_names[],.cask_token
      the applications are designed to easily run under an isolated environment
      (think about IDEs like
      [VS Code](https://github.com/flathub/com.visualstudio.code?tab=readme-ov-file#usage)). \
-     And here **Homebrew** comes to play: a <u>*lightweight software manager*</u>,
+     And here **Homebrew** comes to play: a <ins>*lightweight software manager*</ins>,
      capable of handling updates and dependencies seamlessly, which lets
      you run software directly on your machine, without any intermediate container! ☘️
 
   1. Homebrew has the great option to be installed
-     <u>*without root privileges*</u>.
+     <ins>*without root privileges*</ins>.
      Meaning that, you can install it in your `$HOME` directory and easily port
      your setup everywhere (even if you are not granted root privileges, e.g.
      on clusters or servers). 🖥️
@@ -86,7 +86,7 @@ brew tap-info thebusydev/linux --json | jq -r '.[]|(.formula_names[],.cask_token
   And even if I really appreciate immutable distros for their security and yet
   maintainability, installing new software may appear a little be cumbersome. 😵‍💫
 
-## What is <u>not</u> planned
+## What is <ins>not</ins> planned
 
 🍎 I am not planning to include any software for MacOS... Homebrew official
 repository is already really complete for MacOS users.
