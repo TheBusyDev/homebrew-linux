@@ -8,7 +8,6 @@
 # Input:
 # 1. Colon-separated list of pull request numbers.
 #
-# TODO: add criteria list to README.md
 
 source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
 source ./scripts/__functions.sh
