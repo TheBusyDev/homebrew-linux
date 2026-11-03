@@ -42,7 +42,7 @@ do
   fi
 done
 
-n_skipped=$((n_deleted - ${#bump_branches[@]})) # Number of skipped branches.
+n_skipped=$((${#bump_branches[@]} - n_deleted)) # Number of skipped branches.
 cat << EOMSG
 
 Skipped ${n_skipped} branch(es).

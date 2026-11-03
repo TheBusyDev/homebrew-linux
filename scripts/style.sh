@@ -1,7 +1,7 @@
 #!/bin/bash
 # This script is used to check the style of the entire tap.
 # The following checks are executed:
-# - `brew style` and `brew audit` on all the formulae/casks;
+# - `brew style`, `brew audit` and `brew livecheck` on all the formulae/casks;
 # - `shellcheck` and `shfmt` on all the bash scripts;
 # - check style of all the `.rb` source files.
 #
