@@ -12,6 +12,7 @@ check out this fantastic project on their official website <https://brew.sh/>. �
 - [Objectives](#objectives)
 - [What is not planned](#what-is-not-planned)
 - [What is still missing](#what-is-still-missing-todo-list)
+- [How to contribute](#how-to-contribute)
 
 ## Dependencies
 
@@ -95,3 +96,8 @@ repository is already really complete for MacOS users.
 
 🍾 For a matter of simplicity, **bottle** builds and releases are not included
 yet... But any contribution is welcome!
+
+## How to contribute
+
+Thanks a lot, this is really appreciated! 🤗 \
+Have a look at [`CONTRIBUTING.md`](./CONTRIBUTING.md) for further info!
