@@ -2,521 +2,521 @@ cask "firefox" do
   arch arm: "aarch64", intel: "x86_64"
   os linux: "linux"
 
-  version "159.0.1"
+  version "160.0"
 
   language "ach" do
-    sha256 arm64_linux:  "8669d515516801dd03bfd6cc002262f790099c35cf683b19113b8b066999a8cb",
-           x86_64_linux: "9cda98f137dcbca22b19aea511a5c965eeca4c7190604b38b8fd459eda34e364"
+    sha256 arm64_linux:  "58d0b27155fbd4b776eddff0b0dd0a127e3a45d45da4fd342d01e933060e76e6",
+           x86_64_linux: "a053e78969a6d009e5cbe369dbb9e046bd4657341196ee056f3eb47d167a879f"
     "ach"
   end
   language "af" do
-    sha256 arm64_linux:  "11d7448a085ae58a74a3e3bacfae029cee9d459198963441d2ffb70d5cc295ee",
-           x86_64_linux: "4ebde664a4046c99a9c68ebac821519ece9ef4c1ed8c5e6d2a58e0eae020fda6"
+    sha256 arm64_linux:  "a2c9bf5db6b4d668477dc3862c0776a24b00c5c5a71fc5a4d6bff262b3fc741d",
+           x86_64_linux: "4400897d1aed775d675246b04552fcd3cb7f162f079147018a690169e283f337"
     "af"
   end
   language "an" do
-    sha256 arm64_linux:  "c009284ef54357bd133b011ccf04b430eed64875d4b1ba4c819aa5e37157482a",
-           x86_64_linux: "d70efdbede57e697d276c86bab546fd78d847b884b116b83a0bf912850dcc04e"
+    sha256 arm64_linux:  "32d928be5284f5d67b335e42743239593a18b57a2ccf8d091e3cb1954879b30a",
+           x86_64_linux: "5d43108bfbb24ffdade16e336848e57b55586c0a81b7ee2b55b17b3590a07dfd"
     "an"
   end
   language "ar" do
-    sha256 arm64_linux:  "0f7d0946697608d2a67f260c9407a431579a2514ffcf5be1c6db51d14d13ec4e",
-           x86_64_linux: "2c7d40cb526202d96e96c67bdfce489632b78f786f6f72c396288c2fcee6fe8f"
+    sha256 arm64_linux:  "2e92c0ce528908550c9b6d35e946175c20db62669e515e3a3a0cddbee6749a83",
+           x86_64_linux: "972478344a0ce0926df6e88a31f7b626e5854f401f71f47d4f687123717d9145"
     "ar"
   end
   language "ast" do
-    sha256 arm64_linux:  "bd5dc03d7706acf2eabfbc33718bd5a67e99c4fc4ad4db8c6ebe623bc09729d9",
-           x86_64_linux: "56845b3a57e1e46eac1588df0cb3a3bec002c6b693295b5644d251fbb0f51302"
+    sha256 arm64_linux:  "60b92100870d009b164f75995bfc05cc1063122cbe0e10569f0e1a333c1592a2",
+           x86_64_linux: "c685f3f96ca6e1ee6417774c25a8ed2d42496fc4a57f4a8f47385a04d00df32e"
     "ast"
   end
   language "az" do
-    sha256 arm64_linux:  "6b970ab74098d2ac3d2cdb4de1a0fa09cfc74fa6abebd5da00adc2d69e8f9fde",
-           x86_64_linux: "0e4227eacca08c738f31d88b17d932dd726f7f68218d60b8492690c3afc8a379"
+    sha256 arm64_linux:  "7cba1a72b90f0a0515aa91798f1e3854348e72df43728d44602c72c0b5e87b4c",
+           x86_64_linux: "532e05933aa4665bf2dacf3224a8b06cab576900aa889f9ac7588cc3cb1326dc"
     "az"
   end
   language "be" do
-    sha256 arm64_linux:  "2f76147677680841ef6c4d9fe15478a70bd8446a0beda751b6a70d4a636036aa",
-           x86_64_linux: "0b1c928065dc1a731f9fa71f9570d2e2759308113ffa20ef9249ba5a913946a6"
+    sha256 arm64_linux:  "dc20f725e153d73463fa16eb1cf3943b913363712154fb614e277b38e5332541",
+           x86_64_linux: "34f990a9bc834dfaa1d45f9f6cb246c8a1927d77a67c9d1b86b0aec60388f08f"
     "be"
   end
   language "bg" do
-    sha256 arm64_linux:  "37389c57f822cd5f4c4f08c6e906460e152e8e4831c2622257865a65b33b6e6c",
-           x86_64_linux: "4bbf035ce38948abfc63cbea6a119b1b4a8949354da2ef2f9a20c10879a479a1"
+    sha256 arm64_linux:  "48ebb087d9df21313d07c5ce4f38c9092f9f47d1f17805b1fabc18855a1b9187",
+           x86_64_linux: "298af5de6322ce9347a84d1adaf54ce8cccabac552bf2500b426632635ff8099"
     "bg"
   end
   language "bn" do
-    sha256 arm64_linux:  "6457b1b4807a83aa21d8c67518231089f006422125ceba8f85f29fefb99c6dd4",
-           x86_64_linux: "8612c08465219fb075298c4ae7eb2df917b35f2923a24d2f92128496a218e3f3"
+    sha256 arm64_linux:  "628b85970e544c3abd71aeafdf53eb63e09a6d82b2e0d39297a0951df50fcdcb",
+           x86_64_linux: "2844adf60dad281790f6be1c5526673412e3d72171792a983c78b212754801ef"
     "bn"
   end
   language "br" do
-    sha256 arm64_linux:  "3abcc7a16ffa4dda0c6172df85cccd0c0a59528e180c87ff1516d70cc7845787",
-           x86_64_linux: "7921bc5ff9864fc3e7679585c634b7a64e0e18be3eb291de49b354c6509d7c87"
+    sha256 arm64_linux:  "4cbdc009657089d006eea7ee01c49864f87a0a9394f436e723512c862bf29543",
+           x86_64_linux: "9589bea5d632d27108f450a192241827ddab5bb408a530e4586720b96eee058b"
     "br"
   end
   language "bs" do
-    sha256 arm64_linux:  "fbeef560843c816b02251bcef53f76a1a1b68390cd62e7e881d6181741917bcf",
-           x86_64_linux: "a1729915d4deb7faa6bfaf5d3ab5cf936e269e6b5933dbebfa5ae5f39740f359"
+    sha256 arm64_linux:  "20d4ae3dac2960634a1c610fb928c8036f5dbc1069e45e7ed7dd247dab793634",
+           x86_64_linux: "b575b2b4ffe54ff2feb9e29eae57db9daeae9a0e5820ddc348b3a976ef9ed568"
     "bs"
   end
   language "ca" do
-    sha256 arm64_linux:  "3e1ef566cf96f415fbc3b81704db55fe3be05be825735db9eac491c427a8ea89",
-           x86_64_linux: "588f49faf73b7613a51755de7e9698fc45c0f4e7db3b450aac97b09bc29f2712"
+    sha256 arm64_linux:  "f0d2930db252b0cd19cb1469ba022dcb31d4402572e950b9531cfcc1251daa5a",
+           x86_64_linux: "ee5220c5545592ee1c10b666db061485ef70c1e9ccbdbf660493e7688b30e432"
     "ca"
   end
   language "cak" do
-    sha256 arm64_linux:  "e0cafca4ecec74892cbc05d9fb39e90cb8e90804de9e0a1406441cce7f6a800d",
-           x86_64_linux: "cc4ed8bd91266289d6313ab4a666d85a36d6c3d9b6b0b9ff8b87eacac3916e3e"
+    sha256 arm64_linux:  "b1a916964f9538d63eb3f34048daf2def8d9aa68e962d91a3eb31c69cbe007f4",
+           x86_64_linux: "48cbf14800c4c5df32650c213e356ed17a5da903af2765f6a3b35c63b28fdc3e"
     "cak"
   end
   language "cs" do
-    sha256 arm64_linux:  "9cbafee4301736f11235e4bc4b0ae19ecb3b45ffa6f9edfee1d8393bf867468a",
-           x86_64_linux: "94d09e1352062714efc62906c6032211aa7e5a1cf81a2e557b8606586c5536fb"
+    sha256 arm64_linux:  "2503e494234c52bb9f34e26a9095be4475209842344ae06d18bbdce58492fa8c",
+           x86_64_linux: "c48927f0b72d7d44099e23dbae00ba31a73966f8b8c6dbe3a4d0dee57d158b9f"
     "cs"
   end
   language "cy" do
-    sha256 arm64_linux:  "37798bfe94dffae5190803ea92cff24de0b039696709d24e407970a33ae655fd",
-           x86_64_linux: "1b436f0e234f3998bd7eefa09abe70517ebee668c313e17dae2e2db56fd03c4e"
+    sha256 arm64_linux:  "c8a033545aa0a16a924a917ae69a7809237f75b4dfbe0fe55767aad30a787c81",
+           x86_64_linux: "ca482aa2fa86c3a5989a9dfc33ac8b3106deccc48f20927c876494391bdf449d"
     "cy"
   end
   language "da" do
-    sha256 arm64_linux:  "a431abfb937d976450b97877e415f2157c3785f28d088dee60dddab533e3cbd9",
-           x86_64_linux: "70136c9829e7f864c6084e330b6866c8c0ab22311360792935d66c8aa8b2e21e"
+    sha256 arm64_linux:  "95eeef88e3707cae48be2de6b36bb3a61c5fb84db0b4eb365db3d905f4fcf9c3",
+           x86_64_linux: "8107fe68346bd719877a241d64d4956adb198f21f1434e553aef18629d088094"
     "da"
   end
   language "de" do
-    sha256 arm64_linux:  "0751f8888c1e700c83088bd86d4d7fae418ce298c8783784fd3c7d29bf612309",
-           x86_64_linux: "9b8582e946f24792df7416119fee7da6bb8a535fdda4eb529478efd3209919e9"
+    sha256 arm64_linux:  "db598e051816fc75a9a3fa999583d9c4f2a27821451a94caafe296569cc85d7b",
+           x86_64_linux: "5a5610c122516d2259642815182d1a8d3063f4126f21119b886fbf0f9599714e"
     "de"
   end
   language "dsb" do
-    sha256 arm64_linux:  "c99c761eed8b72660ea99aca96a36e8dc3b7f2ba5178ef66fa6e94d24b7c3d5e",
-           x86_64_linux: "aedcca9f1149301c4a450e53bb930ccf942a95709857309b744e04ff1e0a206b"
+    sha256 arm64_linux:  "24eb6872ba78b535c60f2e0a26426cb7718ea07a7aa86820b9a1c438fb5518c3",
+           x86_64_linux: "3ab019e3eb26df3847e926a5a51f8b4beb59a54e39350515d4fcff1273c37811"
     "dsb"
   end
   language "el" do
-    sha256 arm64_linux:  "77d45978c793af380ebceedbb670a30d314ccbef642469a41a25b7311411a72b",
-           x86_64_linux: "2b989d255ac89dc158107eb0c53fa64957c06ad07001ba15c8e08006b87f8f37"
+    sha256 arm64_linux:  "d0e0a9bd768d2a943a43737169981763b735c811e4535065319565e7fb245008",
+           x86_64_linux: "cb8afca1ca12adde595ee38c5a15509d4a812fb694265c45a89eff407f634887"
     "el"
   end
   language "en-CA" do
-    sha256 arm64_linux:  "0a82c7f7eb00ecee51b91932068791f45dc615e95c1217cb8860f0766c8c9aca",
-           x86_64_linux: "75b58867535570e7de6825a4caaf32fea2f203a4f057ee828ab2fe4b88e49a93"
+    sha256 arm64_linux:  "d3f122d6fabe70b872ae85b6c2822c13455ad3cbeeec91eb3e5d60cc7a9dc754",
+           x86_64_linux: "d94cbc66a8a8d2cfa0e57e58e9af1447d33a3965143d30e05491109cb8754c7c"
     "en-CA"
   end
   language "en-GB" do
-    sha256 arm64_linux:  "8a974eea6d1b0e63ec9e6ef20261c208cf15dde68eefc4ace02ca083f79b03f9",
-           x86_64_linux: "746e63f57971c17702686ed8a0a0bd0cf0140051449449a0e63d03c5ab62b3ec"
+    sha256 arm64_linux:  "5ef0188c7444e56f8494732bb9c166ef0ff8c9a29291f2945a95407f883fe752",
+           x86_64_linux: "3eee365478b2735f453e91c5576627251ac9456e9b4ea00bb77bc04cfeafee43"
     "en-GB"
   end
   language "en", default: true do
-    sha256 arm64_linux:  "847651efd44351972a281afa54845708faffb358692f551af391dd77736bbd6b",
-           x86_64_linux: "469ce17120018e1c95411d254cf3c5f8db2dd1768a7acde5a2a089b00072ac65"
+    sha256 arm64_linux:  "0fd9e4fd7ab97f7b1eec42f70e809080679498ebabd78fd692f0b94f9b6bf92f",
+           x86_64_linux: "fde774e9757c8878534c05ec210db592bf6a1b244c57941ffb2e364c04f35fcd"
     "en-US"
   end
   language "eo" do
-    sha256 arm64_linux:  "783b73107949ef170acc22fd7b72b73e75c101cb210053445d5890553ae5c5bc",
-           x86_64_linux: "10b48233066dffc8221f2fd9366d11c6fe2d54672da6d8249717140754d49d6a"
+    sha256 arm64_linux:  "9ea640112c812e2d331e1c230aa1931de6320b2f8aedbafe379cc0fdd788a36f",
+           x86_64_linux: "8aa40b15505e21455a1d76ec535ad06b6335d3e01f3c7180e03a84ac067198ac"
     "eo"
   end
   language "es-AR" do
-    sha256 arm64_linux:  "fa16fcdd6e2873dacdb4ed81d88c0d5c789bd816b8c31dedc07cf1d63c1fddc4",
-           x86_64_linux: "10a717152a97930bb18f55e7dc97f8c9a2ab882ed00aad6f0962d580d105365e"
+    sha256 arm64_linux:  "8086fb5dd7f478703ede8c87fb87d9ddcc1ba58e944b37f26149e815829feec7",
+           x86_64_linux: "270d56d980f7d92d645e3039eed0d6a248f0b2a158fdf43ca6f54de8a2fbe8e1"
     "es-AR"
   end
   language "es-CL" do
-    sha256 arm64_linux:  "7b79ffbb51630fd3086ffd58e218e169baedc36b4529a6539c7e476da39307ba",
-           x86_64_linux: "58dfdf359d051cbf682ae91e5b9f821343c6e6ea95fc8402dae997e8aed66dfa"
+    sha256 arm64_linux:  "526a2bd79b5ef3009866408081f1c884b88de70a87df4ec41b5586b8627f9ea5",
+           x86_64_linux: "ad60060a8423b76d62dd487a026a22f0f4f7bbb349d47beaad564cdd86249dc4"
     "es-CL"
   end
   language "es-ES" do
-    sha256 arm64_linux:  "30784490dc52a82d4a4d08cd4afc966df0383341dec28cd9a20f834e3e02573e",
-           x86_64_linux: "b582930063c95c2248341a9d949c4687ac94552f727029d67209e96203ade759"
+    sha256 arm64_linux:  "78033ceb9967483977f616c05e3f26567dd7296ec0477d40a68cdeadd6c46ac0",
+           x86_64_linux: "4e154181cddba54ac6cb1b67c7a369170c53bbf9d58db68233c43d12bd4fd8a9"
     "es-ES"
   end
   language "es-MX" do
-    sha256 arm64_linux:  "202fb5361b672c48be595258206433709843b807b7ed3f6d0ba9b31131767a75",
-           x86_64_linux: "c8616641b706794a06e099a35c155b75568bf8333478ffa3ad7d6278af764295"
+    sha256 arm64_linux:  "76c3bd24d237f6bdf3ed3c16d2e8026a8c09bbcb85a265dc2cc9004730d0c5c3",
+           x86_64_linux: "4b6a60329c5f1a4fffb93b0b9f7d0417e9c4861e84c2df1b539b7bd797cfcbce"
     "es-MX"
   end
   language "et" do
-    sha256 arm64_linux:  "a93dd5cd03c63f527044f53521224bab5321d43005c9f431710c9311d5b0a91e",
-           x86_64_linux: "bb7326e672a8118b0472df2194f8fe06b0d807c72a985fbfd1afdf58ecf2a923"
+    sha256 arm64_linux:  "5fcbec8fa02e3f1fe8e1af415f37b4537a80648d53d0c8fcee077324696a44b8",
+           x86_64_linux: "1668dbb423ec81148df6b2b10816362d66dbaf07da915c371e9114b2c8dd336f"
     "et"
   end
   language "eu" do
-    sha256 arm64_linux:  "2f033a5f6bfaa332c61d6c83347d94c815e362ee49bdc21f1c8110c9b5ca1bb4",
-           x86_64_linux: "c052da10044757c1721cd185fd0e198f146d8c5442b03b3d672030b01d66ee6a"
+    sha256 arm64_linux:  "ed55672423a76fa82d1cfe868ce976d1e573c183f61178777c7c22606518aae0",
+           x86_64_linux: "67d3f7c05944a2321de8141a149f55ac13413c0f3c17e981a94b7acd75fe138f"
     "eu"
   end
   language "fa" do
-    sha256 arm64_linux:  "19426bec3be0b5b66bdbe55af2ea883f49683dfae488e7b9285ac922db65a522",
-           x86_64_linux: "f6967077fbfb4a0074f36d16708425e870a8e9f91b7c9bf3f98d59ecf8724e75"
+    sha256 arm64_linux:  "ad1d56c20885dad4b07ec429aa55b94aa755bf5fd94eeb2dd776392ab72c7308",
+           x86_64_linux: "74a99836f1404a9f08eaf76df55d63c96a0668dd35753d51e4fb60d970fa64ea"
     "fa"
   end
   language "ff" do
-    sha256 arm64_linux:  "3118c8008832e83239b97e69cfd9e9508bb27550302262410db53a1aaaab70e1",
-           x86_64_linux: "2d15ccf9ffa6bc4b78fb679f98e0f466bb8fda56d82c779da9f679cc9d452621"
+    sha256 arm64_linux:  "b6d69a29e08ff98c0f8c576b37d3db636ea17307cb236de05bbcd1b250a4a7f5",
+           x86_64_linux: "5a17f0c47c9f320ac4c9a9f2e19f87e8ceb7767231ce03993d7411c9aa71f24a"
     "ff"
   end
   language "fi" do
-    sha256 arm64_linux:  "ef58e461079ea499780c3c4365bb34be88f4c0fe1fb8c8e229db920c94ad83e1",
-           x86_64_linux: "ef493509956b34d87212e3774e2f4cca8938413f89ab5b6a63fd875adc26f9e4"
+    sha256 arm64_linux:  "ac05045e0426a1cb8a40f8e16ce8bf1b11bcb73c8085f17c7ecf05437563b66c",
+           x86_64_linux: "c6412e0cd06c23de4000d1bdfa682c0b635216f1644e5f67ef09a45575dcb9de"
     "fi"
   end
   language "fr" do
-    sha256 arm64_linux:  "55a7827174a49b0adc2ecf9d37bb8d708ccd11b6c2998322bef820044e11d2ae",
-           x86_64_linux: "2e201e72c6aa67728a46a97b4f46e43c04cdbaef6a657f683721ff57486aab6b"
+    sha256 arm64_linux:  "34ac0b465a29bacac188951bce4e1dbb08288eff237a02a0d5e48da9de42e398",
+           x86_64_linux: "760634cecbe2fffa2867a7ef749efbebbf749f606c1ad9818acbd65d0b6ca9d9"
     "fr"
   end
   language "fur" do
-    sha256 arm64_linux:  "f7b15b854f7d6f2194e08c56239424b7431ff01a61a94c18743ef4804140c735",
-           x86_64_linux: "c84fb85bf776f43147197c21aad98ba2d2893b437694c42b6e8ea3d9e2ae1c4e"
+    sha256 arm64_linux:  "ef40187e17048701156f90e24f9114895a3b44aa01728460d0302f62924b9235",
+           x86_64_linux: "51e47ad87ab874b47ecd4e2bd107f95cab8c9675745fe0ba6ba330404c7c3ee0"
     "fur"
   end
   language "fy" do
-    sha256 arm64_linux:  "5daa4cee8848e8a1fbb4ff175bc0f8734e37367e0ca1ee261a37f93d9579dd68",
-           x86_64_linux: "84959e0a8ec5378d5ca8dc40d2f52705c5636b27356cad119448389a39adc90e"
+    sha256 arm64_linux:  "fd1c2e2235ddb8cd42c5167d84c5ec1932867c6c31f8e3b6a49c68d2073c5b88",
+           x86_64_linux: "42e3beeff97547ce98f52b228e43ecbb1e4e6753ca23ceb1dd929eb1a24d4065"
     "fy-NL"
   end
   language "ga" do
-    sha256 arm64_linux:  "8477c286b1a3bda501015ff656f499ecd0828cfb49f6bfa66655bba9f32ce30e",
-           x86_64_linux: "415d89dbfa4637caa9b77ab728d9d4c46eee7a10c6307d32e93f8b8bc2e91388"
+    sha256 arm64_linux:  "808a2d5b53102b612ffe33bb109edafe56d9d54912e9962bc2ecfc6c9883602c",
+           x86_64_linux: "15e765895c67a1fd41e28ebea8ea8aaf07a30289539c54901838b0780186c40e"
     "ga-IE"
   end
   language "gd" do
-    sha256 arm64_linux:  "80b0f8c5dca17bf910eb9b88e525ce91687fb78de91310ab88de636fe877a8da",
-           x86_64_linux: "74c1691ffeb15fe0cfb64f2c8593767dd80bf03396a3af70bf7ab9ee871789d8"
+    sha256 arm64_linux:  "9eef7df8e4cf02ec7bfc9911b1866a51ca6e09dea569cce14dbb5a3dc6f1f563",
+           x86_64_linux: "b1d855c5525c99f92bec34713356f70fc59d75bd03a09f106165e5e030ac275c"
     "gd"
   end
   language "gl" do
-    sha256 arm64_linux:  "1c597f61a281f201b0da53bb19abf2ab64cf118beb9de92b440c549b7f3081c3",
-           x86_64_linux: "f88bbf0ec735338edb436fded19b760ee2a4abc6be07fd4adf13aceeabf39dde"
+    sha256 arm64_linux:  "2faabd24e53afcda6f4001affeb9b1a349fd5b6c10f9985cbf81f04d345b693c",
+           x86_64_linux: "47f9d05b3870896ae56f736f5b7836fca2b5c0c90a922584afbf38db5ee13f80"
     "gl"
   end
   language "gn" do
-    sha256 arm64_linux:  "36915ec4e3faac20085223f0577b29084d7c7e9186ed94681b7381dffdb3b61f",
-           x86_64_linux: "042033c150e902eb1e94efa108d2829d0b7f30b72f2acb73b622d0fcb81f3564"
+    sha256 arm64_linux:  "cb232022ad4bfbf8ba40e6390c344402896e322ac3e244985c51f6d2ab54103f",
+           x86_64_linux: "b521c370cb3933081dfbb971c666d152a9ccb55bc7b6d72f8c3251349850e834"
     "gn"
   end
   language "gu" do
-    sha256 arm64_linux:  "29436bc7a6ab966dcd8bdc911a1e1827a89ccd3f742161d3b33bdb532a612f30",
-           x86_64_linux: "3dfebe8fc352e6af0cbfddf1a9c945a21e17ee531de8bd1c6a7b4def019d6446"
+    sha256 arm64_linux:  "39ee262262ccaa45dd3ceff65c97311aa887a8a8f08efceb7d11d956fdde7f53",
+           x86_64_linux: "fae0b23622a784e628eeca09331cf92324cfa6e531810d1fb0ec181747b64d6f"
     "gu-IN"
   end
   language "he" do
-    sha256 arm64_linux:  "1d19c49b81eb0743fe87e3bcf9ef3cd1b326bbc742222fe6b3e75eb95ba211cc",
-           x86_64_linux: "a0dc462a358d975f9c3dc594adbab23f601a736d0bb85970a3b9c60b0a7f394d"
+    sha256 arm64_linux:  "caac865c5a75b6a9a0361eb7af57fd6ee2fa3146cf030a6d0be8d29e09a2fc7d",
+           x86_64_linux: "dfa3a6c3af522e5242655f8e931af43b3f9ba9a432b41b492b22420465cb4c2a"
     "he"
   end
   language "hi" do
-    sha256 arm64_linux:  "d142c01770ff7c2276339e1df85334c6b038c0fc88bec365d19b490884ae57b1",
-           x86_64_linux: "766a78505315d69229ac1a0c1fe668047803da93dd3790f082136c5dfe44b175"
+    sha256 arm64_linux:  "6bbeb3f8a9e00359c8a8c61e30b88173a522dbf1dda0da2ad393c6e075daa063",
+           x86_64_linux: "3317ee8b26fe9d306a0aaaa757f7053a5717b28d7bdfec9717c5b22d753b539a"
     "hi-IN"
   end
   language "hr" do
-    sha256 arm64_linux:  "08b65db25fd67bb495828610d1856b0e1d76d5cabd5cdf07d429f88b249e8868",
-           x86_64_linux: "a63f757f3c4f1db142571e998a1405bc922591f6f825a5e6c922eaf6e83c0337"
+    sha256 arm64_linux:  "e2a536dea1482e395c220e18c1cc3597a0eb0375d51fd72e00211125886e6e83",
+           x86_64_linux: "ab8d111435782091ba37664d21ec910ce85233333900a2654a2e966e5247b2ce"
     "hr"
   end
   language "hsb" do
-    sha256 arm64_linux:  "e01c83e5fd4511cbd4ec388152e47e8462a470d91a5e365da388f541ecaa80d8",
-           x86_64_linux: "708d8a2e57bf92b80c006dbc2231e65eabf762126384b6b279d1a2a363b712eb"
+    sha256 arm64_linux:  "e461f63ec84e54c2702e6ddaee851394918839df0969afca25d06a476ffd1aa1",
+           x86_64_linux: "65cecce8081ec78902d713eda5004fd36d0435140e795097be8b9930ae0cde52"
     "hsb"
   end
   language "hu" do
-    sha256 arm64_linux:  "cc6a7f80f8f1a23568be4a49a9c5d0134ae18fd845030743b19b07b95a9be4c5",
-           x86_64_linux: "1e973c019f712bcd95f22b1519f4a0f6c1abbe0ea4cb4975eca7367205e85a0b"
+    sha256 arm64_linux:  "cdc4a9e9e0c5e32ac268f4eeb93e96c10f48a0f8c05db121484a769a7afe64c8",
+           x86_64_linux: "559d182f6f57473076ccf0b83f44fae91580a23a5d835fdd8fa779ce624785d9"
     "hu"
   end
   language "hy" do
-    sha256 arm64_linux:  "93871dd2ef24f138e83666bb3f4e248e74cc8dd8ac863cb374d7b9ba18a21b38",
-           x86_64_linux: "ea54abceaf2f87074e9bb33b1aed9acfeb8e96cfc580e59aebda393282f01b29"
+    sha256 arm64_linux:  "e9b7b03ac69bc888945254780656112f5941ba3bc08e0e0c8a12757653900c99",
+           x86_64_linux: "919b209959386378dbeba7fb42bb785fa0ba0e5314e41ce0e75e0734da46b795"
     "hy-AM"
   end
   language "ia" do
-    sha256 arm64_linux:  "d222f7fc16e5e231c1759c013825896d579b330996cf69785fd120f5e86a8462",
-           x86_64_linux: "c32bb080e9c14bb69c7e7716ae0d6f2857d32ba998ef99686d87d1cc894d89a8"
+    sha256 arm64_linux:  "4901e0f329838c9ad91928eb0a74364917df99b2f53c1ad2d7bab1f1342bc211",
+           x86_64_linux: "db812369a5c68bcfd8c29c05030b90aa3f4fcbc634438091df264757e6838c3f"
     "ia"
   end
   language "id" do
-    sha256 arm64_linux:  "25e3add956e3da7476df36dd5bd34c34952f9a819c2a0bb2e551000bdbdc5a48",
-           x86_64_linux: "8809a9602a0c21b3cb9b2fa9eabde289d9db22ef4f53ee51cf3d3228a74f9d3a"
+    sha256 arm64_linux:  "95241ee4c6768049a73005f48d26e16e37d8b7182f9b3be2032f143677b898df",
+           x86_64_linux: "6bee843705d96f3bae50b67546308a4ada89cc6e3211ad75fd7c0f5a9e64d713"
     "id"
   end
   language "in" do
-    sha256 arm64_linux:  "d142c01770ff7c2276339e1df85334c6b038c0fc88bec365d19b490884ae57b1",
-           x86_64_linux: "766a78505315d69229ac1a0c1fe668047803da93dd3790f082136c5dfe44b175"
+    sha256 arm64_linux:  "6bbeb3f8a9e00359c8a8c61e30b88173a522dbf1dda0da2ad393c6e075daa063",
+           x86_64_linux: "3317ee8b26fe9d306a0aaaa757f7053a5717b28d7bdfec9717c5b22d753b539a"
     "hi-IN"
   end
   language "is" do
-    sha256 arm64_linux:  "9a60ca3b97b4204de6dddfbeab07294e70f446a6648502ae0691b638c00cd40b",
-           x86_64_linux: "a6fbdac2260e5bbf6cba58f767bf4c12970c9b5174f38baf9ab19005f1552f60"
+    sha256 arm64_linux:  "b5288f9765a7d90e2eefc1d7fa944a20a7df91fed43c00dc060264664b7d0c68",
+           x86_64_linux: "dac0606e5c0c77c36fdd5f20fdf3eae3a727c74026bbbfef1f69b44b12188243"
     "is"
   end
   language "it" do
-    sha256 arm64_linux:  "77031188293c707e3a76103d9f4fd838ee7159a2a1e100fc60ce142690425790",
-           x86_64_linux: "3a63a34f9cbd30137d6c9d096e019597fa4c5aa515beb2caa9fd2185ac0aaea8"
+    sha256 arm64_linux:  "bde4fc764a335f0cbf3776bcae6070758eb95c49bbf85d44c831e4576f093ea6",
+           x86_64_linux: "7bdbbe3ee0cea12040921110986bc8ed4eae39dfed58bc1bc41638d9f9abab91"
     "it"
   end
   language "ja" do
-    sha256 arm64_linux:  "2b60d76112cccafcf2840b1e342001ae00e9e09168a96d9afc749f9d72516799",
-           x86_64_linux: "6626ea9dc8e8e838bc3434768eb62272e24b9bcf18c71abb53bd6bd315a3c5f7"
+    sha256 arm64_linux:  "64dc53d80990e19f3328b14bb419051d0b06cb0e6ac8f6c19e1356c1e87ffb96",
+           x86_64_linux: "8da46645b6203d6075fd42fa507018bb77bfeaf3ccd019cded9037d1c6f0b08c"
     "ja"
   end
   language "ka" do
-    sha256 arm64_linux:  "0eb0816015a16cd9a851311e713ea0c48df7fe3d06332754fc3747e6f22cdb17",
-           x86_64_linux: "7b5219029352fbf0407f9d5cbc675c7c9152a4c237517af5e53f617893625904"
+    sha256 arm64_linux:  "dd4fc01d721ebe8a0bbc9f53f2ae75ea50ff2db33899fe19192e88b5ff6de5d7",
+           x86_64_linux: "40cfec2e1ac166d7b72a9fdfdbdbf5d7d006c2c64951aa0513d92bededec8e0f"
     "ka"
   end
   language "kab" do
-    sha256 arm64_linux:  "67b2f76d6f893eb1dd40e06fb6f7945a127f9e9994a9a2317d60c6d19d45f2b4",
-           x86_64_linux: "528f1d8d8c2498d469643cb659707747eff1a77dce9e8fe6176d2043a6505e12"
+    sha256 arm64_linux:  "bf172bee2aedc1a830591ad6e1a538fedcab607ca0c294308b5a3ea31a8f6739",
+           x86_64_linux: "6644db1ed9a1cb315119af856d7d5beadd0684b2546c7ec8bcde0f4a555d8be9"
     "kab"
   end
   language "kk" do
-    sha256 arm64_linux:  "1a9c14082d11841fb1d6bb0d6134a7734e824c16eae1be5dd9f38b3ee63a8387",
-           x86_64_linux: "370b4c7fcaab7adc2ac22ff68436e90dcef3162bd7359c51635c99add1301df4"
+    sha256 arm64_linux:  "0174b711628681c99847931a4bdb54a645558532714a73dc9a30bfc0d73ad9e2",
+           x86_64_linux: "04a65508408375d67b62652256fe1742880698abd4bc65bf0dbb74989f50ec91"
     "kk"
   end
   language "km" do
-    sha256 arm64_linux:  "3b6efad5e3a3a05c1b09647f75e980453b84597997e800787bcd85d20cb5a3cb",
-           x86_64_linux: "0a3d711588161755d47f7c23531d7bbd273b0954ae76adfc947aac7afa59d875"
+    sha256 arm64_linux:  "ba12c418ba137554d44405e21f095723246ed141748a28ab7213a0933ee7e297",
+           x86_64_linux: "6c1d01091b1badcff545465f0ab1aa8df7d304f2a4f9d799ab27b13fc0c6ff05"
     "km"
   end
   language "kn" do
-    sha256 arm64_linux:  "817885d46126a2c7a571d9f145e7c4268be0fe3a1e6ad8f54c2ba12ed790329a",
-           x86_64_linux: "5efd0a034ab6d814e9c1d9cb83b3b7e0ab2d6cf66d630a39ef3f82efa8c72dcf"
+    sha256 arm64_linux:  "a801b225bd51dd9c8bd11d0c8a314f92ee1f715b685f2337da9db663a82958f8",
+           x86_64_linux: "b5282016febbc08039e821924ef1fc840b998960250fb00dfba315f8d4362816"
     "kn"
   end
   language "ko" do
-    sha256 arm64_linux:  "412f0b6603d3816709768a834496314a03ed4a79623ede3c0fd09db0af3ed98f",
-           x86_64_linux: "99620dcc12abbd129c75c424faa6092f9269112d55505a1b99d20fd4f76f94c7"
+    sha256 arm64_linux:  "4630d9387f18200e6525b9ae037516461f98b93c0a6952479150e1bad35d0a85",
+           x86_64_linux: "6ce2e4b241c23b64c6fc1efd9026a880ca341388e18f62407b12a7512dad28e1"
     "ko"
   end
   language "lij" do
-    sha256 arm64_linux:  "58493bcb5d66d9214799370da29a3ec6310a3fc8eb566c8541d4635ed5b3dfe3",
-           x86_64_linux: "9f1f4bcf0d65ade7d5ae4804989d6d2bb188ab427eb90b16f5061cb88c5671bd"
+    sha256 arm64_linux:  "d05fa824a8cea4c50fd798b027db5f97cf5e296471ba0e7eef2bcd6f391ee64a",
+           x86_64_linux: "691856dce6820e6b1df4a946236d81aa2076d3eecf24dd71f078f40c6fa2d02b"
     "lij"
   end
   language "lt" do
-    sha256 arm64_linux:  "198d73079661b73625e6e496e16074df39042cd83e656feae090688395c56ce2",
-           x86_64_linux: "71c24ae372005a4f29c33ac26540264c5b38196ef14a288852285e68ed45eb6f"
+    sha256 arm64_linux:  "cf2ec8612ad976d3214cdd7fbc5264c561bd98f2ac3e8d5c6641602ea9b2e260",
+           x86_64_linux: "1f72ef6b6a1484b7f60830cdee3ad53d26392440937ba1132a80509cddf23d5c"
     "lt"
   end
   language "lv" do
-    sha256 arm64_linux:  "a07cb5000f0ca448d934d02a5cd1962b4dab8b7e09633dd4752864fd671fea87",
-           x86_64_linux: "fb6b24e82f31870c876b406fc7fb678f5e2a7d46bf86010b8feedd3c605bf56c"
+    sha256 arm64_linux:  "691626cebb1f64b7a22d082d00f5aae8dc73030767e38ba6bf52bb0a5eeac3c7",
+           x86_64_linux: "156e2d48d0acb25e6a9d7026d95a70198ecf41927a2ff45b1a6d73b0a8ad6c5b"
     "lv"
   end
   language "mk" do
-    sha256 arm64_linux:  "80c2e46aac2b8584c3d16ea95c7305537707a379cdf36b7bedf8d4578fe5af2e",
-           x86_64_linux: "cf8a8360023db27263840de04a54fc822a3eac8d5e334960b0e55ec7644f004b"
+    sha256 arm64_linux:  "35e80a1096f032fbfc64d0fe68de1de0b56e125747928f6ec2e31c4a50ca0074",
+           x86_64_linux: "10deaa7aaccb66f70868fdb52df82a6605b1747ff2d732305d1fb8b059ede250"
     "mk"
   end
   language "mr" do
-    sha256 arm64_linux:  "9491f16669e847cb5a3c2447c03fa94f17349eb58bd929e30d254a81708c02d9",
-           x86_64_linux: "f620dde306bca1bec93fcc305e420c6dae52088324b7ae4bd12907f7460bdcfd"
+    sha256 arm64_linux:  "db3bb3d992f611eaee8a59b92288552b0d69a19d641244f28fe42c03f37e39d6",
+           x86_64_linux: "9db91a8f545751f107b768dd1225c930860ac198d32513d7ee1ed0539c98a4ed"
     "mr"
   end
   language "ms" do
-    sha256 arm64_linux:  "b34b35621ec338d41da22b913e5db1ae4c80635a76b5d77ab6f8f58a7d5199b0",
-           x86_64_linux: "58a4222448f4fae05a760b86e23c31be6fc2a4e6bc43108e2e7623eec982df6a"
+    sha256 arm64_linux:  "29649d44c60a4beb8b7ef09f9254ce8fbe750ecc54a69ec46d9d1bf52909b670",
+           x86_64_linux: "9b31b2b090e0f8604aa3bacb833a6b8903a9e11cc70f513a31818aad063561fb"
     "ms"
   end
   language "my" do
-    sha256 arm64_linux:  "7f667d2679801a0a2a01d268815d26d6dba79011eb9d562d2aae4e9b0d860b55",
-           x86_64_linux: "7d4810d9514855abe3a21a83e2197478bf55b7827eb035312dd30f4375545056"
+    sha256 arm64_linux:  "3672d371059ead965160342e3e6a58a26d775cb7576d5a7e8d7728f6b02878e2",
+           x86_64_linux: "27af95823d54f2f1f18d29d1dee34a31fb57977aba3c1f4aec714714ae01b8e9"
     "my"
   end
   language "nb" do
-    sha256 arm64_linux:  "66e7e45fa5126c2addc7ad810010bc8c521d03bc3d6485f4504c167a4eaac3ce",
-           x86_64_linux: "77848b6ead6705c791633c72de3aae327fe2ec63a87c0a5d09f322cca018b568"
+    sha256 arm64_linux:  "20f8b1deed06d2be059841a88dc32bfc328da2063c87cfa9568c162f0597c1bc",
+           x86_64_linux: "3ef9f10a071f9d6fc8bd83480b0da87a89d5e62be2b53487afb9bbda6e740e8e"
     "nb-NO"
   end
   language "ne" do
-    sha256 arm64_linux:  "22cd083a97749463bb29352fe3049c9a5e020a6504cab45ed2dcdf3a16862bd0",
-           x86_64_linux: "02dc09cc5720a8cc381c360193775e38cc3847acc57fd7e1a16ae6bf9ebc57a2"
+    sha256 arm64_linux:  "2c180f75b6b37df25c9abcea1874e70ac7b9a0ee8bbb45e84cb71a6ebb5539a7",
+           x86_64_linux: "efa0c68f7c660faee7b108a08f2351032d3a19fcfd66b72d13d0fad9355dd694"
     "ne-NP"
   end
   language "nl" do
-    sha256 arm64_linux:  "76c0a23eb5f417c9a18081cbb7b8c7ed3e9649f45be4c6aa626fc57b8efacd67",
-           x86_64_linux: "5b0bcf43f4f8ec337e8fc53df1be9b9311a4ccb2fe86d7ab68a9d36d77b29a1f"
+    sha256 arm64_linux:  "ceb71c3a247da711ce0a91a3847aed0e3e041323280cd2d202e8ed8cfde57868",
+           x86_64_linux: "e67b9064498a7c410939d8c42ab4cfa40ffe6505b3b0830cb0795c544351f51d"
     "nl"
   end
   language "nn" do
-    sha256 arm64_linux:  "c90cf3a3f99cf85a395806a0015c982a5cb4d1aaa8810bf79ca196eff604ae77",
-           x86_64_linux: "d4011e2f830102a454d4b018d6682cb71231bdd3264630f03d9331ac839b614d"
+    sha256 arm64_linux:  "6804a52bf39b24b003df7270ab5ef7dadb58acd494364ccee4e74ba9486f0780",
+           x86_64_linux: "5d29011d1731c5d1170c99deefbbf511f3397b9df15c282fcc550d59e7f1e4be"
     "nn-NO"
   end
   language "oc" do
-    sha256 arm64_linux:  "f23f67743ed239589dbe34dd67e3fbcae7014398b5ef9a2123ee0851aed8a836",
-           x86_64_linux: "f8f9416fa84c77e6e2ac21b6a9279e22463dda816ccfa1dd940a19e77391df98"
+    sha256 arm64_linux:  "28488b856aaced930214521feb4fd0f26098f6726b67b27df6d086499b4413c3",
+           x86_64_linux: "87f76ccbc99f08ed31ba0b9387a5316723448f7e8ba975f79a689d89f16766a6"
     "oc"
   end
   language "pa-IN" do
-    sha256 arm64_linux:  "85575d2f5f5b8e937d51957d84556aee25e8627cc980ed805b97bd1221d8e90c",
-           x86_64_linux: "448afb406031e636fc3f236a482c0643ef8322fca639411cde03f6f6c6c7332a"
+    sha256 arm64_linux:  "b908c84ffb30303d7238c9abc100726c744070d07c906806812afefe3e143854",
+           x86_64_linux: "b57ddc504cc40c7186b6782e4acf84fbbb63563721fcff4bc8d35962c5ea414d"
     "pa-IN"
   end
   language "pl" do
-    sha256 arm64_linux:  "d505c15bc483e091c0656588218d526ffc2a07e50bd917f1c73af45c116872d8",
-           x86_64_linux: "cef61c291e4d07b57839ccca6b213e154fd7367e181e7e326c0274a721045f3f"
+    sha256 arm64_linux:  "15313d3899b083c46081431d1c328525ee4600e9e2f2cc02c64bd72aee449b5b",
+           x86_64_linux: "80bba8b1e05836229b107f98bd48a0900a5092fd59758d173676fce42e82e733"
     "pl"
   end
   language "pt-BR" do
-    sha256 arm64_linux:  "ffc7443385889d45dab4b7938203c215e209897e7d3517a7cf904a80e6579ffb",
-           x86_64_linux: "f010a0d63de88ee098d4603c0d1f03ae22012e603ef6eb13510887177e2a32b0"
+    sha256 arm64_linux:  "f583c28e2e5125540197742749c29b8f1ddc96ac3e36b046272e63849c12f43e",
+           x86_64_linux: "d3b8dbf65e3b02fffaafe7e62adc9060a4c4e0294656d37aaac46f5eba442c8c"
     "pt-BR"
   end
   language "pt" do
-    sha256 arm64_linux:  "e2e6f3560f44f4149b67bd111ebc774a309dceead6072a1abca68c7002f02faf",
-           x86_64_linux: "f11bdb2021fa20394819aa5fa99342d12b0cf28f36480807b9d616b2a66e3e36"
+    sha256 arm64_linux:  "c8b6b02e0edc17b71bd50935c10f4105edfd0399177324ed7a0c9f3bfafffd1e",
+           x86_64_linux: "6c16585e04bb4e6be6a5d239af86cab583b162fa8adc40fb3f9b423de84614fe"
     "pt-PT"
   end
   language "rm" do
-    sha256 arm64_linux:  "da489d6f843e3cd846b4f10a2b8e8e4f0900ea7f2b0de0ca1d3b5d9624c8d6bd",
-           x86_64_linux: "05acf16dc52298679d7b7f4dfdbfa1dbbbafdc04aca5fe747a7216d124f84b58"
+    sha256 arm64_linux:  "2d89eb6d16cb33c84a7892843b3a9303dd18397a88737214a492816f93159d7a",
+           x86_64_linux: "fed53b163460150575fc1eb1ef7a569afb421555bd2500d28c0904fcceb3c372"
     "rm"
   end
   language "ro" do
-    sha256 arm64_linux:  "0e6eef55569399ecfbcc43c341ddc23df95ddad8871879cb531051074317ebc3",
-           x86_64_linux: "aa58c5be340d9c9cc80692c855b08ec55f54814c4f0955c3d54874cb7b1ce554"
+    sha256 arm64_linux:  "187cd1591dd4525e4f3ef9c0f9e586c59eaf377fb90f9f126ab8d8996e1aebd7",
+           x86_64_linux: "f7a65c243ee32dfa55f91a25c699e320d74254320073b8e75319b035bf45f574"
     "ro"
   end
   language "ru" do
-    sha256 arm64_linux:  "921fca2dc59960f9a2fa183ba654f4f157dee60fa934def79e1a7d982bcfa741",
-           x86_64_linux: "72982234e8eba6ab6299449bd028ba996e404dd186f4eb26f643e5e61320ab74"
+    sha256 arm64_linux:  "98a112168659aed2f5315aa5bcb24349a5c55b26336349ac25fb92777949bbb6",
+           x86_64_linux: "74a4ddecb25c1240a048b5ddb63d826a2502f35601ee2af48804c153d02eddd9"
     "ru"
   end
   language "sat" do
-    sha256 arm64_linux:  "d2af1b17d7d29b34e8a936b9874c6956390973017348c90d0764572c4198cf54",
-           x86_64_linux: "aec5f8c3144306dab9a16e1dacd4ed9b5129631f12e157ff3d39fb19e0603e67"
+    sha256 arm64_linux:  "5f6a82538a866201c43427b1bfbd521c6ac46c8fd5e0112d66fc7eb1e09f34fd",
+           x86_64_linux: "86c52c588f7fcc401ef801283805e1e54bc7d24685948315b6862160f1bfd8b8"
     "sat"
   end
   language "sc" do
-    sha256 arm64_linux:  "b8951f28fd7f851681a1f012b360b104ec39ad13e2ccb271c11082d75b20bcde",
-           x86_64_linux: "c32314392655f8077ec14dd6945e4c1fe6dc9fe4d2f0f289991aef7bab71404f"
+    sha256 arm64_linux:  "00c389427726123d9945698810cb6f004d1b2b09bca2ee03150e5e6c10963ed4",
+           x86_64_linux: "ba12c22deb4bbd7686aa375ae4f429229c3831b2ed2b74e6078a9713f529f7d2"
     "sc"
   end
   language "sco" do
-    sha256 arm64_linux:  "189cdca156f83cf8057ae70de92fc2c6fa895e3b386ef610578fe4bd4b8c6828",
-           x86_64_linux: "850b105885e43804af987479bcf405c997b49f6faf2f8ddd21572d72c4ac4f97"
+    sha256 arm64_linux:  "3a4f3597cc924deae0ee204522b49c72f14b8c7262247c10a547eb6aaab95ff2",
+           x86_64_linux: "c2007547ee4b400be20d534827abedc761d6cf0d7a317651471365930dc3abda"
     "sco"
   end
   language "si" do
-    sha256 arm64_linux:  "3fa12416a48a73a52f03759fc34a897dced4e2baa6133bcbfaa0d3d64ba6bfef",
-           x86_64_linux: "a761c0352db356ddb2cd54b5abecceac8f59b7b48bd6dc785d077afb4891ab5a"
+    sha256 arm64_linux:  "59c2e04a69518de8207b2ae7fc49b700ec79c52967037f3fb2b8f31c85f0c10b",
+           x86_64_linux: "7650ac6717ca7aee2b2c6ce596f0209b947c3a21c029a3f1e01f4cebdf07186c"
     "si"
   end
   language "sk" do
-    sha256 arm64_linux:  "93a107fcb1b0e817a78f7b8df202565730104c85dc9947599ee8f357dbdd9918",
-           x86_64_linux: "9454b1418c8f33128189e30163c21a1eee3148ab0f4deddb339f4c6738539700"
+    sha256 arm64_linux:  "c688be96fe7a0dc6c38e9466b8078f624d9308939acd7859c7d726da42e3291c",
+           x86_64_linux: "91469c2df79444374afca482e180186e6e9b6f09d7504feddab94164aa45e9b7"
     "sk"
   end
   language "skr" do
-    sha256 arm64_linux:  "9f9ffc41002f7114f01ecb5ebec5ff41d2a48ee661923d75a6b5d2348ed25ce4",
-           x86_64_linux: "7af8f29e2e83bf4b626ced49e0152cc259663574563320b1e369b151ef7d83e4"
+    sha256 arm64_linux:  "60b63c1ff53411e224522e0b7436d31d390e4d731d4934fc92dcfa1854188abe",
+           x86_64_linux: "9cab8fe67cfd5e75ba7146a14e8c70b5371114869451ae3a31fa31d9f6044b44"
     "skr"
   end
   language "sl" do
-    sha256 arm64_linux:  "d7e4b7e5b275f3af9a39a52fb61f2536c430e0981bfdb6d9ab1f989b9630dfe1",
-           x86_64_linux: "fa69e0d06973ba27e4018ec2ff6a3ef5e6cc513cc28fb2ab9744fd07f32c2296"
+    sha256 arm64_linux:  "c1cc921b0cbbdde6ba1c812230e662018b2e422d312a77922ee7a1b95c989d28",
+           x86_64_linux: "50815fed4f3a7d263bb4a39a9ea081c4ee6b3aa4bf1eeaecd13c37bc47a2b86e"
     "sl"
   end
   language "son" do
-    sha256 arm64_linux:  "dc86844e0f1fddfddbb3bff70a56d539c307a7bdcc610d5de6b59706e6982606",
-           x86_64_linux: "f1a2b275590969defe6ab70c62c6f8ffa7773e51fd3e6ff3a9d477353a5c49cb"
+    sha256 arm64_linux:  "7e8ea1219665b33a3f0e2287041cde0ae3bca9764f93570292422711e8e4dafd",
+           x86_64_linux: "200ccadb86e0cbb1dc09419a1daf856a74dcb1aedcf249e877908fd4e17f0e4c"
     "son"
   end
   language "sq" do
-    sha256 arm64_linux:  "9f48b46a2d0c06f0637e6cf084afd445d71e786486316a7d7591192886dbaf91",
-           x86_64_linux: "2e86eedde293e5d034b95b3bccd9edb41967a518cc32e937c21079db320af02a"
+    sha256 arm64_linux:  "bfa90197712c8c8dae3603383cad427d39d1970724b504aea14ba04df932ca43",
+           x86_64_linux: "7758092ec6d251105644430b152443be8745a586652fdefb7ef02354b848db02"
     "sq"
   end
   language "sr" do
-    sha256 arm64_linux:  "6487789fef1b9194068edccb2ab0b5b8f4f3664202bec8e027902f02aabe4262",
-           x86_64_linux: "cea0c2e6ae0c5e78b60b98d9f0cead4e315336ba3bc6943d2bc29845cec9ffb4"
+    sha256 arm64_linux:  "a504a01073b884ed8f7d50cb9a29f4b2090db7b80debe765b75b41127a5967c2",
+           x86_64_linux: "29215715ba838f27780da730666582e494885712f8b34bdeb81f8983549d4e85"
     "sr"
   end
   language "sv" do
-    sha256 arm64_linux:  "2616d34391ff1538dd2aa250d302a714935192127889e27f6746f06d7c31d61e",
-           x86_64_linux: "a7d1c01f1a5a652b134d6bcbc6621e0feac95fde8a204fadb020d30fabe61ac6"
+    sha256 arm64_linux:  "5fdc8e229a36014488408e8f7785050e77db4f4614b9eabcbd39137f4d0f3102",
+           x86_64_linux: "cd681052578b874ea94cb5bec714adffbddcd8b2ef44f04e3c233b6cbc12f6cd"
     "sv-SE"
   end
   language "szl" do
-    sha256 arm64_linux:  "18d469d3eb98d14bb3f02a7bd301d0653fc8829bb100fc3233b31e9bb78c7517",
-           x86_64_linux: "874b6f695e214d54d871ef1398a5a82a5f0eda0ca6dec5aaca31e670e2079143"
+    sha256 arm64_linux:  "724392ca317a607864633e1c429192d513ea6d1c41ee5ddf4ea560e1247bd0f9",
+           x86_64_linux: "ace791b6efcb3858dcbd92abf4bc4c29a47f9a45bbf2920fa3708b01b375aa31"
     "szl"
   end
   language "ta" do
-    sha256 arm64_linux:  "e95b00ef65b794871b03d6b8110fedcdee69b65d01251d54adb44ec8e554cb56",
-           x86_64_linux: "be79a529da2c14e0ff632c5ac9ee5ccddb56dffd08b748dae9f36744b6b784cd"
+    sha256 arm64_linux:  "36468dba66f3cbf44b5d9ab7986561685fb10df431fba20e7d27552ca69749dd",
+           x86_64_linux: "33ee32702f8530a4786930cbe913e685d3338e0724fbae7ab8a2ae6c20537b20"
     "ta"
   end
   language "te" do
-    sha256 arm64_linux:  "229ecbb97684a61070877758c8ff5841d2cbca3f3dba5c018062c1c238a4f983",
-           x86_64_linux: "3600c9fc62eb3fa3145c341019cc6b3d4c8abef5a5af7aa40914c2c5f574f2cf"
+    sha256 arm64_linux:  "eaf3866ae076ea63c7b0b647c06f6055e2504079728692bee10f86a66d5bb0e4",
+           x86_64_linux: "b75f793db6f1aee1a4f2148753a6e84d07f75daf509bb2f1bdee3e445e5fca13"
     "te"
   end
   language "tg" do
-    sha256 arm64_linux:  "e20095a4af43b1b970a927c858a4d148b629184c6252aabcb106a009dee7005d",
-           x86_64_linux: "2e543c097630b00fd21db7d929aa846674199fbb16be13a43d98bee936640a5d"
+    sha256 arm64_linux:  "510a68259ff0e55d0e31b8ee25d108c7f760554a857a3ef1ea349d979ded7bba",
+           x86_64_linux: "42f7076f18f0fdb038b83e5d9541786384e0ce1d409d8f67ae5ec8f2caf87cc1"
     "tg"
   end
   language "th" do
-    sha256 arm64_linux:  "98f1039ab0a487f2a6edbfe8fe52e4929e0823a2ed2c002a2af71509089efd85",
-           x86_64_linux: "0a2e7386c97a2e2aa101d031f020b90f88312684988d839c4d97f2e8156da923"
+    sha256 arm64_linux:  "46a5779145f1e43ad4b1280ec722bba97c25f63baaa23839ff45d5d49032759e",
+           x86_64_linux: "9a269f1c1d1d2c1521268a7663be28e0331a154469fc2ab71c5689d530e436c9"
     "th"
   end
   language "tl" do
-    sha256 arm64_linux:  "809fbbb6b238e96b46384796600b2daab80974b4275e79f12947efa05d62bc1d",
-           x86_64_linux: "201729731d1270e1463c8b25e11f740c1485c7d590eaf2d9aaedc86c56f12f67"
+    sha256 arm64_linux:  "4f2e781215e49dedb26399b4b8fc1293861668127c317bd6f266db35b002a83d",
+           x86_64_linux: "178664b19ec7fd6e384d6b20bcb498cbbb094fa337185b475f8b549073e2ced7"
     "tl"
   end
   language "tr" do
-    sha256 arm64_linux:  "6cdefe8bca75caced1d4172d8a90cc430618c63ee53c8f604927e706c3eafde0",
-           x86_64_linux: "8717b7f3ad202e19de9a7e05575cabcc9706dc6e7c2dfcac7ee0b3a299adfbfc"
+    sha256 arm64_linux:  "f62234043be08418b06f8a9d99babedc2065f75d8f5cc3a05cd93a0bdc80e353",
+           x86_64_linux: "08e9b3e1253b984ff29457c80f9a11155ff64cd1702cfa793b10c5b8578e98a3"
     "tr"
   end
   language "trs" do
-    sha256 arm64_linux:  "463a57192d6fc5fb72c6b4128a698697da7524d221efbee598a535a0d174ac05",
-           x86_64_linux: "3367f961279ebf0019628c24585738fd740d5a9b9c4498b1d97cdf19a829c8aa"
+    sha256 arm64_linux:  "76e42f1dd5bcf6fadb6f40f16b78997ffd81931003ddfc6f5d9e49727e3094d1",
+           x86_64_linux: "310d0a91f04d1bd89d72b12f3d4806587cb800eaf421f696931e212deb48bd1b"
     "trs"
   end
   language "uk" do
-    sha256 arm64_linux:  "1f8409fca40414982270be9e81fa771d5ce6c3ca09b1ac00667ccb299f9ba9b6",
-           x86_64_linux: "06025210f13eb56d4bc0fcb8e624cfa65fbf5da55bdfb4b0d30eef4fadabc503"
+    sha256 arm64_linux:  "30a7c65616cccafc554d47ba10fbf71f53be0cdf62eb630174d0b3bcc5504b04",
+           x86_64_linux: "7fc70866e5fbd89a829c7b95811d8ed81c6e9e123564038ad5ca03e997291c66"
     "uk"
   end
   language "ur" do
-    sha256 arm64_linux:  "979001d9f331fe3d3851541d07603c0c87bb1691dcf4ef702de81550d2b7856c",
-           x86_64_linux: "01bf8e53cf84be81da7b00fad5d6c6cc31b329e377c7c56a2c3667c5fad37248"
+    sha256 arm64_linux:  "5dc921c7883fd05842048628cbdfa93362654445ec54c7106cb7c297884df320",
+           x86_64_linux: "09635e79cbfbf5f288747ae4eb517cadad7204063b18cecd5cfde43e7ff5b686"
     "ur"
   end
   language "uz" do
-    sha256 arm64_linux:  "cd540da06754ad20a2d4f535da76dd1a9e70c6b5e2dcc3b4774f37a97eeec04b",
-           x86_64_linux: "5b0eb224e114ddd62130c43eb45521baba90d10966660b8f7e676acc2e6a1515"
+    sha256 arm64_linux:  "7f2143e5fd6f64ef43ee3b569f554f76deb05dcacbe3274ce03e1f8ba6fd266e",
+           x86_64_linux: "979ad76d5154bf2e09f79b5a76a750f18e491b385c6b186fa0747c563a2cf740"
     "uz"
   end
   language "vi" do
-    sha256 arm64_linux:  "b3b4453ec7a97b1c04b418f5b4121865d87069459e68afec2f626bc233caeb4a",
-           x86_64_linux: "7696133603ade1dd206c1b38920bd0607a930069a1b150c1efabf7defc5c6075"
+    sha256 arm64_linux:  "f81a3492fd84651029f04ffaf39a9f8cebaa89119a82f9329473f3c6ecf2421f",
+           x86_64_linux: "1a615cec3e46416aa3b0ac2d33957479ebace70899304328ec1769d89a0ef0d8"
     "vi"
   end
   language "xh" do
-    sha256 arm64_linux:  "a07e182605fe61c43c59628f077921aef6062b70442ef78be64c4f73088921ac",
-           x86_64_linux: "a8c48d731249f1348f55a44e0a5edabd3a7d7405fb1822f6cbc171ea764e0980"
+    sha256 arm64_linux:  "90b178adc8dbb2533741d3f40afd97dec050332e813ddeeed17629c181c93b7b",
+           x86_64_linux: "73335af9d6f59cd7247de8029356ec1fa34f155433f1de37dc0e44adf4e7e214"
     "xh"
   end
   language "zh-TW" do
-    sha256 arm64_linux:  "9e8e5108ce9e6287e610e6d87c9edd7e67e80af2c89b9dfb528a7b1184cda540",
-           x86_64_linux: "ae03977be6b639aaafd29bb4720b9171b0bf509096ac383a5598e4a59064619e"
+    sha256 arm64_linux:  "ec968119cb091ce3f6df666f1a478f48bd091884f16e2ac08b9f17acc17f582f",
+           x86_64_linux: "d4003864bd0a649e2ac7d3576a55ed7aed3d3517df0b680330030b776a63e962"
     "zh-TW"
   end
   language "zh" do
-    sha256 arm64_linux:  "3fe4a600dbf77c708fd8493b956d63462d8fc6f39eacc0b62d5b669b3043182a",
-           x86_64_linux: "70afd80d0eb6998ea3f97979460685049d6130b0181943db48423a9da297ab83"
+    sha256 arm64_linux:  "16e9060fd163cc57350fe7809e4b799e6820ad5ff5e3f402800175401465e8c0",
+           x86_64_linux: "bdd76204b05deb0670fc43983bc208444e69f2bcd17562d336929fc0328e1c62"
     "zh-CN"
   end
 
