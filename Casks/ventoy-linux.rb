@@ -1,4 +1,4 @@
-cask "ventoy" do
+cask "ventoy-linux" do
   arch arm: "aarch64", intel: "x86_64"
   os linux: "linux"
 

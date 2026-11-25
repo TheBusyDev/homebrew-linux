@@ -1,4 +1,4 @@
-cask "firefox" do
+cask "firefox-linux" do
   arch arm: "aarch64", intel: "x86_64"
   os linux: "linux"
 

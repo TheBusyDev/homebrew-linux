@@ -1,4 +1,4 @@
-cask "msedit" do
+cask "msedit-linux" do
   arch arm: "aarch64", intel: "x86_64"
   os linux: "linux"
 

@@ -31,6 +31,9 @@ script:
 
 New formulae should be placed into [`Formula`](./Formula/), while new casks
 should be placed into [`Casks`](./Casks/) directory, as `*.rb` files.
+All the formulae/casks in this repository should end with `-linux` suffix
+(e.g. `firefox-linux.rb`), in order to prevent name collisions with Homebrew
+official repository. \
 Bash script are located under [`scripts`](./scripts/) directory, with `.sh`
 extension. \
 New formulae/casks/scripts should pass all the checks performed by:

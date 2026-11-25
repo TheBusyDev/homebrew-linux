@@ -1,4 +1,4 @@
-cask "paraview" do
+cask "paraview-linux" do
   arch intel: "x86_64"
   os linux: "Linux"
 

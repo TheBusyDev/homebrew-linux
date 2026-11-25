@@ -37,18 +37,17 @@ brew trust thebusydev/linux
 🧑‍💻 Now you can install and enjoy custom Linux formulae/casks, e.g.:
 
 ```bash
-brew install thebusydev/linux/hello    # Just a dummy hello-world formula.
-brew install thebusydev/linux/firefox  # Firefox, the popular web browser by Mozilla.
-brew install thebusydev/linux/msedit   # Microsoft Edit, a TUI text editor.
-brew install thebusydev/linux/paraview # ParaView, a tool for data visualization.
-brew install thebusydev/linux/ventoy   # Ventoy, used to create bootable images.
-brew install thebusydev/linux/vscode   # VSCode, Microsoft IDE.
-brew install thebusydev/linux/vscodium # VSCodium, the completely open-source alternative to VSCode.
+brew install hello-linux    # Just a dummy hello-world formula.
+brew install firefox-linux  # Firefox, the popular web browser by Mozilla.
+brew install msedit-linux   # Microsoft Edit, a TUI text editor.
+brew install paraview-linux # ParaView, a tool for data visualization.
+brew install ventoy-linux   # Ventoy, used to create bootable images.
+brew install vscode-linux   # VSCode, Microsoft IDE.
+brew install vscodium-linux # VSCodium, the completely open-source alternative to VSCode.
 ```
 
-> **⚠️ WARNING:** Do not forget to use the full name to install formulae/casks
-  from this tap (i.e. `thebusydev/linux/<formula_or_cask_name>`), in order to
-  avoid conflicts with other formulae/casks from Homebrew official repo.
+> **⚠️ WARNING:** Do not forget to add the `-linux` suffix, to avoid name
+  collisions with the **Homebrew** official repository.
 
 Use this command to explore the updated list of formulae and casks:
 
