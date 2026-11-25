@@ -1,5 +1,5 @@
 #!/bin/bash
-# Perform some checks given in REGEX format on `.rb` files in this repository.
+# Check the name of `.rb` files and some of their entries.
 #
 
 source -- "$(dirname -- "${BASH_SOURCE[0]}")"/__env.sh
@@ -16,6 +16,15 @@ do
   sha256_correct="$(check_rb_sha256 "${rb_file}")"
   depends_on_linux="$(check_rb_depends_on "${rb_file}" DEPENDS_ON_LINUX_REGEX)"
   depends_on_macos="$(check_rb_depends_on "${rb_file}" DEPENDS_ON_MACOS_REGEX)"
+
+  if [[ "${rb_file}" != *"-linux.rb" ]]
+  then
+    cat << EOMSG >&2
+
+::error file=${rb_file}::Each formula/cask of this repository should end with \
+\`-linux\` suffix.
+EOMSG
+  fi
 
   if ! ${version_correct}
   then

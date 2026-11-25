@@ -1,4 +1,4 @@
-cask "vscodium" do
+cask "vscodium-linux" do
   arch arm: "arm64", intel: "x64"
   os linux: "linux"
 
