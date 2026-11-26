@@ -24,6 +24,7 @@ do
 ::error file=${rb_file}::Each formula/cask of this repository should end with \
 \`-linux\` suffix.
 EOMSG
+    success=false
   fi
 
   if ! ${version_correct}
